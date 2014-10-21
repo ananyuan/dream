@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.TaskDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_task;
+    </select>
+    
+    <select id="selectAll" resultType="com.dream.model.Task">  
+        select * from dream_task order by start asc
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.Task">  
+        insert into dream_task(TITLE,DESCP,TTYPE,START,ENDTIME) values(#{title},#{descp},#{ttype},#{start},#{endTime})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Task">  
+        update dream_task set title=#{title},descp=#{descp},ttype=#{ttype},start=#{start},endtime=#{endTime} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_task where id=#{id}
+    </delete>
+    
+    <select id="findTask" parameterType="int" resultType="com.dream.model.Task">
+        select * from dream_task where id=#{id}
+    </select>
+    
+    <select id="findTasksFinish" resultType="com.dream.model.Task">
+        select * from dream_task where ttype=1
+    </select>
+    
+    <select id="findTasksTodo" resultType="com.dream.model.Task">
+        select * from dream_task where ttype=2
+    </select>
+</mapper>

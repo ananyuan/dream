@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.dream.model.Task;
 import com.dream.model.User;
+import com.dream.service.TaskService;
 import com.dream.service.UserService;
 
 
@@ -15,11 +17,15 @@ public class TestUser {
     
     ApplicationContext context = null;
     UserService userService = null;
+    TaskService taskService = null;
+    
     
     @Before
     public void initContext(){
         this.context = new FileSystemXmlApplicationContext("WebRoot/WEB-INF/applicationContext.xml");
         this.userService = (UserService) context.getBean("userService");
+        
+        this.taskService = (TaskService)context.getBean("taskService");
     }
     
     
@@ -30,13 +36,23 @@ public class TestUser {
     
     @Test
     public void insert(){
-        User user = new User();
-        user.setUsername("testUserName");
-        user.setPassword("passtest");
-        user.setEmail("xxx@163.com");
-        user.setSex("男");
-        user.setAge(23);
-        userService.insert(user);
+//        User user = new User();
+//        user.setUsername("testUserName");
+//        user.setPassword("passtest");
+//        user.setEmail("xxx@163.com");
+//        user.setSex("男");
+//        user.setAge(23);
+//        userService.insert(user);
+        
+        
+        Task task = new Task();
+        task.setTitle("第二条Spring");
+        task.setDescp("jar包");
+        task.setType(1);
+        task.setStart("2014-10-21");
+        task.setEnd("2014-10-21");
+        
+        taskService.insert(task);
     }
     
     @Test
