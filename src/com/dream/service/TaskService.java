@@ -1,6 +1,8 @@
 package com.dream.service;
 
 import java.util.List;
+
+import com.dream.base.Page;
 import com.dream.model.Task;
 
 public interface TaskService {
@@ -16,7 +18,7 @@ public interface TaskService {
 
 	public Task findTask(int id);
 	
-	public List<Task> findTasksFinish();
+	public List<Task> findTasksFinish(Page page);
 	
-	public List<Task> findTasksTodo();
+	public List<Task> findTasksTodo(Page page);
 }

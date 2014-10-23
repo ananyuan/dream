@@ -2,6 +2,7 @@ package com.dream.service.impl;
 
 import java.util.List;
 
+import com.dream.base.Page;
 import com.dream.dao.TaskDao;
 import com.dream.model.Task;
 import com.dream.service.TaskService;
@@ -51,14 +52,14 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<Task> findTasksFinish() {
-		return this.taskDao.findTasksFinish();
+	public List<Task> findTasksFinish(Page page) {
+		return this.taskDao.findTasksFinish(page);
 	}
 
 	@Override
-	public List<Task> findTasksTodo() {
+	public List<Task> findTasksTodo(Page page) {
 
-		return this.taskDao.findTasksTodo();
+		return this.taskDao.findTasksTodo(page);
 	}
 
 }

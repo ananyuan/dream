@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.dream.base.Page;
 import com.dream.model.Task;
 import com.dream.model.User;
 import com.dream.service.TaskService;
@@ -45,14 +46,23 @@ public class TestUser {
 //        userService.insert(user);
         
         
-        Task task = new Task();
-        task.setTitle("第二条Spring");
-        task.setDescp("jar包");
-        task.setType(1);
-        task.setStart("2014-10-21");
-        task.setEnd("2014-10-21");
+//        Task task = new Task();
+//        task.setTitle("添加一个未读的");
+//        task.setDescp("先添加，再分页查询");
+//        task.setType(2);
+//        task.setStart("2014-10-21");
+//        task.setEnd("2014-10-21");
+//        
+//        taskService.insert(task);
         
-        taskService.insert(task);
+    	Page page = new Page();
+    	page.setPageSize(2);
+    	
+        List<Task> tasks = taskService.findTasksTodo(page);
+        
+        List<Task> tasks1 = taskService.findTasksFinish(page);
+        
+        page.getResults();
     }
     
     @Test
