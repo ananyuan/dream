@@ -16,9 +16,9 @@ public interface TaskDao {
 
 	public List<Task> selectAll();
 	
-	public List<Task> findTasksFinish(Page page);
+	public List<Task> findTasksFinish(Page<?> page);
 	
-	public List<Task> findTasksTodo(@Param("page") Page page);
+	public List<Task> findTasksTodo(@Param("page") Page<?> page);
 
 	public int countAll();
 

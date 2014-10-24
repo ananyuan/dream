@@ -2,6 +2,8 @@ package com.dream.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,8 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
-    @RequestMapping(value="task")
-    public ModelAndView index(Task task){
+    @RequestMapping(value="list")
+    public ModelAndView list(Task task){
         ModelAndView mav=new ModelAndView();
         mav.setViewName("task");
         
@@ -33,15 +35,16 @@ public class TaskController {
     
     
     @RequestMapping(value="/{name}", method = RequestMethod.GET)
-	public @ResponseBody Task getTaskInJSON(@PathVariable String name) {
+	public @ResponseBody Task getTaskInJSON(@PathVariable String name, HttpSession session) {
  
+    	session.getAttribute("");
+    	
     	Task task = new Task();
     	task.setTitle("this is title");
     	task.setDescp("setDescp");
     	task.setStart(name);
  
 		return task;
- 
 	}
     
     @RequestMapping(value="/testRb", method = RequestMethod.GET)
