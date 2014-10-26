@@ -28,10 +28,8 @@ public class ChannelController {
         return mav;
     }
 	
-    
-    @RequestMapping(value="/getChannelsInJSON", method = RequestMethod.GET)
-	public @ResponseBody List<Channel> getChannelsInJSON() {
-    	
+    @RequestMapping(value="/channels", method = RequestMethod.GET)
+	public @ResponseBody List<Channel> getChannels() {
     	List<Channel> channels = channelService.selectAll();
  
 		return channels;

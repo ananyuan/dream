@@ -12,38 +12,32 @@ public class ChannelServiceImpl implements ChannelService {
 	
 	@Override
 	public int insert(Channel channel) {
-		// TODO Auto-generated method stub
-		return 0;
+		return channelDao.insert(channel);
 	}
 
 	@Override
 	public int update(Channel channel) {
-		// TODO Auto-generated method stub
-		return 0;
+		return channelDao.update(channel);
 	}
 
 	@Override
-	public int delete(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(String code) {
+		return channelDao.delete(code);
 	}
 
 	@Override
 	public List<Channel> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return channelDao.selectAll();
 	}
 
 	@Override
 	public int countAll() {
-		// TODO Auto-generated method stub
-		return 0;
+		return channelDao.countAll();
 	}
 
 	@Override
-	public Channel findChannel(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Channel findChannel(int code) {
+		return channelDao.findChannel(code);
 	}
 
 	public ChannelDao getChannelDao() {

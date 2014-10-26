@@ -3,7 +3,6 @@ package com.dream.dao;
 import java.util.List;
 
 import com.dream.model.Channel;
-import com.dream.model.User;
 
 public interface ChannelDao {
 	public int insert(Channel channel);
@@ -16,5 +15,5 @@ public interface ChannelDao {
 
 	public int countAll();
 
-	public User findChannel(int chanId);
+	public Channel findChannel(int code);
 }

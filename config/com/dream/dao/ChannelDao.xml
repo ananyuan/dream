@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.ChannelDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_channel;
+    </select>
+    
+    <select id="selectAll" resultType="com.dream.model.Channel">  
+        select * from dream_channel
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.Channel">  
+        insert into dream_channel(code,p_code,name) values(#{code},#{pCode},#{name})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Channel">  
+        update dream_channel set p_code=#{pCode},name=#{name} where code=#{code}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_channel where code=#{code}
+    </delete>
+    
+    <select id="findChannel" parameterType="int" resultType="com.dream.model.Channel">
+        select * from dream_channel where code=#{code}
+    </select>
+</mapper>

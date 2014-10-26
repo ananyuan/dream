@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dream.base.Page;
 import com.dream.model.Task;
 import com.dream.service.TaskService;
 
@@ -47,8 +48,20 @@ public class TaskController {
 		return task;
 	}
     
-    @RequestMapping(value="/testRb", method = RequestMethod.GET)
+    @RequestMapping(value="/testRb", method = RequestMethod.POST)
     public @ResponseBody Task testRb(@RequestBody Task t) {
         return t;
+    }
+    
+    @RequestMapping(value="/taskTodo", method = RequestMethod.GET)
+    public @ResponseBody List<Task> taskTodo() {
+    	Page page = new Page();
+    	return taskService.findTasksTodo(page);
+    }
+    
+    @RequestMapping(value="/taskFinish", method = RequestMethod.GET)
+    public @ResponseBody List<Task> taskFinish() {
+    	Page page = new Page();
+    	return taskService.findTasksFinish(page);
     }
 }

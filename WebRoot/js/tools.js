@@ -1,20 +1,30 @@
 
-
-function sendAjax(ajaxUrl,queryParams,async,func) {
+/**
+ * 
+ * @param ajaxUrl 请求url
+ * @param queryParams 请求参数
+ * @param queryType get/post 默认为post请求
+ * @param async 是否同步
+ * @param func 同步执行的回调函数
+ * @returns 返回值
+ */
+function sendAjax(ajaxUrl,queryParams,queryType,async,func) {
     var resultData = new Object();
     var params = jQuery.extend({}, queryParams, {expando:jQuery.expando});
     var tempasync = false;
     if (async) {
     	tempasync = async;
     }
-    ajaxUrl = ajaxUrl;
+    queryType = queryType || "post"; 
+    var jsonStr = JSON.stringify({title:'测试用户1'});
+    jsonStr = JSON.stringify(queryParams);
     jQuery.ajax({
-        type:"get",
+        type:queryType,
         url:encodeURI(ajaxUrl),
         dataType:"json",
-        contentType: 'application/json',
+        contentType: "application/json; charset=utf-8",
         mimeType: 'application/json',
-        data:params,
+        data:jsonStr,
         cache:false,
         async:tempasync,
         timeout:60000,

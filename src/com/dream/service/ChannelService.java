@@ -15,5 +15,5 @@ public interface ChannelService {
 
 	public int countAll();
 
-	public Channel findChannel(String id);
+	public Channel findChannel(int code);
 }
