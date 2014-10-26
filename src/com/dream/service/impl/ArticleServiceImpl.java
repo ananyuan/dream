@@ -43,8 +43,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> findArticlesByChannelId(Page<?> page, int channelId) {
-		return articleDao.findArticlesByChannelId(page, channelId);
+	public List<Article> findArticlesByChannelId(Page<?> page, int chanId) {
+		return articleDao.findArticlesByChannelId(page, chanId);
 	}
 
 	public ArticleDao getArticleDao() {

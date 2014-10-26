@@ -9,6 +9,10 @@ public class Article {
 	private int id;
 	private String title;
 	private String content;
+	private int chanId;
+	private String atime;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -39,6 +43,5 @@ public class Article {
 	public void setAtime(String atime) {
 		this.atime = atime;
 	}
-	private int chanId;
-	private String atime;
+
 }

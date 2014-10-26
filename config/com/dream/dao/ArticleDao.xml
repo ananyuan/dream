@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.ArticleDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_article;
+    </select>
+
+    <insert id="insert" parameterType="com.dream.model.Article">  
+        insert into dream_article(title,content,chan_id,s_atime) values(#{title},#{content},#{chan_id},#{s_atime})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Article">  
+        update dream_article set title=#{title},content=#{content},chan_id=#{chanId} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_article where id=#{id}
+    </delete>
+    
+    <select id="findArticle" parameterType="int" resultType="com.dream.model.Article">
+        select * from dream_article where id=#{id}
+    </select>
+
+    <select id="findArticles" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
+        select id, title, s_atime from dream_article order by s_atime desc
+    </select>
+
+    <select id="findArticlesByChannelId" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">
+        select id, title, s_atime from dream_article where chan_id=#{chanId} order by s_atime desc
+    </select>
+</mapper>
