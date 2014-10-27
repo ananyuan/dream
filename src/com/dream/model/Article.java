@@ -11,7 +11,8 @@ public class Article {
 	private String content;
 	private int chanId;
 	private String atime;
-	
+	private String summary;
+	private String localurl;
 	
 	public int getId() {
 		return id;
@@ -42,6 +43,18 @@ public class Article {
 	}
 	public void setAtime(String atime) {
 		this.atime = atime;
+	}
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	public String getLocalurl() {
+		return localurl;
+	}
+	public void setLocalurl(String localurl) {
+		this.localurl = localurl;
 	}
 
 }
