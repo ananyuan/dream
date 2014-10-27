@@ -7,6 +7,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.dream.base.Constant;
+import com.dream.base.Context;
 
 /**
  * 系统启动
@@ -43,7 +44,10 @@ public class StartUpListener implements ServletContextListener {
         
         System.out.println("系统初始化完毕，开始接收请求！");
         System.out.println(".........................................................");
-		
+        
+        Context.setSYSPATH(systemPath);
+        
+        Context.setWEBINF(systemPath  + "WEB-INF" + Constant.PATH_SEPARATOR);
 	}
 
 	

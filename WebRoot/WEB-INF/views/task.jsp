@@ -6,19 +6,7 @@
 	<div class="wrap-content">
 		<div class="row block">
 			<div id="main-content" class="col-2-3">
-				<div class="wrap-col">
-					<article>
-						<div class="heading">
-							<h2><a href="#">什么是JSONP</a></h2>
-						</div>
-						<div class="content">
-							<img src="images/img2.jpg" width="250px" height="100px"/>
-							<p>web客户端通过与调用脚本一模一样的方式，来调用跨域服务器上动态生成的js格式文件（一般以JSON为后缀），显而易见，服务器之所以要动态生成JSON文件，目的就在于把客户端需要的数据装入进 [...]</p>
-						</div>
-						<div class="info">
-							<p>2014-10-14 - <a href="#">01 Commnets</a></p>
-						</div>
-					</article>
+				<div id="mainArticleDiv" class="wrap-col">
 				</div>
 			</div>
 			<div id="sidebar" class="col-1-3">
@@ -60,7 +48,15 @@ jQuery(document).ready(function(){
 	showTaskTodo();
 	showTaskFinish();
 	showChannel();
+	showArticles();
 });
+
+function showArticles() {
+	var article = sendAjax("/article/articles", {}, "get");
+
+	jQuery(article.content).appendTo(jQuery("#mainArticleDiv"));	
+}
+
 
 function showTaskTodo() {
 	var tasksTodo = sendAjax("/task/taskTodo", {}, "get");
