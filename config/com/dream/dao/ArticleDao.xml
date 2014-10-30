@@ -6,7 +6,7 @@
     </select>
 
     <insert id="insert" parameterType="com.dream.model.Article">  
-        insert into dream_article(title,content,chan_id,atime,summary,localurl) values(#{title},#{content},#{chan_id},#{atime},#{summary},#{localurl})
+        insert into dream_article(title,content,chan_id,atime,summary,localurl) values(#{title},#{content},#{chanId},#{atime},#{summary},#{localurl})
     </insert>
     
     <update id="update" parameterType="com.dream.model.Article">  
