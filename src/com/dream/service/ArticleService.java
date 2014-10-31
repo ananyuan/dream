@@ -19,7 +19,7 @@ public interface ArticleService {
 
 	public int countAll();
 
-	public Article findArticle(int id);
+	public Article findArticle(String id);
 	
 	public List<Article> findArticles(Page<?> page);
 	

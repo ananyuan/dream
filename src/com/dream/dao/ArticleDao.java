@@ -17,7 +17,7 @@ public interface ArticleDao {
 
 	public int countAll();
 
-	public Article findArticle(int id);
+	public Article findArticle(String id);
 
 	public List<Article> findArticles(@Param("page") Page<?> page);
 

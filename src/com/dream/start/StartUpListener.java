@@ -28,7 +28,7 @@ public class StartUpListener implements ServletContextListener {
         String systemPath = sc.getRealPath("/");
         
         if (!systemPath.endsWith(File.separator)) {
-            systemPath += Constant.PATH_SEPARATOR;
+            systemPath += File.separator;
         }
         
         String contextPath = sc.getContextPath();
@@ -47,7 +47,7 @@ public class StartUpListener implements ServletContextListener {
         
         Context.setSYSPATH(systemPath);
         
-        Context.setWEBINF(systemPath  + "WEB-INF" + Constant.PATH_SEPARATOR);
+        Context.setWEBINF(systemPath  + "WEB-INF" + File.separator);
 	}
 
 	

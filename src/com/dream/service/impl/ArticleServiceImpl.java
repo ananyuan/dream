@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Article findArticle(int id) {
+	public Article findArticle(String id) {
 		return articleDao.findArticle(id);
 	}
 

@@ -22,8 +22,4 @@ public class Context {
 	public static void setSYSPATH(String sYSPATH) {
 		SYSPATH = sYSPATH;
 	}
-	
-	
-	
-	
 }

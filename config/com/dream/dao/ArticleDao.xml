@@ -6,18 +6,18 @@
     </select>
 
     <insert id="insert" parameterType="com.dream.model.Article">  
-        insert into dream_article(title,content,chan_id,atime,summary,localurl) values(#{title},#{content},#{chanId},#{atime},#{summary},#{localurl})
+        insert into dream_article(id, title,content,chan_id,atime,summary,localurl) values(#{id},#{title},#{content},#{chanId},#{atime},#{summary},#{localurl})
     </insert>
     
     <update id="update" parameterType="com.dream.model.Article">  
         update dream_article set title=#{title},content=#{content},chan_id=#{chanId} where id=#{id}
     </update>
     
-    <delete id="delete" parameterType="int">  
+    <delete id="delete" parameterType="String">  
         delete from dream_article where id=#{id}
     </delete>
     
-    <select id="findArticle" parameterType="int" resultType="com.dream.model.Article">
+    <select id="findArticle" parameterType="String" resultType="com.dream.model.Article">
         select * from dream_article where id=#{id}
     </select>
 
