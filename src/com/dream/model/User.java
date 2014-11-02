@@ -5,12 +5,12 @@ package com.dream.model;
  */
 public class User {
 
-	private int id;
+	private int id = 0;
 	private String username;
 	private String password;
 	private String sex;
 	private String email;
-	private int age;
+	private int age = 0;
 	public int getId() {
 		return id;
 	}

@@ -36,20 +36,25 @@ public class ArticleController {
 	private ArticleService articleService;
 	
     @RequestMapping(value="edit")
-    public ModelAndView edit(Article article){
-        ModelAndView mav=new ModelAndView();
-        mav.setViewName("article");
-        
-        if (StringUtils.isEmpty(article.getId())) {
-        	article = new Article();
-        } else {
-        	String id = article.getId();
-        	
-        	article = articleService.findArticle(id);
-        }
-        
-        mav.addObject("article",article);
-        
+    public ModelAndView edit(Article article, HttpSession session){
+    	ModelAndView mav=new ModelAndView();
+    	
+    	if (null == session.getAttribute("USER")) {
+    		mav.setViewName("login");
+    	} else {
+            mav.setViewName("article");
+            
+            if (StringUtils.isEmpty(article.getId())) {
+            	article = new Article();
+            } else {
+            	String id = article.getId();
+            	
+            	article = articleService.findArticle(id);
+            }
+            
+            mav.addObject("article",article);
+    	}
+    	
         return mav;
     }
     

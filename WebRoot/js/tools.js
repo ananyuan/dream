@@ -10,7 +10,6 @@
  */
 function sendAjax(ajaxUrl,queryParams,queryType,async,func) {
     var resultData = new Object();
-    var params = jQuery.extend({}, queryParams, {expando:jQuery.expando});
     var tempasync = false;
     if (async) {
     	tempasync = async;
