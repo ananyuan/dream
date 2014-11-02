@@ -2,37 +2,33 @@
 <jsp:include page="header.jsp" flush="true" />
 
 <!--------------Content--------------->
-<section id="content">
-	<div class="wrap-content">
-		<div class="row block">
-			<div id="main-content" class="col-2-3">
-				<div id="mainArticleDiv" class="wrap-col">
+			<div class="content paper-border">
+				<div id="mainArticleDiv" class="content-left">				
 				</div>
-			</div>
-			<div id="sidebar" class="col-1-3">
-				<div class="wrap-col">
+				<div class="content-right">
 					<div class="box">
-						<div class="heading"><h2>未完成</h2></div>
+						<div class="heading">
+							<h2>未完成</h2>
+						</div>
 						<div id="tasksTodoDiv" class="content">
 						</div>
 					</div>
 					<div class="box">
-						<div class="heading"><h2>已完成</h2></div>
+						<div class="heading">
+							<h2>已完成</h2>
+						</div>
 						<div id="tasksFinishDiv" class="content">
-							<p>申请服务器</p>
 						</div>
 					</div>					
 					<div class="box">
-						<div class="heading"><h2>Categories</h2></div>
+						<div class="heading">
+							<h2>类别</h2>
+						</div>
 						<div id="channelsDiv" class="content">
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</section>
-
 
 <script>
 
@@ -84,11 +80,10 @@ function showTaskFinish() {
 function showChannel() {
 	var channels = sendAjax("/channel/channels", {}, "get");
 
-	var channelStr = "<ul>";
+	var channelStr = "";
 	jQuery.each(channels , function (key, item) {
-		channelStr += "<li><a href='#'>"+item.name+"</a></li>";
+		channelStr += "<p>"+item.name+"</p>";
 	});
-	channelStr += "</ul>";
 	
 	jQuery(channelStr).appendTo(jQuery("#channelsDiv"));
 

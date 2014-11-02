@@ -4,16 +4,31 @@
 
 <jsp:include page="header.jsp" flush="true" />
 
-<!--------------Content--------------->
-标题  <input type="text" id="title" value="" border=1>
+<div class="content paper-border">
+
+<table width="100%">
+	<tr>
+		<td>标题</td>
+		<td><input type="text" id="title" size="80" value="" border=1></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<textarea id="editor_id" name="content" style="width:100%;height:300px;">
+			&lt;strong&gt;HTML内容&lt;/strong&gt;
+			</textarea>		
+		</td>
+	</tr>
+</table>
+
+  
 
 
-<textarea id="editor_id" name="content" style="width:100%;height:300px;">
-&lt;strong&gt;HTML内容&lt;/strong&gt;
-</textarea>
+
 
 
 <input type="button" id="submit" onclick="save()" value="保存"/>
+
+</div>
 
 <script>
 var editor;
