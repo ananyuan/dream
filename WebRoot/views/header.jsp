@@ -19,7 +19,7 @@
 			</div>
 			<div class="menu">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="/index.jsp">Home</a></li>
 					<li><a href="#">Blog</a></li>
 					<li><a href="#">Gallery</a></li>
 					<li><a href="#">About</a></li>
