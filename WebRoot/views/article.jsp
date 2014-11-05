@@ -4,7 +4,7 @@
 
 <jsp:include page="header.jsp" flush="true" />
 
-<div class="content paper-border">
+<div class="content paper-border" style="margin-bottom:20px">
 
 <table width="100%">
 	<tr>
@@ -42,14 +42,14 @@ function save() {
 	var param = {};
 	param.title = jQuery("#title").val();
 	
-	alert(editor.html());
 	param.content = editor.html();
 	param.summary = editor.text();
 	
 	sendAjax("/article/save", param);
 	
 	// 设置HTML内容
-	//editor.html('HTML内容');	
+	//editor.html('HTML内容');
+	window.location.href = "/task/list";
 }
 
 </script>

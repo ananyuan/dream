@@ -1,10 +1,15 @@
 
 <jsp:include page="header.jsp" flush="true" />
 
+
+<div style="margin:200px">
+
 帐号:<input type="text" id="username" value=""><br>  
 密码:<input type="password" id="password" value=""><br>  
+
 <input type="button" onclick="login()"  value="登录">  
 
+</div>
 
 <script>
 
@@ -23,7 +28,11 @@ function login() {
 	}
 }
 
-
+jQuery(document).ready(function(){
+	jQuery("#skin").remove();
+	jQuery(".banner").remove();
+	jQuery("#").remove();
+});
 
 </script>
   
