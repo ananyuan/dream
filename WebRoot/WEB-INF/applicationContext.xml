@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/dream?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value=""></property>
+    </bean>
+    
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" /> 
+    </bean>
+    
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:MyBatis-Configuration.xml"></property>
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+
+    <!-- bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+         <property name="mapperInterface" value="com.dream.dao.UserDao"></property>
+         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean-->
+    
+    <bean id="userService" class="com.dream.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>
+    
+    <bean id="taskService" class="com.dream.service.impl.TaskServiceImpl">
+        <property name="taskDao" ref="taskDao"></property>
+    </bean>
+    
+    <bean id="articleService" class="com.dream.service.impl.ArticleServiceImpl">
+        <property name="articleDao" ref="articleDao"></property>
+    </bean>
+
+    <bean id="channelService" class="com.dream.service.impl.ChannelServiceImpl">
+        <property name="channelDao" ref="channelDao"></property>
+    </bean>    
+    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.dream.dao" />
+    </bean>
+
+    
+    <bean id="crawlService" class="com.dream.service.impl.CrawlServiceImpl"/>  
+    <!-- 配置一个Job -->  
+    <bean id="crawlJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+        <property name="jobClass" value="com.dream.quartz.job.CrawlJob"/>  
+        <property name="jobDataAsMap">  
+            <map>  
+                <entry key="crawlService" value-ref="crawlService"></entry>  
+            </map>  
+        </property>  
+    </bean>  
+      
+    <!-- 简单的触发器 -->  
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">  
+        <property name="jobDetail">  
+            <ref bean="crawlJob"/>  
+        </property>  
+        <property name="startDelay">  
+            <value>6000</value>  
+        </property>  
+        <property name="repeatInterval">  
+            <value>6000</value>       
+        </property>  
+    </bean>  
+      
+    <!--复杂的触发器 -->  
+    <bean id="complexTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail">  
+            <ref bean="crawlJob"/>  
+        </property>  
+        <property name="cronExpression">  
+            <!-- <value>0 0/1 * * * ?</value> -->  
+            <value>0 8 * * * ?</value>  
+        </property>  
+    </bean>  
+      
+    <!-- spring触发工厂 -->  
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                <ref bean="complexTrigger"/>  
+            </list>  
+        </property>  
+    </bean>      
+    
+</beans>
