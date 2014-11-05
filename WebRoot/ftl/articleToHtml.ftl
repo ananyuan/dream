@@ -3,9 +3,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>dream</title>
 	
-	<link rel="stylesheet" href="/css/dream.css">
+	<link rel="stylesheet" href="/css/dream-red.css">
     
     <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>
 </head>
 

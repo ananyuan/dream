@@ -119,3 +119,25 @@ function StrToJson(strData) {
 		return {};
 	}
 };
+
+
+function switchSkin(skinName){
+	jQuery("#" + skinName).addClass("selected").siblings().removeClass("selected");
+	jQuery("#cssfile").attr("href", "/css/" + skinName + ".css");
+	jQuery.cookie("MyCssSkin", skinName, { path: '/', expires: 10 });
+}
+
+/**
+ * 初始化的工作
+ */
+jQuery(document).ready(function(){
+	var cookie_skin = jQuery.cookie("MyCssSkin");
+    if (cookie_skin) {
+        switchSkin(cookie_skin);
+    }
+
+    var $li = jQuery("#skinul li");
+    $li.click(function () {
+        switchSkin(this.id);
+    });
+});

@@ -6,7 +6,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.dream.base.Constant;
 import com.dream.base.Context;
 
 /**
@@ -48,6 +47,10 @@ public class StartUpListener implements ServletContextListener {
         Context.setSYSPATH(systemPath);
         
         Context.setWEBINF(systemPath  + "WEB-INF" + File.separator);
+        
+        //系统启动项
+        InitLogger.start(Context.getWEBINF());
+        
 	}
 
 	

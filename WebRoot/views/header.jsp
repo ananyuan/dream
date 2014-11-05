@@ -3,15 +3,28 @@
 	<meta charset="utf-8">
 	<title>dream</title>
 	
-	<link rel="stylesheet" href="/css/dream.css">
-    
+	<link id="cssfile" rel="stylesheet" href="/css/dream-red.css">
     
     <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>
 </head>
 
+<script>
+
+
+</script>
+
 <body>
 	 <div class="paper">
+		<div id="skin" style="border:1px">
+			<ul id="skinul">
+				<li id="dream-blue" title="蓝色" style="background-color:blue">蓝</li>
+				<li id="dream-red" title="红色" style="background-color:red">红</li>
+				<li id="dream-green" title="绿色" style="background-color:green">绿</li>
+				<li id="dream-gray" title="灰色" style="background-color:gray">灰</li>
+			</ul>
+		</div>
 		<div class="banner paper-border">
 			<div>
 				<h1>DREAM</h1>
