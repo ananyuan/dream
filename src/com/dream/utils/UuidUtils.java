@@ -1,6 +1,8 @@
-package com.dream.base;
+package com.dream.utils;
 
 import org.apache.commons.codec.binary.Base64;
+
+import com.dream.base.Base58;
 
 import java.nio.ByteBuffer;
 import java.util.UUID;

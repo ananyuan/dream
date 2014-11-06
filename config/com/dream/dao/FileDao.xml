@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.FileDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_file;
+    </select>
+
+    <insert id="insert" parameterType="com.dream.model.FileBean">  
+        insert into dream_file(id, name,disname,mtype,fsize,path,dataid,atime) values(#{id},#{name},#{disname},#{mtype},#{fsize},#{path},#{dataid},#{atime})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.FileBean">  
+        update dream_file set name=#{name},disname=#{disname} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_file where id=#{id}
+    </delete>
+    
+    <select id="findFile" parameterType="String" resultType="com.dream.model.FileBean">
+        select * from dream_file where id=#{id}
+    </select>
+
+    <select id="findFiles" resultType="com.dream.model.FileBean" parameterType="String">  
+        select id, name,disname,mtype,fsize,path,dataid,atime from dream_file where dataid=#{dataid} order by atime desc
+    </select>
+</mapper>

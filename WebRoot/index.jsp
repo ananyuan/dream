@@ -50,7 +50,7 @@ jQuery(document).ready(function(){
 function showArticles() {
 	var article = sendAjax("/article/articles", {}, "get");
 
-	jQuery(article.content).appendTo(jQuery("#mainArticleDiv"));	
+	jQuery(article._DATA_).appendTo(jQuery("#mainArticleDiv"));	
 }
 
 

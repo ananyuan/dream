@@ -12,5 +12,6 @@
         <mapper resource="com/dream/dao/TaskDao.xml"/>
         <mapper resource="com/dream/dao/ChannelDao.xml"/>
         <mapper resource="com/dream/dao/ArticleDao.xml"/>
+        <mapper resource="com/dream/dao/FileDao.xml"/>
     </mappers>
 </configuration>

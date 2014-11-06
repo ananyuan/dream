@@ -44,7 +44,11 @@
 
     <bean id="channelService" class="com.dream.service.impl.ChannelServiceImpl">
         <property name="channelDao" ref="channelDao"></property>
-    </bean>    
+    </bean>
+
+    <bean id="fileService" class="com.dream.service.impl.FileServiceImp">
+        <property name="fileDao" ref="fileDao"></property>
+    </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.dream.dao" />
@@ -82,7 +86,7 @@
         </property>  
         <property name="cronExpression">  
             <!-- <value>0 0/1 * * * ?</value> -->  
-            <value>0 8 * * * ?</value>  
+            <value>0 0 * * * ?</value>  
         </property>  
     </bean>  
       

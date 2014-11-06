@@ -21,12 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Constant;
 import com.dream.base.Context;
-import com.dream.base.DateUtils;
 import com.dream.base.Page;
-import com.dream.base.UuidUtils;
 import com.dream.model.Article;
 import com.dream.service.ArticleService;
+import com.dream.utils.DateUtils;
 import com.dream.utils.FreeMarkerUtils;
+import com.dream.utils.UuidUtils;
 
 @Controller
 @RequestMapping("/article")
@@ -115,7 +115,8 @@ public class ArticleController {
 	}
     
     @RequestMapping(value="/articles", method = RequestMethod.GET)
-	public @ResponseBody Article getChannels() {
+	public @ResponseBody Map<String, Object> getArticles(HttpSession session) {
+    	Map<String, Object> rtnMap = new HashMap<String, Object>();
     	Page<?> page = new Page();  //获取第一页的数据
     	List<Article> articles = articleService.findArticles(page);
     	
@@ -126,11 +127,12 @@ public class ArticleController {
     	
     	String articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
  
-    	Article article = new Article();
+    	if (null == session.getAttribute("USER")) {
+    		rtnMap.put("_SESSION_", session.getAttribute("USER"));
+    	} 
+    	rtnMap.put("_DATA_", articlesHtml);
     	
-    	article.setContent(articlesHtml);
-    	
-		return article;
+		return rtnMap;
 	}
     
     

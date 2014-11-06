@@ -1,4 +1,4 @@
-package com.dream.base;
+package com.dream.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
