@@ -35,8 +35,8 @@
 					<li><a href="/index.jsp">Home</a></li>
 					<li><a href="#">Blog</a></li>
 					<li><a href="#">Gallery</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
+					<li><a href="/views/about.jsp">About</a></li>
+					<li><a href="/views/contact.jsp">Contact</a></li>
 				</ul>
 			</div>
 		</div>

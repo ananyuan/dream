@@ -4,8 +4,8 @@
 
 <div style="margin:200px">
 
-帐号:<input type="text" id="username" value=""><br>  
-密码:<input type="password" id="password" value=""><br>  
+帐号:<input type="text" id="username" value="admin"><br>  
+密码:<input type="password" id="password" value="123456"><br>  
 
 <input type="button" onclick="login()"  value="登录">  
 

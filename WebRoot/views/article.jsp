@@ -3,21 +3,34 @@
 <script charset="utf-8" src="/js/editor/lang/zh_CN.js"></script>
 
 <jsp:include page="header.jsp" flush="true" />
+<%@ page import="com.dream.model.Article" %>
+
+<% 
+Article article;
+if (null != request.getAttribute("article")) {
+	article = (Article)request.getAttribute("article");	
+} else {
+	article = new Article();
+}
+
+%>
+
 
 <div class="content paper-border" style="margin-bottom:20px">
 
 <table width="100%">
 	<tr>
 		<td>标题</td>
-		<td><input type="text" id="title" size="80" value="" border=1></td>
+		<td><input type="text" id="title" size="80" value="<%=article.getTitle()%>" border=1></td>
 	</tr>
 	<tr>
 		<td colspan="2">
 			<textarea id="editor_id" name="content" style="width:100%;height:300px;">
-			&lt;strong&gt;HTML内容&lt;/strong&gt;
+			<%=article.getContent()%>
 			</textarea>		
 		</td>
 	</tr>
+	<input type="hidden" id ="id" value="<%=article.getId()%>">
 </table>
 
   
@@ -41,6 +54,7 @@ KindEditor.ready(function(K) {
 function save() {
 	var param = {};
 	param.title = jQuery("#title").val();
+	param.id = jQuery("#id").val();
 	
 	param.content = editor.html();
 	param.summary = editor.text();

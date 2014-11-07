@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -35,8 +36,8 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-    @RequestMapping(value="edit")
-    public ModelAndView edit(Article article, HttpSession session){
+    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable String id, HttpSession session){
     	ModelAndView mav=new ModelAndView();
     	
     	if (null == session.getAttribute("USER")) {
@@ -44,13 +45,8 @@ public class ArticleController {
     	} else {
             mav.setViewName("article");
             
-            if (StringUtils.isEmpty(article.getId())) {
-            	article = new Article();
-            } else {
-            	String id = article.getId();
-            	
-            	article = articleService.findArticle(id);
-            }
+            
+            Article	article = articleService.findArticle(id);
             
             mav.addObject("article",article);
     	}
@@ -62,11 +58,14 @@ public class ArticleController {
 	public @ResponseBody Article save(@RequestBody Article article) {
     	
     	String id = article.getId();
+    	boolean addFlag = false;
     	if (StringUtils.isEmpty(id)) {
     		id = UuidUtils.base58Uuid();
     		article.setId(id);
     		
     		article.setAtime(DateUtils.getDatetime());
+    		
+    		addFlag = true;
     	}
     	
     	if (!StringUtils.isEmpty(article.getSummary())) {
@@ -83,7 +82,11 @@ public class ArticleController {
     	
     	article.setLocalurl(localurl);
     	
-    	articleService.insert(article);
+    	if (addFlag) {
+    		articleService.insert(article);	
+    	} else {
+    		articleService.update(article);
+    	}
     	
     	//根据模板生成文件
     	Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -115,21 +118,35 @@ public class ArticleController {
 	}
     
     @RequestMapping(value="/articles", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getArticles(HttpSession session) {
+	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
-    	Page<?> page = new Page();  //获取第一页的数据
+    	
+    	
+    	Page page;
+    	if (null == request.getAttribute("_PAGE_")) {
+    		page = new Page();  //获取第一页的数据
+    	} else {
+    		page = (Page)request.getAttribute("_PAGE_");
+    	}
+    	
     	List<Article> articles = articleService.findArticles(page);
     	
     	Map<String, Object> dataMap = new HashMap<String, Object>();
     	dataMap.put("articles", articles);
+    	dataMap.put("_PAGE_", page);
+    	
+    	if (null != session.getAttribute("USER")) {
+    		rtnMap.put("_SESSION_", session.getAttribute("USER"));
+    		
+    		dataMap.put("canEdit", true);
+    	} 
+    	
     	
     	String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
     	
     	String articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
  
-    	if (null == session.getAttribute("USER")) {
-    		rtnMap.put("_SESSION_", session.getAttribute("USER"));
-    	} 
+
     	rtnMap.put("_DATA_", articlesHtml);
     	
 		return rtnMap;
