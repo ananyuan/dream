@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
 });
 
 function showArticles() {
-	var article = sendAjax("/article/articles", {}, "get");
+	var article = sendAjax("/article/articles", {}, "post");
 
 	jQuery(article._DATA_).appendTo(jQuery("#mainArticleDiv"));	
 }

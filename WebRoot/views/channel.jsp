@@ -6,19 +6,7 @@
 
 <script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 
-<%@ page import="com.dream.model.Task" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 
-<% 
-List<Task> tasks;
-if (null != request.getAttribute("allTask")) {
-	tasks = (List<Task>)request.getAttribute("allTask");	
-} else {
-	tasks = new ArrayList<Task>();
-}
-
-%>
 
 
 <div class="content paper-border" style="margin-bottom:20px">
@@ -28,7 +16,6 @@ if (null != request.getAttribute("allTask")) {
 		<tr>
 			<th>标题</th>
 			<th>说明</th>
-			<th>状态</th>
 			<th>开始时间</th>
 			<th>结束时间</th>
 			<th>操作</th>
@@ -36,19 +23,15 @@ if (null != request.getAttribute("allTask")) {
 	</thead>
 	<tbody>
 	
-	<% for (Task task: tasks) {%>
+	
 		<tr class="odd gradeX">
-			<td><%= task.getTitle()%></td>
-			<td><%= task.getDescp()%></td>
-			<td><%= task.getType()%></td>
-			<td class="center"><%= task.getStart()%></td>
-			<td class="center"><%= task.getEnd()%></td>
-			<td class="center">
-				<a href="#" onclick="edit(<%= task.getId()%>)">编辑</a>
-				<a href="#" onclick="remove(<%= task.getId()%>)">删除</a>
-			</td>
+			<td>标题</td>
+			<td>说明</td>
+			<td class="center">开始时间</td>
+			<td class="center">结束时间</td>
+			<td class="center">编辑</td>
 		</tr>
-	<% } %>	
+		
 	</tbody>
 </table>
 
@@ -64,13 +47,4 @@ $(document).ready(function(){
     	"bInfo": false,//页脚信息
     });
 });
-
-function edit(id) {
-	window.location.href = "/task/edit/" + id;
-}
-
-function remove(id) {
-	
-}
-
 </script>

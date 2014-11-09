@@ -3,8 +3,8 @@ h1 a, h2 a, h3 a{color: #474747; text-decoration: none;}
 .paper-border{margin:30px 30px 0px 30px;}
 .paper{width:84%;display: inline-block;background-color: #FFFFFF;margin-top:30px;overflow:hidden;}
 .banner{background-color: blue;text-algin:center;overflow: auto;}
-.banner>p{color:#000000;}
-.banner>h1{color:#000000;}
+.banner p{color:#FFFFFF;}
+.banner h1{color:#FFFFFF;}
 
 .menu {background-color: blue;}
 .menu ul {list-style: none;margin: 0;padding: 0;}
@@ -26,6 +26,13 @@ h1 a, h2 a, h3 a{color: #474747; text-decoration: none;}
 .content .box .heading { padding:5px; text-align: center;}
 .content .box .heading h2{display:inline; padding:0 10px;}		
 .content .box .content {text-align: left;}		
+
+#page {padding-bottom:20px;margin-bottom:20px;}
+.page {float:right;}
+.page span {padding-left: 4px;padding-right: 4px;}
+.page a {text-decoration: none;}
+.page .select {background-color:blue;}
+.page .normal {background-color:gray;}
 
 #skinul { 
 	float:right; 

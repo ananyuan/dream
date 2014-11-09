@@ -6,9 +6,9 @@ package com.dream.model;
  *
  */
 public class Article {
-	private String id;
-	private String title;
-	private String content;
+	private String id = "";
+	private String title = "";
+	private String content = "";
 	private int chanId;
 	private String atime;
 	private String summary;

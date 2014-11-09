@@ -32,11 +32,10 @@
 			</div>
 			<div class="menu">
 				<ul>
-					<li><a href="/index.jsp">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li><a href="#">Blog</a></li>
-					<li><a href="#">Gallery</a></li>
+					<li><a href="/task/timeline">TimeLine</a></li>
 					<li><a href="/views/about.jsp">About</a></li>
-					<li><a href="/views/contact.jsp">Contact</a></li>
 				</ul>
 			</div>
 		</div>

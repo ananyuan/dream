@@ -34,6 +34,52 @@ public class TaskController {
         return mav;
     }
     
+    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable String id, HttpSession session){
+    	ModelAndView mav=new ModelAndView();
+    	
+    	if (null == session.getAttribute("USER")) {
+    		mav.setViewName("login");
+    	} else {
+            mav.setViewName("taskEdit");
+            
+            if (id.equals("_ADD_")) {
+            	mav.addObject("task", new Task());
+            } else {
+            	Task task = taskService.findTask(Integer.parseInt(id));
+                
+                mav.addObject("task",task);
+            }
+    	}
+    	
+        return mav;
+    }    
+    
+    
+    @RequestMapping(value="/save", method = RequestMethod.POST)
+	public @ResponseBody Task save(@RequestBody Task task) {
+    	int id = task.getId();
+    	
+    	if (id > 0) {
+    		taskService.update(task);
+    	} else {
+    		taskService.insert(task);
+    	}
+    	
+    	return task;
+    }	
+    
+    @RequestMapping(value="timeline")
+    public ModelAndView timeline(){
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("timeline");
+        
+        List<Task> tasks = taskService.selectAll();
+        mav.addObject("allTask",tasks);
+        
+        return mav;
+    }
+    
     
     @RequestMapping(value="/{name}", method = RequestMethod.GET)
 	public @ResponseBody Task getTaskInJSON(@PathVariable String name, HttpSession session) {

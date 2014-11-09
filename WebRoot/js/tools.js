@@ -14,9 +14,8 @@ function sendAjax(ajaxUrl,queryParams,queryType,async,func) {
     if (async) {
     	tempasync = async;
     }
-    queryType = queryType || "post"; 
-    var jsonStr = JSON.stringify({title:'测试用户1'});
-    jsonStr = JSON.stringify(queryParams);
+    queryType = queryType || "POST";
+    var jsonStr = JSON.stringify(queryParams);
     jQuery.ajax({
         type:queryType,
         url:encodeURI(ajaxUrl),
@@ -24,6 +23,54 @@ function sendAjax(ajaxUrl,queryParams,queryType,async,func) {
         contentType: "application/json; charset=utf-8",
         mimeType: 'application/json',
         data:jsonStr,
+        cache:false,
+        async:tempasync,
+        timeout:60000,
+        success:function(data) {
+            resultData = {};
+            resultData = data;
+            if (typeof data === "string") {//判断返回数据类型
+                resultData = jQuery.parseJSON(data);
+            }
+            
+            if(func) {
+            	func.call(this, resultData);
+            }
+        },
+        error:function(err) {
+            resultData = {};
+            resultData.exception = err;
+            resultData.msg = err.responseText || "error";
+            
+            throw new Error(resultData.msg);
+        }
+    });
+    
+    return resultData;
+};
+
+
+/**
+ * 
+ * @param ajaxUrl 请求url
+ * @param queryParams 请求参数
+ * @param queryType get/post 默认为post请求
+ * @param async 是否同步
+ * @param func 同步执行的回调函数
+ * @returns 返回值
+ */
+function sendAjaxParam(ajaxUrl,queryParams,queryType,async,func) {
+    var resultData = new Object();
+    var tempasync = false;
+    if (async) {
+    	tempasync = async;
+    }
+    queryType = queryType || "post"; 
+    jQuery.ajax({
+        type:queryType,
+        url:encodeURI(ajaxUrl),
+        dataType:"json",
+        data:queryParams,
         cache:false,
         async:tempasync,
         timeout:60000,
@@ -121,6 +168,19 @@ function StrToJson(strData) {
 };
 
 
+function goPage(pageNum) {
+	var page = {};
+	page["pageNo"] = pageNum;
+	
+	var param = {};
+	param._PAGE_ = JSON.stringify(page);
+	
+	var article = sendAjaxParam("/article/articles", param);
+	
+	jQuery("#mainArticleDiv").html(article._DATA_);
+}
+
+
 function switchSkin(skinName){
 	jQuery("#" + skinName).addClass("selected").siblings().removeClass("selected");
 	jQuery("#cssfile").attr("href", "/css/" + skinName + ".css");
@@ -141,3 +201,5 @@ jQuery(document).ready(function(){
         switchSkin(this.id);
     });
 });
+
+

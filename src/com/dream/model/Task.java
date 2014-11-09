@@ -7,10 +7,10 @@ package com.dream.model;
  * 
  */
 public class Task {
-	private int id;
-	private String title;
-	private String descp;
-	private int ttype;
+	private int id = 0;
+	private String title = "";
+	private String descp = "";
+	private int ttype = 1;
 	private String start;
 	private String endTime;
 

@@ -63,7 +63,7 @@ function save() {
 	
 	// 设置HTML内容
 	//editor.html('HTML内容');
-	window.location.href = "/task/list";
+	window.location.href = "/";
 }
 
 </script>

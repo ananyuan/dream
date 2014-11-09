@@ -25,6 +25,7 @@ import com.dream.base.Context;
 import com.dream.base.Page;
 import com.dream.model.Article;
 import com.dream.service.ArticleService;
+import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
 import com.dream.utils.FreeMarkerUtils;
 import com.dream.utils.UuidUtils;
@@ -45,10 +46,13 @@ public class ArticleController {
     	} else {
             mav.setViewName("article");
             
-            
-            Article	article = articleService.findArticle(id);
-            
-            mav.addObject("article",article);
+            if (id.equals("_ADD_")) {
+            	mav.addObject("article", new Article());
+            } else {
+            	Article	article = articleService.findArticle(id);
+                
+                mav.addObject("article",article);
+            }
     	}
     	
         return mav;
@@ -117,18 +121,18 @@ public class ArticleController {
     	return articleService.findArticle(id);
 	}
     
-    @RequestMapping(value="/articles", method = RequestMethod.GET)
+    @RequestMapping(value="/articles", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
     	
-    	
+    	HashMap<String, Object> params = CommUtils.getParams(request);
     	Page page;
-    	if (null == request.getAttribute("_PAGE_")) {
+    	if (null == params.get("_PAGE_")) {
     		page = new Page();  //获取第一页的数据
     	} else {
-    		page = (Page)request.getAttribute("_PAGE_");
+    		page = CommUtils.getPage(String.valueOf(params.get("_PAGE_")));
     	}
-    	
+    	request.getParameterNames();
     	List<Article> articles = articleService.findArticles(page);
     	
     	Map<String, Object> dataMap = new HashMap<String, Object>();

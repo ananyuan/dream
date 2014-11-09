@@ -22,7 +22,7 @@ function login() {
 	var user = sendAjax("/user/authenticate", param);
 	
 	if (user && user.username && user.username.length > 0) {
-		window.location.href = "/task/list";
+		window.location.href = "/";
 	} else {
 		alert("用户名密码错误");
 	}

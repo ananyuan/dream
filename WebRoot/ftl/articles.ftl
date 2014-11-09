@@ -16,21 +16,25 @@
 	</div>	
 </#list>
 
-<div id="page" style="float:right">
-	<div style="float:right;padding:4px" id="nextPage"><a href="#">下一页</a></div>
-	<div style="float:right">
+<div id="page" >
+	<#assign nowPage= _PAGE_.pageNo>
+	<#if _PAGE_.pageNo < _PAGE_.totalPage>	
+		<div class="page" id="nextPage"><span><a style="text-decoration: none;" href="#" onclick="goPage(${nowPage + 1})">下一页</a></span></div>
+	</#if>
+	<div class="page">
 		<#assign count= _PAGE_.totalPage>
 		<#list 1..count as i>
-			<#if i==_PAGE_.pageNo>
-				<span style="background-color:green;padding:4px" class="nowPage"><a href="#">${i}</a></span>
+			<#if i==nowPage>
+				<span class="select"><a href="#">${i}</a></span>
 			<#else>
-				<span style="background-color:gray;padding:4px"><a href="#">${i}</a></span>
+				<span class="normal"><a href="#" onclick="goPage(${i})">${i}</a></span>
 			</#if>
 		</#list>
 	</div>
-	<div style="float:right;padding:4px" id="prePage"><a href="#">上一页</a></div>
+	<#if _PAGE_.pageNo != 1>
+		<div class="page" id="prePage"><span><a style="text-decoration: none;" href="#" onclick="goPage(${nowPage - 1})">上一页</a></span></div>
+	</#if>
 </div>
-
 
 
 
