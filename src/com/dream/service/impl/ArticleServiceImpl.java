@@ -46,6 +46,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Article> findArticlesByChannelId(Page<?> page, int chanId) {
 		return articleDao.findArticlesByChannelId(page, chanId);
 	}
+	
+	@Override
+	public List<Article> findArticles(String lasttime) {
+		return articleDao.findNewArticles(lasttime);
+	}
 
 	public ArticleDao getArticleDao() {
 		return articleDao;

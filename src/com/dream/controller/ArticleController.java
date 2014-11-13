@@ -113,14 +113,6 @@ public class ArticleController {
 		return article;
 	}
     
-	
-    
-    @RequestMapping(value="/{name}", method = RequestMethod.GET)
-	public @ResponseBody Article getArticleInJSON(@PathVariable String id, HttpSession session) {
- 
-    	return articleService.findArticle(id);
-	}
-    
     @RequestMapping(value="/articles", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
@@ -156,6 +148,18 @@ public class ArticleController {
 		return rtnMap;
 	}
     
+	
     
+    @RequestMapping(value="/{name}", method = RequestMethod.GET)
+	public @ResponseBody Article getArticleInJSON(@PathVariable String id, HttpSession session) {
+ 
+    	return articleService.findArticle(id);
+	}
+    
+    
+    @RequestMapping(value="/list/{lasttime}", method = RequestMethod.GET)
+	public @ResponseBody List<Article> getArticlesInJSON(@PathVariable String lasttime) {
+    	return articleService.findArticles(lasttime);
+	}
     
 }

@@ -21,6 +21,8 @@ public interface ArticleService {
 
 	public Article findArticle(String id);
 	
+	public List<Article> findArticles(String lasttime);
+	
 	public List<Article> findArticles(Page<?> page);
 	
 	public List<Article> findArticlesByChannelId(Page<?> page, int channelId);

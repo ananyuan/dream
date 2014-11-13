@@ -18,6 +18,8 @@ public interface ArticleDao {
 	public int countAll();
 
 	public Article findArticle(String id);
+	
+	public List<Article> findNewArticles(String atime);
 
 	public List<Article> findArticles(@Param("page") Page<?> page);
 

@@ -54,7 +54,7 @@ public class FreeMarkerUtils {
     	String ftlContent = "";
     	
     	try {
-    		ftlContent = FileUtils.readFileToString(new File(filePath + fileName));
+    		ftlContent = FileUtils.readFileToString(new File(filePath + fileName), "UTF-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

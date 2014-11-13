@@ -21,6 +21,10 @@
         select * from dream_article where id=#{id}
     </select>
 
+    <select id="findNewArticles" parameterType="String" resultType="com.dream.model.Article">  
+        select id,title,atime,summary,localurl from dream_article where atime > #{atime} order by atime desc
+    </select>
+    
     <select id="findArticles" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
         select id,title,chan_id,atime,summary,localurl from dream_article order by atime desc
     </select>
