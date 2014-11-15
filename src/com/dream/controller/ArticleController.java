@@ -150,7 +150,7 @@ public class ArticleController {
     
 	
     
-    @RequestMapping(value="/{name}", method = RequestMethod.GET)
+    @RequestMapping(value="/id/{id}", method = RequestMethod.GET)
 	public @ResponseBody Article getArticleInJSON(@PathVariable String id, HttpSession session) {
  
     	return articleService.findArticle(id);
@@ -161,5 +161,4 @@ public class ArticleController {
 	public @ResponseBody List<Article> getArticlesInJSON(@PathVariable String lasttime) {
     	return articleService.findArticles(lasttime);
 	}
-    
 }
