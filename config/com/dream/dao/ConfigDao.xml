@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.ConfigDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_config;
+    </select>
+
+    <insert id="insert" parameterType="com.dream.model.Config">  
+        insert into dream_config(id,confkey,confvalue) values(#{id},#{confkey},#{confvalue})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Config">  
+        update dream_config set confkey=#{confkey},confvalue=#{confvalue} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_config where id=#{id}
+    </delete>
+    
+    <select id="findConfig" parameterType="String" resultType="com.dream.model.Config">
+        select * from dream_config where id=#{id}
+    </select>
+    
+    <select id="findConfigs" resultType="com.dream.model.Config">  
+        select * from dream_config
+    </select>
+</mapper>

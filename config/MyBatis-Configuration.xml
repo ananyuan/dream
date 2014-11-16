@@ -13,5 +13,6 @@
         <mapper resource="com/dream/dao/ChannelDao.xml"/>
         <mapper resource="com/dream/dao/ArticleDao.xml"/>
         <mapper resource="com/dream/dao/FileDao.xml"/>
+        <mapper resource="com/dream/dao/ConfigDao.xml"/>
     </mappers>
 </configuration>

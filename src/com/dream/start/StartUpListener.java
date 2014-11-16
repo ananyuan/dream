@@ -50,13 +50,12 @@ public class StartUpListener implements ServletContextListener {
         
         //系统启动项
         InitLogger.start(Context.getWEBINF());
-        
 	}
 
 	
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		
+		CacheMgr.shutdown();
 	}
 }

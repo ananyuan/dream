@@ -8,6 +8,8 @@ import org.apache.commons.lang.time.StopWatch;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.dream.base.Constant;
+
 public class FileMgr {
 	
 	private static Log log = LogFactory.getLog(FileMgr.class);
@@ -15,7 +17,13 @@ public class FileMgr {
 	
 	public static String getFilePath(String cat, String fileId) {
 		
-		String filePath = "D:/temp/" + cat + File.separator + fileId;
+		String rootpath = ConfigUtils.getConf(Constant.FILE_PATH);
+		
+		if (!rootpath.endsWith("/") && !rootpath.endsWith("\\")) {
+			rootpath = rootpath + File.separator;
+		}
+		
+		String filePath = rootpath + cat + File.separator + fileId;
 		
 		return filePath;
 	}
