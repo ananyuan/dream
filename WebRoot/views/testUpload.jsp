@@ -14,7 +14,7 @@
 
 <div id="container">
     <a id="pickfiles" href="javascript:;">[Select files]</a> 
-    <a id="uploadfiles" href="javascript:;">[Upload files]</a>
+    <!-- a id="uploadfiles" href="javascript:;">[Upload files]</a-->
 </div>
 
 <br />

@@ -13,6 +13,7 @@ public class Article {
 	private String atime;
 	private String summary;
 	private String localurl;
+	private String imgids = "";
 	
 	public String getId() {
 		return id;
@@ -55,6 +56,12 @@ public class Article {
 	}
 	public void setLocalurl(String localurl) {
 		this.localurl = localurl;
+	}
+	public String getImgids() {
+		return imgids;
+	}
+	public void setImgids(String imgids) {
+		this.imgids = imgids;
 	}
 
 }

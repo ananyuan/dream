@@ -1,9 +1,15 @@
+<jsp:include page="header.jsp" flush="true" />
+<%@ page import="com.dream.model.Article" %>
+
 <link rel="stylesheet" href="/css/editor/editor.css" />
 <script charset="utf-8" src="/js/editor/kindeditor.js"></script>
 <script charset="utf-8" src="/js/editor/lang/zh_CN.js"></script>
 
-<jsp:include page="header.jsp" flush="true" />
-<%@ page import="com.dream.model.Article" %>
+<script type="text/javascript" src="/js/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/plupload/jquery.plupload.queue/jquery.plupload.queue.min.js"></script>
+<script type="text/javascript" src="/js/plupload/i18n/zh_CN.js"></script>
+
+<script type="text/javascript" src="/js/upload.js"></script>
 
 <% 
 Article article;
@@ -30,7 +36,19 @@ if (null != request.getAttribute("article")) {
 			</textarea>		
 		</td>
 	</tr>
+	<tr>
+		<td>选择图片</td>
+		<td>
+			<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+			<br />
+			
+			<div id="container">
+			    <a id="pickfiles" href="javascript:;">[Select files]</a>
+			</div>		
+		</td>
+	</tr>	
 	<input type="hidden" id ="id" value="<%=article.getId()%>">
+	<input type="hidden" id ="imgids" value="<%=article.getImgids()%>">
 </table>
 
   
@@ -55,6 +73,7 @@ function save() {
 	var param = {};
 	param.title = jQuery("#title").val();
 	param.id = jQuery("#id").val();
+	param.imgids = jQuery("#imgids").val();
 	
 	param.content = editor.html();
 	param.summary = editor.text();
@@ -64,6 +83,23 @@ function save() {
 	// 设置HTML内容
 	//editor.html('HTML内容');
 	window.location.href = "/";
+}
+
+
+function handleFileInfo(info) {
+	var fileId = info.response;
+	
+	//更新imgids
+	var oldImgids = jQuery("#imgids").val();
+	if (oldImgids.length > 0) {
+		oldImgids += ",";
+	}
+	jQuery("#imgids").val(oldImgids + fileId);
+	
+	//图片插入
+	var imgHtml = "<img src='/file/"+info.response+"'/>";
+	
+	editor.insertHtml(imgHtml);
 }
 
 </script>

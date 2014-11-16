@@ -47,7 +47,9 @@ public class ArticleController {
             mav.setViewName("article");
             
             if (id.equals("_ADD_")) {
-            	mav.addObject("article", new Article());
+            	Article article = new Article();
+            	article.setId(UuidUtils.base58Uuid());
+            	mav.addObject("article", article);
             } else {
             	Article	article = articleService.findArticle(id);
                 
@@ -60,12 +62,8 @@ public class ArticleController {
     
     @RequestMapping(value="/save", method = RequestMethod.POST)
 	public @ResponseBody Article save(@RequestBody Article article) {
-    	
-    	String id = article.getId();
     	boolean addFlag = false;
-    	if (StringUtils.isEmpty(id)) {
-    		id = UuidUtils.base58Uuid();
-    		article.setId(id);
+    	if (StringUtils.isEmpty(article.getAtime())) { //添加时间为空， 则为添加
     		
     		article.setAtime(DateUtils.getDatetime());
     		
@@ -85,6 +83,8 @@ public class ArticleController {
     	String localurl = Constant.PATH_SEPARATOR + "html" + Constant.PATH_SEPARATOR  + "article" + Constant.PATH_SEPARATOR + article.getId() + ".html";
     	
     	article.setLocalurl(localurl);
+    	
+    	article.setSummary(CommUtils.getText(article.getSummary()));
     	
     	if (addFlag) {
     		articleService.insert(article);	
@@ -112,8 +112,8 @@ public class ArticleController {
     	
 		return article;
 	}
-    
-    @RequestMapping(value="/articles", method = RequestMethod.POST)
+
+	@RequestMapping(value="/articles", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
     	

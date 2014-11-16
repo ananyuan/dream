@@ -50,10 +50,15 @@
         <property name="fileDao" ref="fileDao"></property>
     </bean>
     
+    <bean id="configService" class="com.dream.service.impl.ConfigServiceImpl">
+        <property name="configDao" ref="configDao"></property>
+    </bean>
+    
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.dream.dao" />
     </bean>
 
+    <bean id="springContextUtil" class="com.dream.utils.SpringContextUtil" scope="singleton" />
     
     <bean id="crawlService" class="com.dream.service.impl.CrawlServiceImpl"/>  
     <!-- 配置一个Job -->  

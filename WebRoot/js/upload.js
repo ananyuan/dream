@@ -54,16 +54,17 @@ $(function() {
 		init: {
 			PostInit: function() {
 				document.getElementById('filelist').innerHTML = '';
-
+				/**
 				document.getElementById('uploadfiles').onclick = function() {
 					uploader.start();
 					return false;
-				};
+				};*/
 			},
 
 			FilesAdded: function(up, files) {
 				plupload.each(files, function(file) {
 					document.getElementById('filelist').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+					uploader.start();
 				});
 			},
 
@@ -71,6 +72,18 @@ $(function() {
 				document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
 			},
 
+            FileUploaded: function(up, file, info) {
+				/** 
+				 * response: "6WrPohFPXtgfRUq3n8kGHm.png"
+				   responseHeaders: "Date: Sun, 16 Nov ..."
+				   status: 200
+				 */
+				handleFileInfo(info);
+	        },
+			
+			UploadComplete: function(up, files) {
+			},			
+			
 			Error: function(up, err) {
 				document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
 			}

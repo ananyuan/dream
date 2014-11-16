@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
-         updateCheck="true" monitoring="autodetect"
-         dynamicConfig="true">
+         updateCheck="false" monitoring="autodetect"
+         dynamicConfig="false">
          
-    <defaultCache
+<!--     <defaultCache
         name="simpleCache"
         maxElementsInMemory="10000"
         eternal="false"
         timeToIdleSeconds="120"
         timeToLiveSeconds="120"
     >
-    </defaultCache>
+    </defaultCache> -->
+    
+	<defaultCache maxElementsInMemory="100000" eternal="true"
+		overflowToDisk="false" diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" statistics="true"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+		<terracotta clustered="false" />
+	</defaultCache>    
 </ehcache>

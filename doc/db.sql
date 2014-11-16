@@ -59,4 +59,6 @@ CREATE TABLE `dream`.`dream_config` (
   `CONFVALUE` VARCHAR(400) NULL COMMENT '配置值',
   PRIMARY KEY (`ID`))
 COMMENT = '配置表';  
-  
+
+ALTER TABLE `dream`.`dream_article` 
+ADD COLUMN `IMGIDS` VARCHAR(400) NULL AFTER `LOCALURL`;

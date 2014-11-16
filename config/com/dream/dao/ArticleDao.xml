@@ -6,10 +6,10 @@
     </select>
 
     <insert id="insert" parameterType="com.dream.model.Article">  
-        insert into dream_article(id, title,content,chan_id,atime,summary,localurl) values(#{id},#{title},#{content},#{chanId},#{atime},#{summary},#{localurl})
+        insert into dream_article(id, title,content,chan_id,atime,summary,localurl, imgids) values(#{id},#{title},#{content},#{chanId},#{atime},#{summary},#{localurl},#{imgids})
     </insert>
     
-    <update id="update" parameterType="com.dream.model.Article">  
+    <update id="update" parameterType="com.dream.model.Article">
         update dream_article set title=#{title},content=#{content},chan_id=#{chanId} where id=#{id}
     </update>
     
@@ -22,7 +22,7 @@
     </select>
 
     <select id="findNewArticles" parameterType="String" resultType="com.dream.model.Article">  
-        select id,title,atime,summary,localurl from dream_article where atime > #{atime} order by atime desc
+        select id,title,atime,summary,localurl,imgids from dream_article where atime > #{atime} order by atime desc
     </select>
     
     <select id="findArticles" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
