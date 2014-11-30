@@ -28,4 +28,8 @@ public class DateUtils {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
+    
+    public static String getDatetime(Date time) {
+        return getStringFromDate(time, FORMAT_DATETIME);
+    }
 }
