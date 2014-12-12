@@ -4,6 +4,7 @@
 		<#if canEdit?? && canEdit>
 			<div style="float:right">
 				<a href="/article/edit/${article.id}">编辑</a>
+				<a href="#" onclick="deleteItem('${article.id}')">删除</a>
 			</div>	
 		</#if>	
 		<div class="heading">

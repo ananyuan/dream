@@ -3,12 +3,16 @@ package com.dream.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dream.base.Constant;
+import com.dream.model.FileBean;
+import com.dream.service.FileService;
 
 public class FileMgr {
 	
@@ -50,4 +54,31 @@ public class FileMgr {
             throw new RuntimeException("file upload error.", ioe);
         } 
 	}
+	
+	/**
+	 * 
+	 * @param fileId 文件主键
+	 */
+	public static void delete(String fileId) {
+		FileService fileService = SpringContextUtil.getBean("fileService");
+		
+		fileService.delete(fileId);
+	}
+	
+	
+	/**
+	 * 
+	 * @param dataId 数据主键
+	 */
+	public static void deleteByDataId(String dataId) {
+		FileService fileService = SpringContextUtil.getBean("fileService");
+		
+		List<FileBean> files =  fileService.findFiles(dataId);
+		
+		for (FileBean file: files) {
+			fileService.delete(file.getId());
+		}
+	}
+	
+	
 }

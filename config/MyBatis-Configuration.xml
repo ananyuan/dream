@@ -14,5 +14,6 @@
         <mapper resource="com/dream/dao/ArticleDao.xml"/>
         <mapper resource="com/dream/dao/FileDao.xml"/>
         <mapper resource="com/dream/dao/ConfigDao.xml"/>
+        <mapper resource="com/dream/dao/ActLogDao.xml"/>
     </mappers>
 </configuration>

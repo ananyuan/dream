@@ -129,7 +129,7 @@ public class FileController {
 	
     @RequestMapping(value="/{fileid}", method = RequestMethod.GET)
 	public void download(@PathVariable String fileid, HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Server", "rhfile-server");
+        response.setHeader("Server", "server");
         response.setHeader("Cache-Control", "max-age=" + (3600 * 2 * 12));
         
         FileBean fileBean = fileService.findFile(fileid);

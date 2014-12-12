@@ -13,6 +13,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dream.base.Constant;
 import com.dream.base.Page;
 
 /**
@@ -125,6 +126,14 @@ public class CommUtils {
         return textStr;//返回文本字符串
 	}
     
-    
+    /**
+     * 
+     * @param articleId 文章的ID
+     * @return 相对路径
+     */
+	public static String getArticleLocal(String articleId) {
+		return Constant.PATH_SEPARATOR + "html" + Constant.PATH_SEPARATOR  + "article" 
+				+ Constant.PATH_SEPARATOR + articleId + ".html";
+	}
 
 }

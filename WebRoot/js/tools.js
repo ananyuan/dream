@@ -180,6 +180,13 @@ function goPage(pageNum) {
 	jQuery("#mainArticleDiv").html(article._DATA_);
 }
 
+function deleteItem(id) {
+	var param = {};
+	param.id = id;
+	sendAjax("/article/delete/" + id, param, "get");
+	
+	window.location.href = "/";
+}
 
 function switchSkin(skinName){
 	jQuery("#" + skinName).addClass("selected").siblings().removeClass("selected");

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.ActLogDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_act_log;
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.ActLog">  
+        insert into dream_act_log(model_type,act_type,dataid,atime) values(#{modelType},#{actType},#{dataId},#{atime})
+    </insert>
+    
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_act_log where id=#{id}
+    </delete>
+    
+    <select id="findActLog" parameterType="int" resultType="com.dream.model.ActLog">
+        select * from dream_act_log where id=#{id}
+    </select>
+    
+    <select id="findActLogsByType" resultType="com.dream.model.ActLog" parameterType="com.dream.model.ActLog">
+        select * from dream_act_log where model_type = #{modelType} and act_type=#{actType} order by atime desc
+    </select>
+</mapper>

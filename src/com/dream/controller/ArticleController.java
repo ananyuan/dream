@@ -23,11 +23,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dream.base.Constant;
 import com.dream.base.Context;
 import com.dream.base.Page;
+import com.dream.model.ActLog;
 import com.dream.model.Article;
+import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
+import com.dream.service.FileService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
+import com.dream.utils.FileMgr;
 import com.dream.utils.FreeMarkerUtils;
+import com.dream.utils.SpringContextUtil;
 import com.dream.utils.UuidUtils;
 
 @Controller
@@ -60,6 +65,36 @@ public class ArticleController {
         return mav;
     }
     
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+    public @ResponseBody String delete(@PathVariable String id, HttpSession session){
+        
+        //delete the files related
+        FileMgr.deleteByDataId(id);
+        
+        //delete the generated html file 
+        String localurl = CommUtils.getArticleLocal(id);
+        File htmlFile = new File(Context.getSYSPATH() + localurl.substring(1));
+        if (htmlFile.exists()) {
+        	htmlFile.delete();
+        }
+        
+        //delete main record
+        articleService.delete(id);
+        
+        //添加一条删除的记录， 供客户端获取之后，删除客户端的记录
+        ActLogService actLogService = SpringContextUtil.getBean("actLogService");
+        
+        ActLog actLog = new ActLog();
+        actLog.setActType(Constant.ACT_TYPE_DELETE);
+        actLog.setAtime(DateUtils.getDatetime());
+        actLog.setDataId(id);
+        actLog.setModelType("article");
+        
+        actLogService.insert(actLog);
+    	
+        return "";
+    }
+    
     @RequestMapping(value="/save", method = RequestMethod.POST)
 	public @ResponseBody Article save(@RequestBody Article article) {
     	boolean addFlag = false;
@@ -80,7 +115,7 @@ public class ArticleController {
     	
     	
     	article.setChanId(11);
-    	String localurl = Constant.PATH_SEPARATOR + "html" + Constant.PATH_SEPARATOR  + "article" + Constant.PATH_SEPARATOR + article.getId() + ".html";
+    	String localurl = CommUtils.getArticleLocal(article.getId()); 
     	
     	article.setLocalurl(localurl);
     	

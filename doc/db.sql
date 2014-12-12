@@ -62,3 +62,15 @@ COMMENT = '配置表';
 
 ALTER TABLE `dream`.`dream_article` 
 ADD COLUMN `IMGIDS` VARCHAR(400) NULL AFTER `LOCALURL`;
+
+
+
+CREATE TABLE `dream`.`dream_act_log` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `model_type` VARCHAR(45) NULL COMMENT '所属模块',
+  `act_type` VARCHAR(10) NULL COMMENT '操作类型',
+  `dataid` VARCHAR(45) NULL COMMENT '数据主键',
+  `atime` VARCHAR(23) NULL COMMENT '操作时间',
+  PRIMARY KEY (`ID`))
+COMMENT = '操作记录';
+
