@@ -10,7 +10,7 @@ public class Article {
 	private String title = "";
 	private String content = "";
 	private int chanId;
-	private String atime;
+	private String atime = "";
 	private String summary;
 	private String localurl;
 	private String imgids = "";

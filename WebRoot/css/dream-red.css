@@ -14,6 +14,7 @@ h1 a, h2 a, h3 a{color: #474747; text-decoration: none;}
 .menu ul li:hover a {color:#000000;}			
 
 .content{overflow:hidden;}
+.content p img {width:100%;}
 .content-left{width:65%; float:left;}
 .content-right{width:33%; float:right;}
 .content-page{width:100%; float:left;}

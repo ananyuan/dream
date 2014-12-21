@@ -16,7 +16,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,6 +44,27 @@ public class FileController {
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadFile(HttpServletRequest request, HttpServletResponse response ) {
+		String fileId = UuidUtils.base58Uuid();	
+		
+		return upload(fileId, request, response);
+	}
+	
+	@RequestMapping(value = "/upload/{fileId}", method = RequestMethod.POST)
+	public @ResponseBody String uploadFile(@PathVariable String fileId, HttpServletRequest request, HttpServletResponse response ) {
+		if (fileId.length() <= 0) {
+			fileId = UuidUtils.base58Uuid();	
+		}
+		return upload(fileId, request, response);
+	}
+	
+	/**
+	 * 
+	 * @param fileId 文件ID
+	 * @param request 请求
+	 * @param response 返回
+	 * @return
+	 */
+	private String upload(String fileId, HttpServletRequest request, HttpServletResponse response) {
 		
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         List<FileItem> items = new ArrayList<FileItem>();
@@ -71,7 +91,6 @@ public class FileController {
             FileItem item = iter.next();
             InputStream is = null;
             try {
-            	String fileId = UuidUtils.base58Uuid();
                 String fileName = item.getName();
                 
 //                String extname = FilenameUtils.getExtension(fileName);

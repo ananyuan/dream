@@ -48,6 +48,7 @@ if (null != request.getAttribute("article")) {
 		</td>
 	</tr>	
 	<input type="hidden" id ="id" value="<%=article.getId()%>">
+	<input type="hidden" id ="atime" value="<%=article.getAtime()%>">
 	<input type="hidden" id ="imgids" value="<%=article.getImgids()%>">
 </table>
 
@@ -97,7 +98,7 @@ function handleFileInfo(info) {
 	jQuery("#imgids").val(oldImgids + fileId);
 	
 	//图片插入
-	var imgHtml = "<img src='/file/"+info.response+"'/>";
+	var imgHtml = "<img src='/file/"+info.response+"' style='max-width:100%;'/>";
 	
 	editor.insertHtml(imgHtml);
 }

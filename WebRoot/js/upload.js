@@ -7,7 +7,7 @@ jQuery.getScript("/js/plupload/i18n/zh_CN.js");
 $(function() {
 	$("#uploader").bind('show',function(){
 		$('#uploader').pluploadQueue({
-			url : '/upload/file',
+			url : '/file/upload',
 			multipart_params:{dataType:'install'},
 			max_file_size : '10mb',
 			filters : [
