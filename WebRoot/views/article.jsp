@@ -75,6 +75,7 @@ function save() {
 	param.title = jQuery("#title").val();
 	param.id = jQuery("#id").val();
 	param.imgids = jQuery("#imgids").val();
+	param.atime = jQuery("#atime").val();
 	
 	param.content = editor.html();
 	param.summary = editor.text();
