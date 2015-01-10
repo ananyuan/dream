@@ -26,7 +26,7 @@
     </select>
     
     <select id="findArticles" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
-        select id,title,chan_id,atime,summary,localurl from dream_article order by atime desc
+        select id,title,chan_id,atime,summary,localurl,imgids from dream_article order by atime desc
     </select>
 
     <select id="findArticlesByChannelId" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">

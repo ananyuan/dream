@@ -1,41 +1,63 @@
+<#if canEdit?? && canEdit>
+<div>
+<a href="/article/edit/_ADD_">添加</a>
+</div>
+</#if>	
 
 <#list articles as article>
-	<div class="article">
+    <h2>
+        <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
 		<#if canEdit?? && canEdit>
 			<div style="float:right">
 				<a href="/article/edit/${article.id}">编辑</a>
 				<a href="#" onclick="deleteItem('${article.id}')">删除</a>
 			</div>	
 		</#if>	
-		<div class="heading">
-			<h2><a href="#" onclick="window.open('${article.localurl}')">${article.title}</a></h2>
-		</div>
+    </h2>
 
-		<div class="content">
-			<p>${article.summary}[...]</p>
-		</div>
-	</div>	
+    <p><span class="glyphicon glyphicon-time"></span> ${article.atime}</p>
+    
+    <#if article.imgids?length gt 0> 
+    <hr>
+    <img class="img-responsive" src="/file/${article.imgids}" alt="">
+    </#if>
+    
+    <hr>
+    <p>${article.summary}</p>
+    <a class="btn btn-primary" href="#" onclick="window.open('${article.localurl}')">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+    <hr>
 </#list>
 
-<div id="page" >
-	<#assign nowPage= _PAGE_.pageNo>
-	<#if _PAGE_.pageNo < _PAGE_.totalPage>	
-		<div class="page" id="nextPage"><span><a style="text-decoration: none;" href="#" onclick="goPage(${nowPage + 1})">下一页</a></span></div>
-	</#if>
-	<div class="page">
-		<#assign count= _PAGE_.totalPage>
-		<#list 1..count as i>
-			<#if i==nowPage>
-				<span class="select"><a href="#">${i}</a></span>
-			<#else>
-				<span class="normal"><a href="#" onclick="goPage(${i})">${i}</a></span>
-			</#if>
-		</#list>
-	</div>
-	<#if _PAGE_.pageNo != 1>
-		<div class="page" id="prePage"><span><a style="text-decoration: none;" href="#" onclick="goPage(${nowPage - 1})">上一页</a></span></div>
-	</#if>
-</div>
+<nav>
+    <ul class="pagination pagination-lg ">
+        <#assign nowPage=_PAGE_.pageNo>
+            <#if _PAGE_.pageNo !=1>
+                <li>
+                	<a href="#" onclick="goPage(${nowPage - 1})" aria-label="Next">
+		        		<span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </#if>
 
+            <#assign count=_PAGE_.totalPage>
+                <#list 1..count as i>
+                    <#if i==nowPage>
+                        <li class="active"><a href="#">${i}</a>
+                        </li>
+                        <#else>
+                            <li><a href="#" onclick="goPage(${i})">${i}</a>
+                            </li>
+                    </#if>
+                </#list>
 
+                <#if _PAGE_.pageNo < _PAGE_.totalPage>
+                    <li>
+                        <a href="#" onclick="goPage(${nowPage + 1})" aria-label="Next">
+                            <span aria-hidden="false">&raquo;</span>
+                        </a>
+                    </li>
+                </#if>
+    </ul>
+</nav>
 

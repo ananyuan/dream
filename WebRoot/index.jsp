@@ -1,34 +1,78 @@
-
 <jsp:include page="/views/header.jsp" flush="true" />
 
-<!--------------Content--------------->
-			<div class="content paper-border">
-				<div id="mainArticleDiv" class="content-left">				
-				</div>
-				<div class="content-right">
-					<div class="box">
-						<div class="heading">
-							<h2>未完成</h2>
-						</div>
-						<div id="tasksTodoDiv" class="content">
-						</div>
-					</div>
-					<div class="box">
-						<div class="heading">
-							<h2>已完成</h2>
-						</div>
-						<div id="tasksFinishDiv" class="content">
-						</div>
-					</div>					
-					<div class="box">
-						<div class="heading">
-							<h2>类别</h2>
-						</div>
-						<div id="channelsDiv" class="content">
-						</div>
-					</div>
-				</div>
-			</div>
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
+				<div id="mainArticleDiv">
+					
+				</div>				
+
+            </div>
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Blog Categories Well -->
+                <div class="well">
+                    <h4>未完成</h4>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled" id="tasksTodoDiv">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="well">
+                    <h4>已完成</h4>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled" id="tasksFinishDiv">
+                            </ul>
+                        </div>
+                    </div>
+                </div>				
+				
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright ©  2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
 
 <script>
 
@@ -43,7 +87,6 @@ var param = {"title":"asdfg1"};
 jQuery(document).ready(function(){
 	showTaskTodo();
 	showTaskFinish();
-	showChannel();
 	showArticles();
 });
 
@@ -59,7 +102,7 @@ function showTaskTodo() {
 
 	var taskTodoStr = "";
 	jQuery.each(tasksTodo , function (key, item) {
-		taskTodoStr += "<p>" + item.title + "</p>";
+		taskTodoStr += "<li>" + item.title + "</li>";
 	});
 
 	jQuery(taskTodoStr).appendTo(jQuery("#tasksTodoDiv"));
@@ -70,7 +113,7 @@ function showTaskFinish() {
 
 	var taskFinishStr = "";
 	jQuery.each(taskFinish , function (key, item) {
-		taskFinishStr += "<p>" + item.title + "</p>";
+		taskFinishStr += "<li>" + item.title + "</li>";
 	});
 
 	jQuery(taskFinishStr).appendTo(jQuery("#tasksFinishDiv"));
@@ -90,3 +133,8 @@ function showChannel() {
 }
 
 </script>
+
+</body>
+
+
+</html>

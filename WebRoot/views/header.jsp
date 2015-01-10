@@ -1,41 +1,57 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>dream</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Home - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/dream.css"/>
 	
-	<link id="cssfile" rel="stylesheet" href="/css/dream-red.css">
-    
-    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/js/tools.js"></script>
+    <script type="text/javascript" src="/js/tools.js"></script>		
 </head>
 
-<script>
-
-
-</script>
-
 <body>
-	 <div class="paper">
-		<div id="skin" style="border:1px">
-			<ul id="skinul">
-				<li id="dream-blue" title="蓝色" style="background-color:blue">蓝</li>
-				<li id="dream-red" title="红色" style="background-color:red">红</li>
-				<li id="dream-green" title="绿色" style="background-color:green">绿</li>
-				<li id="dream-gray" title="灰色" style="background-color:gray">灰</li>
-			</ul>
-		</div>
-		<div class="banner paper-border">
-			<div>
-				<h1>DREAM</h1>
-				<p>If you have a dream,you got to protect it!</p>
-			</div>
-			<div class="menu">
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="/task/timeline">TimeLine</a></li>
-					<li><a href="/views/about.jsp">About</a></li>
-				</ul>
-			</div>
-		</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">DREAM</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/views/about.jsp">About</a>
+                    </li>
+                    <li>
+                        <a href="/task/timeline">TimeLine</a>
+                    </li>
+                    <li>
+                        <a href="">Contact</a>
+                    </li>
+                </ul>
+                
+                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/user/login">Login</a>
+                    </li>
+                </ul>               
+            </div>   
+        </div>
+    </nav>
+

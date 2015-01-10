@@ -50,6 +50,10 @@
         <property name="fileDao" ref="fileDao"></property>
     </bean>
     
+    <bean id="actLogService" class="com.dream.service.impl.ActLogServiceImpl">
+        <property name="actLogDao" ref="actLogDao"></property>
+    </bean>    
+    
     <bean id="configService" class="com.dream.service.impl.ConfigServiceImpl">
         <property name="configDao" ref="configDao"></property>
     </bean>
@@ -60,7 +64,9 @@
 
     <bean id="springContextUtil" class="com.dream.utils.SpringContextUtil" scope="singleton" />
     
-    <bean id="crawlService" class="com.dream.service.impl.CrawlServiceImpl"/>  
+    <bean id="mailService" class="com.dream.service.impl.MailServiceImpl"/>
+    
+    <bean id="crawlService" class="com.dream.service.impl.CrawlServiceImpl"/>
     <!-- 配置一个Job -->  
     <bean id="crawlJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
         <property name="jobClass" value="com.dream.quartz.job.CrawlJob"/>  

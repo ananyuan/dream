@@ -162,6 +162,18 @@ public class ArticleController {
     	request.getParameterNames();
     	List<Article> articles = articleService.findArticles(page);
     	
+    	for (Article article: articles) {
+    		if (article.getImgids().length() > 0) {
+    			String imgId = article.getImgids();
+    			if (imgId.indexOf(",") > 0) {
+    				imgId = imgId.substring(0, imgId.indexOf(","));
+    			}
+    			
+    			article.setImgids(imgId);
+    		}
+    	}
+    	
+    	
     	Map<String, Object> dataMap = new HashMap<String, Object>();
     	dataMap.put("articles", articles);
     	dataMap.put("_PAGE_", page);
