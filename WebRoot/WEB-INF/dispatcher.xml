@@ -32,6 +32,7 @@
 	<mvc:resources mapping="/fonts/**" location="/fonts/"/>
 	<mvc:resources mapping="/images/**" location="/images/"/>
 	<mvc:resources mapping="/views/**" location="/views/"/>
+	<mvc:resources mapping="/font-awesome/**" location="/font-awesome/"/>
 	<mvc:resources mapping="/html/article/**" location="/html/article/"/>
 	<mvc:annotation-driven />
 	<bean

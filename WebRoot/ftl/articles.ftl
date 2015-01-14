@@ -1,6 +1,9 @@
 <#if canEdit?? && canEdit>
 <div>
-<a href="/article/edit/_ADD_">添加</a>
+<a href="/article/edit/_ADD_" class="btn btn-primary btn-sm">添加BLOG</a>
+<a href="/task/list" class="btn btn-primary btn-sm">TASKS</a>
+<a href="/task/edit/_ADD_" class="btn btn-primary btn-sm">添加TASK</a>
+<hr>
 </div>
 </#if>	
 
@@ -9,8 +12,8 @@
         <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
 		<#if canEdit?? && canEdit>
 			<div style="float:right">
-				<a href="/article/edit/${article.id}">编辑</a>
-				<a href="#" onclick="deleteItem('${article.id}')">删除</a>
+				<a class="btn btn-primary btn-sm" href="/article/edit/${article.id}">编辑</a>
+				<a class="btn btn-danger btn-sm" href="#" onclick="deleteItem('${article.id}')">删除</a>
 			</div>	
 		</#if>	
     </h2>

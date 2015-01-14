@@ -2,7 +2,7 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-img{
+p>img{
 	max-width:100%;
 	height: auto;
    	width: auto\9; /* ie8 */
@@ -139,4 +139,9 @@ footer {
 	margin-right: 20px;
 	margin-bottom: 20px;
 	float: right;
+}
+
+.about-pic-div {
+	text-align: center;
+	background-color:gray;
 }

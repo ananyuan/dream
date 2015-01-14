@@ -1,6 +1,10 @@
 
 
 <jsp:include page="header.jsp" flush="true" />
+
+<link rel="stylesheet" href="/css/datepicker3.css" />
+<script charset="utf-8" src="/js/bootstrap-datepicker.js"></script>
+
 <%@ page import="com.dream.model.Task" %>
 
 <% 
@@ -12,48 +16,62 @@ if (null != request.getAttribute("task")) {
 }
 
 %>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="title" class="col-sm-2 control-label">标题</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="title" value="<%=task.getTitle()%>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="descp" class="col-sm-2 control-label">描述</label>
+    <div class="col-sm-8">
+      <textarea class="form-control" rows="3" id="descp" value="<%=task.getDescp()%>"><%=task.getDescp()%></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+  	<label for="ttype" class="col-sm-2 control-label">描述</label>
+    <div class="col-sm-8">
+		<label class="radio-inline">
+		  <input type="radio" name="ttype" id="inlineRadio1" <% if (task.getTtype() == 1){out.print("checked");} %> value="1"> 未完成
+		</label>
+		<label class="radio-inline">
+		  <input type="radio" name="ttype" id="inlineRadio2" <% if (task.getTtype() == 2){out.print("checked");} %> value="2"> 已完成
+		</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="start" class="col-sm-2 control-label">开始时间</label>
+    <div class="col-sm-3 input-group date">
+      <input type="text" class="form-control" id="start" value="<%=task.getStart()%>">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+    <div class="col-sm-3 input-group date">
+      <input type="text" class="form-control" id="endTime" value="<%=task.getEndTime()%>">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
+  </div>  
+  <input type="hidden" id ="id" value="<%=task.getId()%>">
 
-
-<div class="content paper-border" style="margin-bottom:20px">
-
-<table width="100%">
-	<tr>
-		<td>标题</td>
-		<td><input type="text" id="title" size="80" value="<%=task.getTitle()%>" border=1></td>
-	</tr>
-	<tr>
-		<td>描述</td>
-		<td><textarea type="text" id="descp" rows="3" cols="80" value="<%=task.getDescp()%>" border=1><%=task.getDescp()%></textarea></textarea></td>
-	</tr>
-	<tr>
-		<td>是否完成</td>
-		<td>
-			
-		</td>
-	</tr>	
-	<tr>
-		<td>开始时间</td>
-		<td><input type="text" id="start" size="80" value="<%=task.getStart()%>" border=1></td>
-	</tr>
-	<tr>
-		<td>结束时间</td>
-		<td><input type="text" id="endTime" size="80" value="<%=task.getEnd()%>" border=1></td>
-	</tr>		
-	
-	<input type="hidden" id ="id" value="<%=task.getId()%>">
-</table>
-
+  <div class="form-group">
+  	<div style="text-align:center">
+  	<input type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存"/>
+  	</div>
+  </div>
   
-
-
-
-
-
-<input type="button" id="submit" onclick="save()" value="保存"/>
-
-</div>
+  
+</form>
 
 <script>
+
+
+$('.input-group.date').datepicker({
+    format: "yyyy-mm-dd"
+});
+
 
 function save() {
 	var param = {};
@@ -61,10 +79,9 @@ function save() {
 	param.id = jQuery("#id").val();
 	
 	param.descp = jQuery("#descp").val();
-	//param.start = jQuery("#start").val();
-	//param.endTime = jQuery("#endTime").val();
-	
-	alert(JsonToStr(param));
+	param.ttype = $("input[name='ttype'][checked]").val();
+	param.start = jQuery("#start").val();
+	param.endTime = jQuery("#endTime").val();
 	
 	sendAjax("/task/save", param);
 	

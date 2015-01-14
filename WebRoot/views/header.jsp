@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/dream.css"/>
 	
 	<script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
@@ -40,9 +41,6 @@
                     </li>
                     <li>
                         <a href="/task/timeline">TimeLine</a>
-                    </li>
-                    <li>
-                        <a href="">Contact</a>
                     </li>
                 </ul>
                 

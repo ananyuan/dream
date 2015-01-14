@@ -11,8 +11,8 @@ public class Task {
 	private String title = "";
 	private String descp = "";
 	private int ttype = 1;
-	private String start;
-	private String endTime;
+	private String start = "";
+	private String endTime = "";
 
 	public int getId() {
 		return id;
@@ -38,13 +38,7 @@ public class Task {
 		this.descp = descp;
 	}
 
-	public int getType() {
-		return ttype;
-	}
 
-	public void setType(int type) {
-		this.ttype = type;
-	}
 
 	public String getStart() {
 		return start;
@@ -54,12 +48,21 @@ public class Task {
 		this.start = start;
 	}
 
-	public String getEnd() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEnd(String end) {
-		this.endTime = end;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
+
+	public int getTtype() {
+		return ttype;
+	}
+
+	public void setTtype(int ttype) {
+		this.ttype = ttype;
+	}
+
 
 }
