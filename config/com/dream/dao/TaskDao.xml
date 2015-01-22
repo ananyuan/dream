@@ -26,10 +26,10 @@
     </select>
     
     <select id="findTasksFinish" resultType="com.dream.model.Task" parameterType="com.dream.base.Page">
-        select * from dream_task where ttype=1
+        select * from dream_task where ttype=2
     </select>
     
     <select id="findTasksTodo" resultType="com.dream.model.Task" parameterType="com.dream.base.Page">
-        select * from dream_task where ttype=2
+        select * from dream_task where ttype=1
     </select>
 </mapper>

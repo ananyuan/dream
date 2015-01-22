@@ -1,5 +1,8 @@
 <jsp:include page="header.jsp" flush="true" />
-<%@ page import="com.dream.model.Article" %>
+<%@ page import="com.dream.model.Article"%>
+<%@ page import="com.dream.model.Channel"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 <link rel="stylesheet" href="/css/editor/editor.css" />
 <script charset="utf-8" src="/js/editor/kindeditor.js"></script>
@@ -11,97 +14,120 @@
 
 <script type="text/javascript" src="/js/upload.js"></script>
 
-<% 
-Article article;
-if (null != request.getAttribute("article")) {
-	article = (Article)request.getAttribute("article");	
-} else {
-	article = new Article();
-}
-
+<%
+	Article article;
+	List<Channel> chanList = new ArrayList();
+	if (null != request.getAttribute("article")) {
+		article = (Article) request.getAttribute("article");
+	} else {
+		article = new Article();
+	}
+	if (null != request.getAttribute("chanList")) {
+		chanList = (List) request.getAttribute("chanList");
+	}	
+	
 %>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label for="title" class="col-sm-2 control-label">标题</label> 
+		<div class="col-sm-9">
+	      <input type="text" class="form-control" id="title" value="<%=article.getTitle()%>">
+	    </div>
+	</div>
+	<div class="form-group">
+		<label for="chanId" class="col-sm-2 control-label">栏目</label> 
+		<div class="col-sm-3">
+	        <select class="form-control" id="chanId">
+	        	<% for (Channel channel: chanList) {
+	        		String option = "<option value='"+channel.getCode()+"' ";
+	        		if (channel.getCode() == article.getChanId()) {
+	        			option += " selected=\"selected\" ";
+	        		}
+	        		option +=  ">"+channel.getName()+"</option>";
+	        		
+	        		System.out.println("---------------------" + option);
+	        		
+	        		out.print(option);
+	        	} %>
+	        </select>
+	    </div>
+		<label for="sortnum" class="col-sm-2 control-label">排序</label> 
+		<div class="col-sm-3">
+	      <input type="text" class="form-control" id="sortnum" value="<%=article.getSortnum()%>">
+	    </div>
+	</div>	
+	
 
-
-<div class="content paper-border" style="margin-bottom:20px">
-
-<table width="100%">
-	<tr>
-		<td>标题</td>
-		<td><input type="text" id="title" size="80" value="<%=article.getTitle()%>" border=1></td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<textarea id="editor_id" name="content" style="width:100%;height:300px;">
-			<%=article.getContent()%>
-			</textarea>		
-		</td>
-	</tr>
-	<tr>
-		<td>选择图片</td>
-		<td>
+	<div class="form-group">
+		<label for="editor_id" class="col-sm-2 control-label">正文</label>
+		<div class="col-sm-9">
+		<textarea id="editor_id" name="content" class="form-control" style="height: 300px;"><%=article.getContent()%></textarea>
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label for="container" class="col-sm-2 control-label">选择图片</label>
+		<div class="col-sm-9">
 			<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
-			<br />
-			
+
 			<div id="container">
-			    <a id="pickfiles" href="javascript:;">[Select files]</a>
-			</div>		
-		</td>
-	</tr>	
-	<input type="hidden" id ="id" value="<%=article.getId()%>">
-	<input type="hidden" id ="atime" value="<%=article.getAtime()%>">
-	<input type="hidden" id ="imgids" value="<%=article.getImgids()%>">
-</table>
+				<a id="pickfiles" href="javascript:;">[Select files]</a>
+			</div>
+		</div>
+	</div>
 
-  
+	<div class="form-group col-sm-12">
+		<div style="text-align: center">
+			<input type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存" />
+		</div>
+	</div>
+	<input type="hidden" id="id" value="<%=article.getId()%>"> 
+	<input type="hidden" id="atime" value="<%=article.getAtime()%>"> 
+	<input type="hidden" id="imgids" value="<%=article.getImgids()%>">
+</form>
 
 
-
-
-
-<input type="button" id="submit" onclick="save()" value="保存"/>
-
-</div>
 
 <script>
-var editor;
-KindEditor.ready(function(K) {
-	editor = K.create('textarea[name="content"]', {
-		allowFileManager : true
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="content"]', {
+			allowFileManager : true
+		});
 	});
-});
 
-function save() {
-	var param = {};
-	param.title = jQuery("#title").val();
-	param.id = jQuery("#id").val();
-	param.imgids = jQuery("#imgids").val();
-	param.atime = jQuery("#atime").val();
-	
-	param.content = editor.html();
-	param.summary = editor.text();
-	
-	sendAjax("/article/save", param);
-	
-	// 设置HTML内容
-	//editor.html('HTML内容');
-	window.location.href = "/";
-}
+	function save() {
+		var param = {};
+		param.title = jQuery("#title").val();
+		param.id = jQuery("#id").val();
+		param.imgids = jQuery("#imgids").val();
+		param.atime = jQuery("#atime").val();
+		param.chanId = jQuery("#chanId").val();
 
+		param.sortnum = jQuery("#sortnum").val();
+		param.content = editor.html();
+		param.summary = editor.text();
 
-function handleFileInfo(info) {
-	var fileId = info.response;
-	
-	//更新imgids
-	var oldImgids = jQuery("#imgids").val();
-	if (oldImgids.length > 0) {
-		oldImgids += ",";
+		sendAjax("/article/save", param);
+
+		// 设置HTML内容
+		//editor.html('HTML内容');
+		window.location.href = "/";
 	}
-	jQuery("#imgids").val(oldImgids + fileId);
-	
-	//图片插入
-	var imgHtml = "<img src='/file/"+info.response+"' style='max-width:100%;'/>";
-	
-	editor.insertHtml(imgHtml);
-}
 
+	function handleFileInfo(info) {
+		var fileId = info.response;
+		//更新imgids
+		var oldImgids = jQuery("#imgids").val();
+		if (oldImgids.length > 0) {
+			oldImgids += ",";
+		}
+		jQuery("#imgids").val(oldImgids + fileId);
+
+		//图片插入
+		var imgHtml = "<img src='/file/" + info.response + "' style='max-width:100%;'/>";
+
+		editor.insertHtml(imgHtml);
+	}
 </script>

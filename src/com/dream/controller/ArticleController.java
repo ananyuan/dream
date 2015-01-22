@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -23,11 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dream.base.Constant;
 import com.dream.base.Context;
 import com.dream.base.Page;
+import com.dream.message.MsgSender;
 import com.dream.model.ActLog;
 import com.dream.model.Article;
+import com.dream.model.Channel;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
-import com.dream.service.FileService;
+import com.dream.service.ChannelService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
 import com.dream.utils.FileMgr;
@@ -38,6 +42,10 @@ import com.dream.utils.UuidUtils;
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
+	
+	private static Log log = LogFactory.getLog(ArticleController.class);
+	
+	private static final String ARTICLE_FIRST_PAGE_FILE_NAME = "articles_first_page.html";
 	
 	@Autowired
 	private ArticleService articleService;
@@ -50,6 +58,12 @@ public class ArticleController {
     		mav.setViewName("login");
     	} else {
             mav.setViewName("article");
+            
+            //添加栏目列表
+            ChannelService chanService = SpringContextUtil.getBean("channelService");
+            List<Channel> chanList = chanService.selectAll();
+            
+            mav.addObject("chanList", chanList);
             
             if (id.equals("_ADD_")) {
             	Article article = new Article();
@@ -114,7 +128,7 @@ public class ArticleController {
     	}
     	
     	
-    	article.setChanId(11);
+    	article.setChanId(article.getChanId());
     	String localurl = CommUtils.getArticleLocal(article.getId()); 
     	
     	article.setLocalurl(localurl);
@@ -123,6 +137,9 @@ public class ArticleController {
     	
     	if (addFlag) {
     		articleService.insert(article);	
+    		
+    		//添加發一條推送的消息
+    		MsgSender.pushOneUser("新消息", article.getTitle());
     	} else {
     		articleService.update(article);
     	}
@@ -144,8 +161,56 @@ public class ArticleController {
 			e.printStackTrace();
 		}
     	
+    	//单个文件静态化完成之后，将列表第一页的也静态化
+    	staticArticleList(Context.getSYSPATH() + CommUtils.getArticleLocalDir());
     	
 		return article;
+	}
+
+    /**
+     * 静态化列表的第一页
+     * @param filePath
+     */
+	private void staticArticleList(String filePath) {
+		Page page = new Page();
+		List<Article> articles = getArticles(page);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("articles", articles);
+		dataMap.put("_PAGE_", page);
+		
+		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
+		
+		String articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
+		
+    	try {
+    		File file = new File(filePath + ARTICLE_FIRST_PAGE_FILE_NAME);
+			FileUtils.writeStringToFile(file, articlesHtml, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 
+	 * @param page 分页对象
+	 * @return 
+	 */
+	private List<Article> getArticles(Page page) {
+		List<Article> articles = articleService.findArticles(page);
+		
+		for (Article article: articles) {
+			if (article.getImgids().length() > 0) {
+				String imgId = article.getImgids();
+				if (imgId.indexOf(",") > 0) {
+					imgId = imgId.substring(0, imgId.indexOf(","));
+				}
+				
+				article.setImgids(imgId);
+			}
+		}
+		return articles;
 	}
 
 	@RequestMapping(value="/articles", method = RequestMethod.POST)
@@ -159,43 +224,54 @@ public class ArticleController {
     	} else {
     		page = CommUtils.getPage(String.valueOf(params.get("_PAGE_")));
     	}
-    	request.getParameterNames();
-    	List<Article> articles = articleService.findArticles(page);
     	
-    	for (Article article: articles) {
-    		if (article.getImgids().length() > 0) {
-    			String imgId = article.getImgids();
-    			if (imgId.indexOf(",") > 0) {
-    				imgId = imgId.substring(0, imgId.indexOf(","));
-    			}
-    			
-    			article.setImgids(imgId);
-    		}
+    	String articlesHtml = "";
+    	
+    	if (page.getPageNo() == 1 && null == session.getAttribute("USER")) { // 如果是第一页, 并且没有登录，读取模板
+    		
+    		File file = new File(Context.getSYSPATH() + CommUtils.getArticleLocalDir() + ARTICLE_FIRST_PAGE_FILE_NAME); 
+    		try {
+				articlesHtml = FileUtils.readFileToString(file, "UTF-8");
+			} catch (IOException e) {
+				log.error("getArticles", e);
+				articlesHtml = setArticlesInfo(session, rtnMap, page);
+			}
+    	} else {
+        	articlesHtml = setArticlesInfo(session, rtnMap, page);
     	}
     	
-    	
-    	Map<String, Object> dataMap = new HashMap<String, Object>();
-    	dataMap.put("articles", articles);
-    	dataMap.put("_PAGE_", page);
-    	
-    	if (null != session.getAttribute("USER")) {
-    		rtnMap.put("_SESSION_", session.getAttribute("USER"));
-    		
-    		dataMap.put("canEdit", true);
-    	} 
-    	
-    	
-    	String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
-    	
-    	String articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
- 
-
     	rtnMap.put("_DATA_", articlesHtml);
     	
 		return rtnMap;
 	}
-    
 	
+	/**
+	 * 
+	 * @param session
+	 * @param rtnMap
+	 * @param page
+	 * @return
+	 */
+	private String setArticlesInfo(HttpSession session,
+			Map<String, Object> rtnMap, Page page) {
+		String articlesHtml;
+		List<Article> articles = getArticles(page);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("articles", articles);
+		dataMap.put("_PAGE_", page);
+		
+		if (null != session.getAttribute("USER")) {
+			rtnMap.put("_SESSION_", session.getAttribute("USER"));
+			
+			dataMap.put("canEdit", true);
+		} 
+		
+		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
+		
+		articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
+		return articlesHtml;
+	}
     
     @RequestMapping(value="/id/{id}", method = RequestMethod.GET)
 	public @ResponseBody Article getArticleInJSON(@PathVariable String id, HttpSession session) {

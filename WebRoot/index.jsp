@@ -35,7 +35,15 @@
                         </span>
                     </div>
                 </div>
-
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled" id="channelsDiv">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>未完成</h4>
@@ -75,19 +83,17 @@
 
 
 <script>
-
-var param = {"title":"asdfg1"};
-	param.id = 12;
-    param.title = "anan";
-    param.descp = "value";
-//    param.ttype = 23;
-//    param.start = "a123451s";
-//    param.endTime = "v987652v";
+function testPostMsg() {
+	debugger;
+	
+	window.parent.postMessage({'AA': 'BB'}, '*');
+}
 
 jQuery(document).ready(function(){
 	showTaskTodo();
 	showTaskFinish();
 	showArticles();
+	showChannel();
 });
 
 function showArticles() {
@@ -125,11 +131,10 @@ function showChannel() {
 
 	var channelStr = "";
 	jQuery.each(channels , function (key, item) {
-		channelStr += "<p>"+item.name+"</p>";
+		channelStr += "<li><h3><a href='#'>"+item.name+"</a></h3></li>";
 	});
 	
 	jQuery(channelStr).appendTo(jQuery("#channelsDiv"));
-
 }
 
 </script>

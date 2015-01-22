@@ -18,6 +18,12 @@ if (null != request.getAttribute("task")) {
 %>
 <form class="form-horizontal">
   <div class="form-group">
+  	<div class="col-sm-2 control-label">
+  	<input type="button" class="btn btn-primary" id="submit" onclick="javascript:history.go(-1)" value="返回"/>
+  	</div>
+  </div>
+
+  <div class="form-group">
     <label for="title" class="col-sm-2 control-label">标题</label>
     <div class="col-sm-8">
       <input type="text" class="form-control" id="title" value="<%=task.getTitle()%>">

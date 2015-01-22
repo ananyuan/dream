@@ -14,6 +14,7 @@ public class Article {
 	private String summary;
 	private String localurl;
 	private String imgids = "";
+	private int sortnum = 0;
 	
 	public String getId() {
 		return id;
@@ -62,6 +63,12 @@ public class Article {
 	}
 	public void setImgids(String imgids) {
 		this.imgids = imgids;
+	}
+	public int getSortnum() {
+		return sortnum;
+	}
+	public void setSortnum(int sortnum) {
+		this.sortnum = sortnum;
 	}
 
 }

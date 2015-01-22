@@ -74,3 +74,10 @@ CREATE TABLE `dream`.`dream_act_log` (
   PRIMARY KEY (`ID`))
 COMMENT = '操作记录';
 
+
+
+ALTER TABLE `dream`.`dream_article` 
+ADD COLUMN `SORTNUM` INT NULL COMMENT '排序' AFTER `IMGIDS`;
+
+ALTER TABLE `dream`.`dream_article` 
+CHANGE COLUMN `CHAN_ID` `CHANID` INT(11) NULL DEFAULT NULL COMMENT '栏目ID' ;
