@@ -136,4 +136,14 @@ public class CommUtils {
 				+ Constant.PATH_SEPARATOR + articleId + ".html";
 	}
 
+	
+    /**
+     * 
+     * @param articleId 文章的ID
+     * @return 相对路径
+     */
+	public static String getArticleLocalDir() {
+		return Constant.PATH_SEPARATOR + "html" + Constant.PATH_SEPARATOR  + "article" 
+				+ Constant.PATH_SEPARATOR;
+	}
 }

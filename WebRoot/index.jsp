@@ -27,11 +27,11 @@
                 <div class="well">
                     <h4>Blog Search</h4>
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="query_str">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
+                            <button class="btn btn-default" type="button" id="full_search_btn">
                                 <span class="glyphicon glyphicon-search"></span>
-                        </button>
+                        	</button>
                         </span>
                     </div>
                 </div>
@@ -94,6 +94,12 @@ jQuery(document).ready(function(){
 	showTaskFinish();
 	showArticles();
 	showChannel();
+	
+	jQuery("#full_search_btn").bind("click", function(){
+		var queryStr = jQuery("#query_str").val();
+		
+		window.location = "/search/" + queryStr;
+	});
 });
 
 function showArticles() {

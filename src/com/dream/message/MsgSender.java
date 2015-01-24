@@ -2,16 +2,12 @@ package com.dream.message;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
 
 import com.gexin.rp.sdk.base.IPushResult;
 import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
 import com.gexin.rp.sdk.http.IGtPush;
-import com.gexin.rp.sdk.template.LinkTemplate;
 import com.gexin.rp.sdk.template.NotificationTemplate;
-import com.tencent.xinge.Message;
-import com.tencent.xinge.XingeApp;
 
 public class MsgSender {
 
@@ -75,53 +71,10 @@ public class MsgSender {
 		return template;
 	}
 
-	/**
-	 * 下发单个账号
-	 * 
-	 * @param userCode
-	 *            用户编码
-	 * @param title
-	 *            标题
-	 * @param msgContent
-	 *            内容
-	 * @return
-	 */
-	public static JSONObject pushOneUser(String userCode, String title,
-			String msgContent) {
-		XingeApp xinge = new XingeApp(ACCESS_ID, SECRET_KEY);
-
-		Message message = new Message();
-		message.setExpireTime(86400);
-		message.setTitle(title);
-		message.setContent(msgContent);
-		message.setType(Message.TYPE_MESSAGE);
-		JSONObject ret = xinge.pushSingleAccount(0, userCode, message);
-
-		return (ret);
-	}
-
-	/**
-	 * @param title
-	 *            标题
-	 * @param msgContent
-	 *            内容
-	 * @return
-	 */
-	public static JSONObject demoPushAllDevice(String title, String msgContent) {
-		XingeApp xinge = new XingeApp(ACCESS_ID, SECRET_KEY);
-		Message message = new Message();
-		message.setExpireTime(86400);
-		message.setTitle(title);
-		message.setContent(msgContent);
-		message.setType(Message.TYPE_MESSAGE);
-		JSONObject ret = xinge.pushAllDevice(0, message);
-		return (ret);
-	}
-
 	public static void main(String[] args) {
 		// MsgSender.demoPushAllDevice("新消息", "设备的账户或别名由终端SDK在调用推送注册接口时设置");
 
-		MsgSender.pushOneUser("yuananan", "新消息1", "设备的账户或别名由终端SDK在调用推送注册接口时设置");
+		//MsgSender.pushOneUser("yuananan", "新消息1", "设备的账户或别名由终端SDK在调用推送注册接口时设置");
 	}
 
 }

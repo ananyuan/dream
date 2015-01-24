@@ -81,3 +81,9 @@ ADD COLUMN `SORTNUM` INT NULL COMMENT '排序' AFTER `IMGIDS`;
 
 ALTER TABLE `dream`.`dream_article` 
 CHANGE COLUMN `CHAN_ID` `CHANID` INT(11) NULL DEFAULT NULL COMMENT '栏目ID' ;
+
+ALTER TABLE `dream`.`dream_article` 
+ADD COLUMN `CHANNAME` VARCHAR(45) NULL COMMENT '栏目' AFTER `SORTNUM`;
+
+INSERT INTO `dream`.`dream_config` (`ID`, `CONFKEY`, `CONFVALUE`) VALUES ('11', 'INDEX_URL', 'http://localhost:8080/solr/collection1');
+

@@ -29,11 +29,13 @@ import com.dream.message.MsgSender;
 import com.dream.model.ActLog;
 import com.dream.model.Article;
 import com.dream.model.Channel;
+import com.dream.search.IndexArticleTask;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
 import com.dream.service.ChannelService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
+import com.dream.utils.DrThreadPool;
 import com.dream.utils.FileMgr;
 import com.dream.utils.FreeMarkerUtils;
 import com.dream.utils.SpringContextUtil;
@@ -106,6 +108,12 @@ public class ArticleController {
         
         actLogService.insert(actLog);
     	
+        //删除索引
+        Article article = new Article();
+        article.setId(id);
+    	IndexArticleTask indexTask = new IndexArticleTask(article, IndexArticleTask.INDEX_TYPE_DEL);
+    	DrThreadPool.getDefaultPool().execute(indexTask);
+        
         return "";
     }
     
@@ -120,20 +128,23 @@ public class ArticleController {
     	}
     	
     	if (!StringUtils.isEmpty(article.getSummary())) {
-    		String summary = article.getSummary();
-    		if (summary.length() > 300) {
-    			article.setSummary(summary.substring(0, 300));
-    		}
+    		String summary = CommUtils.getText(article.getSummary());
     		
+    		if (summary.length() > 300) {
+    			summary = summary.substring(0, 300);
+    		}
+
+			article.setSummary(summary);
     	}
     	
+    	int chanId = article.getChanId();
+    	ChannelService chanService = SpringContextUtil.getBean("channelService");
+    	Channel channel = chanService.findChannel(chanId);
+    	article.setChanname(channel.getName());
     	
-    	article.setChanId(article.getChanId());
     	String localurl = CommUtils.getArticleLocal(article.getId()); 
     	
     	article.setLocalurl(localurl);
-    	
-    	article.setSummary(CommUtils.getText(article.getSummary()));
     	
     	if (addFlag) {
     		articleService.insert(article);	
@@ -163,6 +174,10 @@ public class ArticleController {
     	
     	//单个文件静态化完成之后，将列表第一页的也静态化
     	staticArticleList(Context.getSYSPATH() + CommUtils.getArticleLocalDir());
+    	
+    	//做索引
+    	IndexArticleTask indexTask = new IndexArticleTask(article, IndexArticleTask.INDEX_TYPE_ADD);
+    	DrThreadPool.getDefaultPool().execute(indexTask);
     	
 		return article;
 	}

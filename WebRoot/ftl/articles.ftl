@@ -18,7 +18,7 @@
 		</#if>	
     </h2>
 
-    <p><span class="glyphicon glyphicon-time"></span> ${article.atime}</p>
+    <p><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
     
     <#if article.imgids?length gt 0> 
     <hr>

@@ -10,6 +10,7 @@ public class Article {
 	private String title = "";
 	private String content = "";
 	private int chanId;
+	private String channame = "";
 	private String atime = "";
 	private String summary;
 	private String localurl;
@@ -69,6 +70,12 @@ public class Article {
 	}
 	public void setSortnum(int sortnum) {
 		this.sortnum = sortnum;
+	}
+	public String getChanname() {
+		return channame;
+	}
+	public void setChanname(String channame) {
+		this.channame = channame;
 	}
 
 }
