@@ -20,8 +20,8 @@ public interface ArticleDao {
 	public Article findArticle(String id);
 	
 	public List<Article> findNewArticles(String atime);
-
-	public List<Article> findArticles(@Param("page") Page<?> page);
+	
+	public List<Article> findArticles(Page<?> page);
 
 	public List<Article> findArticlesByChannelId(@Param("page") Page<?> page, int channelId);
 }

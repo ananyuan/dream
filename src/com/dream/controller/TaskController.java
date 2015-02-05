@@ -1,5 +1,6 @@
 package com.dream.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Page;
+import com.dream.model.Sicker;
 import com.dream.model.Task;
 import com.dream.service.TaskService;
 
 @Controller
 @RequestMapping("/task")
-public class TaskController {
+public class TaskController extends AbsController  {
 	@Autowired
 	private TaskService taskService;
 	
@@ -28,11 +30,24 @@ public class TaskController {
         ModelAndView mav=new ModelAndView();
         mav.setViewName("task");
         
-        List<Task> tasks = taskService.selectAll();
-        mav.addObject("allTask",tasks);
-        
         return mav;
     }
+    
+    @Override
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+    	Page page = listPage.getPage();
+    	
+		List<Task> rtnList = taskService.findTasks(page);
+		for (Task task: rtnList) {
+			String caozuo = "<a href='/task/edit/"+task.getId()+"'>编辑</a>&nbsp;<a href='/task/edit/"+task.getId()+"'>删除</a>";
+			
+			task.setCaozuo(caozuo);
+		}
+		
+		
+		listPage.setRtnList(rtnList);
+	}
+    
     
     @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable String id, HttpSession session){

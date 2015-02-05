@@ -29,10 +29,12 @@ import com.dream.message.MsgSender;
 import com.dream.model.ActLog;
 import com.dream.model.Article;
 import com.dream.model.Channel;
+import com.dream.model.Task;
 import com.dream.search.IndexArticleTask;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
 import com.dream.service.ChannelService;
+import com.dream.service.TaskService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
 import com.dream.utils.DrThreadPool;
@@ -193,6 +195,9 @@ public class ArticleController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("articles", articles);
 		dataMap.put("_PAGE_", page);
+//		page.setInt("pageNo", page.getPageNo());
+//		page.setInt("totalPage", page.getTotalPage());
+		
 		
 		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
 		
@@ -205,6 +210,27 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 		
+    	//栏目
+        ChannelService chanService = SpringContextUtil.getBean("channelService");
+        List<Channel> chanList = chanService.selectAll();
+    	
+        // 已/未 完成
+        TaskService taskService = SpringContextUtil.getBean("taskService");
+        List<Task> finishTasks = taskService.findTasksFinish(page);
+        List<Task> todoTasks = taskService.findTasksTodo(page);
+    	
+        dataMap.put("channels", chanList);
+        dataMap.put("finishTasks", finishTasks);
+        dataMap.put("todoTasks", todoTasks);
+        
+        String indexhtml = FreeMarkerUtils.parseString(fileDir, "index.html.ftl", dataMap);
+        
+    	try {
+    		File file = new File(Context.getSYSPATH() + "index.html");
+			FileUtils.writeStringToFile(file, indexhtml, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -271,6 +297,9 @@ public class ArticleController {
 			Map<String, Object> rtnMap, Page page) {
 		String articlesHtml;
 		List<Article> articles = getArticles(page);
+		
+//		page.setInt("pageNo", page.getPageNo());
+//		page.setInt("totalPage", page.getTotalPage());
 		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("articles", articles);

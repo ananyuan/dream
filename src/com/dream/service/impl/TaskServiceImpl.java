@@ -62,4 +62,9 @@ public class TaskServiceImpl implements TaskService {
 		return this.taskDao.findTasksTodo(page);
 	}
 
+	@Override
+	public List<Task> findTasks(Page page) {
+		return this.taskDao.findTasks(page);
+	}
+
 }

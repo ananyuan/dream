@@ -4,11 +4,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -61,6 +65,7 @@ public class CommUtils {
             params.put(pName, value);
         }
         
+        
         return params;
     }
     
@@ -70,19 +75,31 @@ public class CommUtils {
      * @return 转换成的page对象
      */
     public static Page<?> getPage(String pageStr) {
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	
-    	Page<?> page = null;
+    	Page<?> page = new Page();
 		try {
-			page = objectMapper.readValue(pageStr, Page.class);
+			JSONObject jObject = JSONObject.fromObject(pageStr);
+			
+	        Iterator<?> keys = jObject.keys();
+
+	        while( keys.hasNext() ){
+	            String key = (String)keys.next();
+	            String value = jObject.getString(key); 
+	            
+	            if (key.equalsIgnoreCase("pageNo")) {
+	            	page.setPageNo(Integer.parseInt(value));
+	            } else if (key.equalsIgnoreCase("pageSize")) {
+	            	page.setPageSize(Integer.parseInt(value));
+	            } else if (key.equalsIgnoreCase("totalPage")) {
+	            	page.setTotalPage(Integer.parseInt(value));
+	            } else if (key.equalsIgnoreCase("totalRecord")) {
+	            	page.setTotalRecord(Integer.parseInt(value));
+	            }
+	        }
+			
 			return page;
-		} catch (JsonParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
     	
     	return new Page();
     }

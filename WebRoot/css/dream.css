@@ -145,3 +145,21 @@ footer {
 	text-align: center;
 	background-color:gray;
 }
+
+td.center {
+	text-align: center;
+} 
+
+td.left {
+	text-align: left;
+} 
+
+td.right {
+	text-align: right;
+} 
+
+table th {
+	text-align: center;
+}
+
+

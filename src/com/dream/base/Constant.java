@@ -22,4 +22,9 @@ public class Constant {
     public static final String ACT_TYPE_DELETE = "delete";
     
     public static final String ACT_TYPE_UPDATE = "modify";
+    
+    /**
+     * 查询字段的前缀
+     */
+    public static final String PREFIX_FIELD_QUERY = "search_query_";
 }

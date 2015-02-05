@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
@@ -68,8 +70,8 @@ public class PageInterceptor implements Interceptor {
     	   @SuppressWarnings("rawtypes")
     	   MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap) obj;
     	   
-    	   page = (Page<?>)paramMap.get("param1");
-       }
+    	   page = (Page<?>)paramMap.get("page");
+       } 
        if (null != page) {
            //通过反射获取delegate父类BaseStatementHandler的mappedStatement属性
            MappedStatement mappedStatement = (MappedStatement)ReflectUtil.getFieldValue(delegate, "mappedStatement");
@@ -79,6 +81,12 @@ public class PageInterceptor implements Interceptor {
            String sql = boundSql.getSql();
            //给当前的page参数对象设置总记录数
            this.setTotalRecord(page, mappedStatement, connection);
+           
+           //添加排序
+           if (StringUtils.isNotEmpty(page.getOrder()) && sql.toLowerCase().indexOf("order by") < 0) {
+        	   sql += " order by " + page.getOrder();
+           }
+           
            //获取分页Sql语句
            String pageSql = this.getPageSql(page, sql);
            //利用反射设置当前BoundSql对应的sql属性为我们建立好的分页Sql语句

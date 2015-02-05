@@ -26,7 +26,13 @@
     </select>
     
     <select id="findArticles" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
-        select id,title,chanid,channame,atime,summary,localurl,imgids,sortnum from dream_article order by sortnum, atime desc
+        select id,title,chanid,channame,atime,summary,localurl,imgids,sortnum from dream_article 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="title != null and title != '' ">  
+	            AND title like "%"#{title}"%"
+	        </if>     
+		</trim>
+        order by sortnum, atime desc
     </select>
 
     <select id="findArticlesByChannelId" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">

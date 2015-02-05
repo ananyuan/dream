@@ -24,8 +24,7 @@
 	}
 	if (null != request.getAttribute("chanList")) {
 		chanList = (List) request.getAttribute("chanList");
-	}	
-	
+	}
 %>
 <form class="form-horizontal">
 	<div class="form-group">

@@ -1,4 +1,10 @@
 
+var System  = {
+    getMode:function() {
+    	return "RXTX"; // NODEJS / RXTX 
+    }
+};
+
 /**
  * 
  * @param ajaxUrl 请求url
@@ -168,7 +174,12 @@ function StrToJson(strData) {
 };
 
 
-function goPage(pageNum) {
+/**
+ * @param pageNum 页码
+ * @param reqLocation 请求地址 /article/articles
+ * @param reqLocation 返回数据放在页面上的哪 
+ */
+function goPage(pageNum, reqLocation, locInPage) {
 	var page = {};
 	page["pageNo"] = pageNum;
 	
@@ -188,25 +199,76 @@ function deleteItem(id) {
 	window.location.href = "/";
 }
 
-function switchSkin(skinName){
-	jQuery("#" + skinName).addClass("selected").siblings().removeClass("selected");
-	jQuery("#cssfile").attr("href", "/css/" + skinName + ".css");
-	jQuery.cookie("MyCssSkin", skinName, { path: '/', expires: 10 });
+/**
+ * 
+ * @param columnArray 表格的所有列
+ * @param reqUrl 请求url
+ * @param defaultSort 默认排序
+ * @returns 初始化datatable的参数
+ */
+function getPageParam(columnArray, reqUrl, defaultSort) {
+	var sortField = 1;
+	var sortType = "desc";
+	if (defaultSort) {
+		var sortArray = defaultSort.split(",");
+
+		jQuery.each(columnArray, function(index, item){
+			if (item.mData == sortArray[0]) {
+				sortField = index;
+			}
+		});
+		
+		sortType = sortArray[1];
+	}
+	
+	var pageParam = {
+			"bAutoWidth": false,					//不自动计算列宽度
+			"aoColumns": columnArray ,
+			"aaSorting": [[sortField,sortType]] ,             //默认的排序字段
+			"bProcessing": true,					//加载数据时显示正在加载信息
+			"bServerSide": true,					//指定从服务器端获取数据
+			"bFilter": false,						//不使用过滤功能
+			"bLengthChange": false,					//用户不可改变每页显示数量
+			"iDisplayLength": 20,					//每页显示8条数据
+			"sAjaxSource": reqUrl,					//获取数据的url
+			"fnServerData": retrieveData,			//获取数据的处理函数
+			"sPaginationType": "full_numbers",		//翻页界面类型
+			"oLanguage": {							//汉化
+				"sLengthMenu": "每页显示 _MENU_ 条记录",
+				"sZeroRecords": "没有检索到数据",
+				"sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据；总共有 _TOTAL_ 条记录",
+				"sInfoEmtpy": "没有数据",
+				"sProcessing": "正在加载数据...",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "前页",
+					"sNext": "后页",
+					"sLast": "尾页"
+				}
+			}
+		};
+	
+	return pageParam;
 }
 
-/**
- * 初始化的工作
- */
-jQuery(document).ready(function(){
-	var cookie_skin = jQuery.cookie("MyCssSkin");
-    if (cookie_skin) {
-        switchSkin(cookie_skin);
-    }
 
-    var $li = jQuery("#skinul li");
-    $li.click(function () {
-        switchSkin(this.id);
-    });
-});
+//自定义数据获取函数
+function retrieveData( sSource, aoData, fnCallback ) {
+	if (typeof(setQueryParam) == 'function') { //判断子页面是否存在该函数
+		setQueryParam(aoData);	
+	}
+	
+	$.ajax( {
+		"type": "POST", 
+		"contentType": "application/json",
+		"url": sSource, 
+		"dataType": "json",
+		"data": JSON.stringify(aoData), 
+		"headers": {'Content-Type': 'application/json'}, 
+		"success": function(resp) {
+			fnCallback(resp);
+		}
+	});
+}
 
 

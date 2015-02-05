@@ -2,12 +2,11 @@ package com.dream.base;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
  
 /**
  * 对分页的基本数据进行一个简单的封装
  */
-public class Page<T> {
+public class Page<T> extends HashMap<Object, Object> {
  
     private int pageNo = 1; //页码，默认是第一页
     private int pageSize = 5; //每页显示的记录数，默认是15
@@ -16,15 +15,18 @@ public class Page<T> {
     private List<T> results; //对应的当前页记录
     
     private String order; //排序
-    
-    private Map<String, Object> params = new HashMap<String, Object>(); //其他的参数我们把它分装成一个Map对象
  
+    public Page(){
+    	this.setPageNo(1); //设置默认的页码是1
+    }
+    
     public int getPageNo() {
        return pageNo;
     }
  
     public void setPageNo(int pageNo) {
        this.pageNo = pageNo;
+       this.setInt("pageNo", pageNo);
     }
  
     public int getPageSize() {
@@ -33,6 +35,7 @@ public class Page<T> {
  
     public void setPageSize(int pageSize) {
        this.pageSize = pageSize;
+       this.setInt("pageSize", pageSize);
     }
  
     public int getTotalRecord() {
@@ -44,6 +47,9 @@ public class Page<T> {
        //在设置总页数的时候计算出对应的总页数，在下面的三目运算中加法拥有更高的优先级，所以最后可以不加括号。
        int totalPage = totalRecord%pageSize==0 ? totalRecord/pageSize : totalRecord/pageSize + 1;
        this.setTotalPage(totalPage);
+       
+       this.setInt("totalRecord", totalRecord);
+       this.setInt("totalPage", totalPage);
     }
  
     public int getTotalPage() {
@@ -52,6 +58,7 @@ public class Page<T> {
  
     public void setTotalPage(int totalPage) {
        this.totalPage = totalPage;
+       this.setInt("totalPage", totalPage);
     }
  
     public List<T> getResults() {
@@ -60,14 +67,6 @@ public class Page<T> {
  
     public void setResults(List<T> results) {
        this.results = results;
-    }
-   
-    public Map<String, Object> getParams() {
-       return params;
-    }
-   
-    public void setParams(Map<String, Object> params) {
-       this.params = params;
     }
  
     @Override
@@ -87,5 +86,41 @@ public class Page<T> {
 	public void setOrder(String order) {
 		this.order = order;
 	}
- 
+
+    /**
+	 * 设置上查询的值
+	 * @param key
+	 * @param value
+	 */
+	public void setStr(String key, String value) {
+        put(key, value);
+	}
+	
+	/**
+	 * 获取查询的值
+	 * @param key
+	 * @return
+	 */
+	public String getStr(String key) {
+        return (String)get(key);
+	}
+	
+	
+	/**
+	 * 设置上查询的值
+	 * @param key
+	 * @param value
+	 */
+	public void setInt(String key, int value) {
+        put(key, value);
+	}
+	
+	/**
+	 * 获取查询的值
+	 * @param key
+	 * @return
+	 */
+	public int getInt(String key) {
+        return Integer.parseInt((String)get(key));
+	}
 }

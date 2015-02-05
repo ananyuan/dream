@@ -18,6 +18,8 @@ public interface TaskService {
 
 	public Task findTask(int id);
 	
+	public List<Task> findTasks(Page page);
+	
 	public List<Task> findTasksFinish(Page page);
 	
 	public List<Task> findTasksTodo(Page page);

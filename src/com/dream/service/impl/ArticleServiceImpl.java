@@ -1,6 +1,7 @@
 package com.dream.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.dream.base.Page;
 import com.dream.dao.ArticleDao;
@@ -38,11 +39,6 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> findArticles(Page<?> page) {
-		return articleDao.findArticles(page);
-	}
-
-	@Override
 	public List<Article> findArticlesByChannelId(Page<?> page, int chanId) {
 		return articleDao.findArticlesByChannelId(page, chanId);
 	}
@@ -51,6 +47,13 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Article> findArticles(String lasttime) {
 		return articleDao.findNewArticles(lasttime);
 	}
+	
+	
+	@Override
+	public List<Article> findArticles(Page<?> page) {
+		return articleDao.findArticles(page);
+	}
+	
 
 	public ArticleDao getArticleDao() {
 		return articleDao;
@@ -59,5 +62,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void setArticleDao(ArticleDao articleDao) {
 		this.articleDao = articleDao;
 	}
+
+
 
 }

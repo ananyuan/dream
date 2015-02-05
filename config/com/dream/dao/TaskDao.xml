@@ -25,6 +25,10 @@
         select * from dream_task where id=#{id}
     </select>
     
+    <select id="findTasks" resultType="com.dream.model.Task" parameterType="com.dream.base.Page">
+        select * from dream_task 
+    </select>    
+    
     <select id="findTasksFinish" resultType="com.dream.model.Task" parameterType="com.dream.base.Page">
         select * from dream_task where ttype=2
     </select>

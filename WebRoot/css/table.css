@@ -1,0 +1,28 @@
+body {
+	background-color:gray;
+	padding : 20px;
+}
+
+.outter-div {
+	background-color : white;
+	padding:20px;
+	min-height: 500px;
+}
+
+
+.header-table {
+	padding-bottom : 10px;
+}
+
+.header-table .right-search {
+	float : right;
+}
+
+.header-table .page-header {
+	text-align : center;
+}
+
+.table .xuhao {
+	width : 30px;
+	text-align: center;
+}

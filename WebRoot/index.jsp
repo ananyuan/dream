@@ -27,7 +27,7 @@
                 <div class="well">
                     <h4>Blog Search</h4>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="query_str">
+                        <input type="text" class="form-control" id="query_str" placeholder="输入查询内容">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="full_search_btn">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -46,7 +46,7 @@
                 
                 <!-- Blog Categories Well -->
                 <div class="well">
-                    <h4>未完成</h4>
+                    <h4><a href="#" onclick="toTaskList()">未完成</a></h4>
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled" id="tasksTodoDiv">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="well">
-                    <h4>已完成</h4>
+                    <h4><a href="#" onclick="toTaskList()">已完成</a></h4>
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled" id="tasksFinishDiv">
@@ -83,11 +83,7 @@
 
 
 <script>
-function testPostMsg() {
-	debugger;
-	
-	window.parent.postMessage({'AA': 'BB'}, '*');
-}
+
 
 jQuery(document).ready(function(){
 	showTaskTodo();
@@ -97,8 +93,9 @@ jQuery(document).ready(function(){
 	
 	jQuery("#full_search_btn").bind("click", function(){
 		var queryStr = jQuery("#query_str").val();
-		
-		window.location = "/search/" + queryStr;
+		if (queryStr.length > 0) {
+			window.location = "/search/page/" + queryStr;	
+		}
 	});
 });
 
@@ -142,6 +139,11 @@ function showChannel() {
 	
 	jQuery(channelStr).appendTo(jQuery("#channelsDiv"));
 }
+
+function toTaskList() {
+	window.location = "/task/list";	
+}
+
 
 </script>
 

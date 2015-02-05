@@ -1,28 +1,34 @@
 
 <jsp:include page="header.jsp" flush="true" />
 
-<%@ page import="com.dream.model.Task" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
 
-<% 
-List<Task> tasks;
-if (null != request.getAttribute("allTask")) {
-	tasks = (List<Task>)request.getAttribute("allTask");	
-} else {
-	tasks = new ArrayList<Task>();
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+
+<style>
+body {
+	background-color:gray;
+	padding : 70px 20px 20px 20px;
 }
 
-%>
+.outter-div {
+	background-color : white;
+	padding:20px;
+	min-height: 500px;
+}
 
+</style>
 
-<div class="content paper-border" style="margin-bottom:20px">
+<div class="outter-div">
+<div class="content paper-border inner_div" style="margin-bottom:20px">
 
 <a href="/task/edit/_ADD_" class="btn btn-primary btn-sm">添加TASK</a>
 
-<table class="table table-bordered" id = "myTable">
+<table class="table table-bordered table-hover" id = "myTable">
 	<thead>
 		<tr>
+		    <th>序号</th>
 			<th>标题</th>
 			<th>说明</th>
 			<th>状态</th>
@@ -32,33 +38,31 @@ if (null != request.getAttribute("allTask")) {
 		</tr>
 	</thead>
 	<tbody>
-	
-	<% for (Task task: tasks) {%>
-		<tr class="odd gradeX">
-			<td><%= task.getTitle()%></td>
-			<td><%= task.getDescp()%></td>
-			<td><% if (task.getTtype() == 1){out.print("未完成");} else {out.print("已完成");} %></td>
-			<td class="center"><%= task.getStart()%></td>
-			<td class="center"><%= task.getEndTime()%></td>
-			<td class="center">
-				<a class="btn btn-primary btn-sm" href="#" onclick="edit(<%= task.getId()%>)">编辑</a>
-				<a class="btn btn-danger btn-sm" href="#" onclick="remove(<%= task.getId()%>)">删除</a>
-			</td>
-		</tr>
-	<% } %>	
 	</tbody>
 </table>
 
 </div>
 
+</div>
+
 <script>
 
-function edit(id) {
-	window.location.href = "/task/edit/" + id;
-}
-
-function remove(id) {
+var	oTable;
+$(document).ready(function() {
+	var columnsDef = [							//设定各列宽度
+		            	{ "mData": "xuhao", 'sClass':'center', "bSortable": false, 'sWidth': '30px'},  
+		                { "mData": "title", 'sClass':'left'},   
+		                { "mData": "descp",'sClass':'left', 'sWidth': '360px'},
+		                { "mData": "ttype",'sClass':'center'}, 
+		                { "mData": "start",'sClass':'center'}, 
+		                { "mData": "endTime",'sClass':'center'}, 
+		                { "mData": "caozuo",'sClass':'center', "bSortable": false}
+						];
+	var reqUrl = "/task/search";
+	var defaultSort = "start,desc";
+	var dataTableParam = getPageParam(columnsDef, reqUrl, defaultSort);
 	
-}
+    oTable = $('#myTable').dataTable(dataTableParam);	
+});
 
 </script>
