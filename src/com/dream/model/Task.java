@@ -6,7 +6,7 @@ package com.dream.model;
  * @author anan
  * 
  */
-public class Task extends BaseBean {
+public class Task {
 	private int id = 0;
 	private String title = "";
 	private String descp = "";

@@ -2,9 +2,7 @@ package com.dream.controller.serial.mgr;
 
 import gnu.io.CommPortIdentifier;
 
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -22,48 +20,25 @@ public class SerialPortMgr {
 	private static Log log = LogFactory.getLog(SerialPortMgr.class);
 
 	private static HashMap<String, SerialPorter> serialMap = new HashMap<String, SerialPorter>();
-
 	
 	/**
 	 * 
 	 * @return 获取连接的串口
 	 */
 	public static Set<String> getSerailPorts() {
-		Set<String> rtnSet = new HashSet<String>();
-
-		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-		while (portEnum.hasMoreElements()) {
-			CommPortIdentifier portIdentifier = (CommPortIdentifier) portEnum
-					.nextElement();
-
-			switch (portIdentifier.getPortType()) {
-			case CommPortIdentifier.PORT_SERIAL:
-				try {
-					String portname = portIdentifier.getName();
-					
-					rtnSet.add(portname);
-					
-					if (!serialMap.containsKey(portname)) {
-						serialMap.put(portname, new SerialPorter(portname));	
-					}
-				} catch (Exception e) {
-					System.err.println("Failed to open port " + portIdentifier.getName());
-					log.error("Failed to open port " + portIdentifier.getName(), e);
-				}
-			}
-		}
-
-		return rtnSet;
+		return serialMap.keySet();
 	}
 	
 	/**
 	 * 像串口写数据
 	 * @param portName
 	 * @param data
+	 * @throws Exception 
 	 */
-	public static void sendData(String portName, String data) {
+	public static void sendData(String portName, String data) throws Exception {
 		if (!serialMap.containsKey(portName)) {
-			getSerailPorts();
+			log.error(portName + " 不存在");
+			throw new Exception(portName + " 不存在");
 		}
 		
 		SerialPorter serialPorter = serialMap.get(portName);
@@ -75,6 +50,14 @@ public class SerialPortMgr {
 		serialPorter.sendData(data);
 	}
 
+	/**
+	 * 
+	 * @return 所有的串口的数据信息
+	 */
+	public static HashMap<String, SerialPorter> getPorts() {
+		return serialMap;
+	}
+	
 	/**
 	 * 
 	 * @param portName
@@ -89,16 +72,29 @@ public class SerialPortMgr {
 	 * @param portName 串口
 	 */
 	public static void releasePort(String portName) {
-		serialMap.remove(portName);
+		SerialPorter rmPort = serialMap.get(portName);
+		rmPort.close();
 		
-		getSerailPorts();
+		serialMap.remove(portName);
 	}
+	
 	
 	/**
 	 * 
 	 * @param portName 串口
 	 */
-	public static void openPort(String portName, SerialParam params) {
+	public static void addPort(String portName) {
+		if (!serialMap.containsKey(portName)) {
+			serialMap.put(portName, new SerialPorter(portName));	
+		}
+	}
+	
+	/**
+	 * 
+	 * @param portName 串口
+	 * @throws Exception 
+	 */
+	public static void openPort(String portName, SerialParam params) throws Exception {
 		SerialPorter serialPoter = serialMap.get(portName);
 		if (!serialPoter.isOpen()) {
 			serialPoter.open(params);

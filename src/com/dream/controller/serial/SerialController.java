@@ -1,11 +1,13 @@
 package com.dream.controller.serial;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dream.base.Constant;
+import com.dream.controller.serial.mgr.ReceiveData;
 import com.dream.controller.serial.mgr.SerialPortMgr;
 import com.dream.controller.serial.mgr.SerialPorter;
 import com.dream.controller.serial.model.SendData;
@@ -55,7 +59,8 @@ public class SerialController {
 	}
 	
 	@RequestMapping(value="/sendData", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> sendData(@RequestBody SendData sendData, HttpServletRequest request) {
+	public @ResponseBody Map<String, Object> sendData(@RequestBody SendData sendData, HttpServletRequest request) 
+			 {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
     	
     	String action = sendData.getActionMethod();
@@ -63,7 +68,12 @@ public class SerialController {
     	HashMap<String, Object> dataObj = sendData.getDataObj();
     	
     	if (action.equalsIgnoreCase("writeData")) {
-    		SerialPortMgr.sendData(dataObj.get("PORT_NUM").toString(), dataObj.get("COMMAND").toString());
+    		
+    		try {
+    			SerialPortMgr.sendData(dataObj.get("PORT_NUM").toString(), dataObj.get("COMMAND").toString());
+    		} catch(Exception e) {
+    			rtnMap.put(Constant.RTN_ERR_MSG, e.getMessage());
+    		}
     	} else if (action.equalsIgnoreCase("open")) {
     		//{PORT_NUM=COM4, PARAM_OBJ={baudrate=9600, databits=8, stopbits=1}}
     		
@@ -75,7 +85,11 @@ public class SerialController {
     		params.setDataBits(Integer.parseInt(paramMap.get("databits").toString()));
     		params.setStopBits(Integer.parseInt(paramMap.get("stopbits").toString()));
     		
-    		SerialPortMgr.openPort(portName, params);
+    		try {
+    			SerialPortMgr.openPort(portName, params);
+    		} catch(Exception e) {
+    			rtnMap.put(Constant.RTN_ERR_MSG, e.getMessage());
+    		}
     	} else if (action.equalsIgnoreCase("close")) {
     		String portName = dataObj.get("PORT_NUM").toString();
     		
@@ -93,15 +107,33 @@ public class SerialController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/receive/{portNum}", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> readData(@PathVariable String portNum, HttpServletRequest request) {
+	@RequestMapping(value="/receive/{portNum}", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> readData(@PathVariable String portNum, HttpServletRequest request, HttpServletResponse response) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
     	
+		SerialPorter serialPorter = SerialPortMgr.getSerialPorter(portNum);
+		ReceiveData receiveData = serialPorter.getReceiveData();
     	
     	
-    	
-    	
-    	
+    	PrintWriter out;
+		try {
+			out = response.getWriter();
+			
+			while(true) {
+				Thread.currentThread().sleep(10);
+				
+				String data = receiveData.pop();
+				if (null != data) {
+					out.write("<script>parent.handleRtnMsg('" + data + "')</script>");
+					
+					out.flush();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		//out.close();
     	
 		return rtnMap;
 	}

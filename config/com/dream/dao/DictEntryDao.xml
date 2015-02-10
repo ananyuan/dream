@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.DictEntryDao">
+    
+    <insert id="insert" parameterType="com.dream.model.DictEntry">  
+        insert into dream_dict_entry(code, pcode, name, esort, dictid, dlevel) values(#{code},#{pcode},#{name},#{esort},#{dictid}, #{dlevel})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.DictEntry">  
+        update dream_dict_entry set code=#{code},pcode=#{pcode},name=#{name},esort=#{esort},dictid=#{dictid}, dlevel=#{dlevel}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_dict_entry where id=#{id}
+    </delete>
+    
+    <delete id="deleteByDictId" parameterType="String">  
+        delete from dream_dict_entry where dictid=#{dictid}
+    </delete>    
+    
+    <select id="findEntry" parameterType="String" resultType="com.dream.model.DictEntry">
+        select * from dream_dict_entry where id=#{id}
+    </select>
+    
+    <select id="findEntrys" resultType="com.dream.model.DictEntry" parameterType="com.dream.base.Page">
+        select * from dream_dict_entry 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="dictid != null and dictid != '' ">  
+	            AND dictid=#{dictid}
+	        </if>     
+		</trim>      
+    </select>
+</mapper>

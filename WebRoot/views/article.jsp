@@ -1,6 +1,6 @@
 <jsp:include page="header.jsp" flush="true" />
 <%@ page import="com.dream.model.Article"%>
-<%@ page import="com.dream.model.Channel"%>
+<%@ page import="com.dream.model.DictEntry"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -16,7 +16,7 @@
 
 <%
 	Article article;
-	List<Channel> chanList = new ArrayList();
+	List<DictEntry> chanList = new ArrayList();
 	if (null != request.getAttribute("article")) {
 		article = (Article) request.getAttribute("article");
 	} else {
@@ -37,9 +37,9 @@
 		<label for="chanId" class="col-sm-2 control-label">栏目</label> 
 		<div class="col-sm-3">
 	        <select class="form-control" id="chanId">
-	        	<% for (Channel channel: chanList) {
+	        	<% for (DictEntry channel: chanList) {
 	        		String option = "<option value='"+channel.getCode()+"' ";
-	        		if (channel.getCode() == article.getChanId()) {
+	        		if (channel.getCode().equals(String.valueOf(article.getChanId()))) {
 	        			option += " selected=\"selected\" ";
 	        		}
 	        		option +=  ">"+channel.getName()+"</option>";

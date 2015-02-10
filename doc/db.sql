@@ -104,5 +104,32 @@ CREATE TABLE `dream`.`dream_sicker` (
   
   
   
+CREATE TABLE `dream`.`dream_dict` (
+  `CODE` VARCHAR(45) NOT NULL COMMENT '主键',
+  `NAME` VARCHAR(45) NULL COMMENT '名称',
+  PRIMARY KEY (`CODE`))
+ENGINE = InnoDB
+COMMENT = '字典';
+
+CREATE TABLE `dream`.`dream_dict_entry` (
+  `CODE` VARCHAR(45) NOT NULL COMMENT '编号',
+  `PCODE` VARCHAR(45) NULL COMMENT '父编号',
+  `NAME` VARCHAR(45) NULL COMMENT '名称',
+  `ESORT` VARCHAR(45) NULL COMMENT '排序',
+  `DICTID` VARCHAR(45) NULL COMMENT '字典编码'
+COMMENT = '字典项';
+
+
+ALTER TABLE `dream`.`dream_dict_entry` 
+ADD COLUMN `ID` INT NOT NULL AUTO_INCREMENT FIRST,
+ADD PRIMARY KEY (`ID`);
+
+
+ALTER TABLE `dream`.`dream_dict_entry` 
+CHANGE COLUMN `ESORT` `ESORT` INT NULL DEFAULT NULL COMMENT '排序' ;
+
+
+ALTER TABLE `dream`.`dream_dict_entry` 
+ADD COLUMN `DLEVEL` INT NULL COMMENT '层级' AFTER `DICTID`;
 
 

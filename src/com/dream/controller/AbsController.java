@@ -1,28 +1,26 @@
 package com.dream.controller;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.PathVariable;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.dream.base.Constant;
 import com.dream.base.Page;
-import com.dream.model.Article;
-import com.dream.model.BaseBean;
 import com.dream.utils.DataTableReturnObject;
 import com.dream.utils.JSONParam;
-import com.dream.utils.UuidUtils;
 
 /**
  * 所有 需要显示datatable列表的父类 
@@ -30,6 +28,12 @@ import com.dream.utils.UuidUtils;
  *
  */
 public class AbsController {
+	
+	private static Log log = LogFactory.getLog(AbsController.class);
+	
+	private static final String POJO_PREFIX_GET = "get";
+	
+	private static final String POJO_PREFIX_IS = "is";
 	
 	protected HashMap<String, String> convertToMap(JSONParam[] params) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -59,15 +63,15 @@ public class AbsController {
 		setRtnDataList(map, listPage);
 		
 		int count = page.getTotalRecord();
-		List<BaseBean> rtnList = listPage.getRtnList();
+		List<Map<String, Object>> rtnList = listPage.getRtnList();
 		if (null == rtnList) {
-			rtnList = new ArrayList<BaseBean>();
+			rtnList = new ArrayList<Map<String, Object>>();
 		}
 		
 		//调整序号
 		int iDisplayStart = Integer.parseInt(map.get("iDisplayStart")); 
-		for (BaseBean base: rtnList) {
-			base.setXuhao(++iDisplayStart);
+		for (Map<String, Object> base: rtnList) {
+			base.put(Constant.COLUMN_XUHAO, ++iDisplayStart);
 		}
 		
 		
@@ -116,8 +120,31 @@ public class AbsController {
 	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
 	}
 	
-	
-    
+	/**
+	 * 
+	 * @param pojo 将pojo类转换成Map
+	 * @return map
+	 */
+	protected Map<String, Object> pojoToMap(Object pojo) {
+		Map<String, Object> hashMap = new HashMap<String, Object>();
+		try {
+			Class<? extends Object> classz = pojo.getClass();
+			BeanInfo info = Introspector.getBeanInfo(classz);
+
+			PropertyDescriptor[] props = info.getPropertyDescriptors();
+
+			for (PropertyDescriptor pd : props) {
+				Method method = pd.getReadMethod();
+				if (method.getName().startsWith(POJO_PREFIX_GET) || method.getName().startsWith(POJO_PREFIX_IS)) {
+					String propName = pd.getDisplayName();
+					hashMap.put(propName, method.invoke(pojo, new Object[0]));	
+				}
+			}
+		} catch (Throwable e) {
+			log.error("pojo to map", e);
+		}
+		return hashMap;
+	}
 }
 
 

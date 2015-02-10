@@ -38,6 +38,17 @@
         <property name="taskDao" ref="taskDao"></property>
     </bean>
     
+    <bean id="sickService" class="com.dream.service.serial.impl.SickServiceImpl">
+        <property name="sickerDao" ref="sickerDao"></property>
+    </bean>
+    
+    <bean id="dictService" class="com.dream.service.impl.DictServiceImpl">
+        <property name="dictDao" ref="dictDao"></property>
+    </bean>
+    <bean id="dictEntryService" class="com.dream.service.impl.DictEntryServiceImpl">
+        <property name="dictEntryDao" ref="dictEntryDao"></property>
+    </bean>           
+    
     <bean id="articleService" class="com.dream.service.impl.ArticleServiceImpl">
         <property name="articleDao" ref="articleDao"></property>
     </bean>

@@ -50,6 +50,9 @@ public class StartUpListener implements ServletContextListener {
         
         //系统启动项
         InitLogger.start(Context.getWEBINF());
+        
+        //查询其他事项
+        InitThirdParty.start();
 	}
 
 	

@@ -1,7 +1,9 @@
 package com.dream.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dream.base.Constant;
 import com.dream.base.Page;
-import com.dream.model.Sicker;
 import com.dream.model.Task;
 import com.dream.service.TaskService;
+import com.dream.utils.DictMgr;
 
 @Controller
 @RequestMapping("/task")
@@ -38,14 +41,20 @@ public class TaskController extends AbsController  {
     	Page page = listPage.getPage();
     	
 		List<Task> rtnList = taskService.findTasks(page);
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		Map<String, String> entryMap = DictMgr.getEntrysMap(Constant.DICT_TASK_STATUS);
+		
 		for (Task task: rtnList) {
 			String caozuo = "<a href='/task/edit/"+task.getId()+"'>编辑</a>&nbsp;<a href='/task/edit/"+task.getId()+"'>删除</a>";
 			
-			task.setCaozuo(caozuo);
+			Map<String, Object> map = pojoToMap(task);
+			map.put(Constant.COLUMN_CAOZUO, caozuo);
+			map.put("ttype", entryMap.get(String.valueOf(task.getTtype())));
+			
+			mapList.add(map);
 		}
 		
-		
-		listPage.setRtnList(rtnList);
+		listPage.setRtnList(mapList);
 	}
     
     

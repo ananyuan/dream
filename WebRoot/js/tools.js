@@ -229,7 +229,7 @@ function getPageParam(columnArray, reqUrl, defaultSort) {
 			"bServerSide": true,					//指定从服务器端获取数据
 			"bFilter": false,						//不使用过滤功能
 			"bLengthChange": false,					//用户不可改变每页显示数量
-			"iDisplayLength": 20,					//每页显示8条数据
+			"iDisplayLength": 50,					//每页显示8条数据
 			"sAjaxSource": reqUrl,					//获取数据的url
 			"fnServerData": retrieveData,			//获取数据的处理函数
 			"sPaginationType": "full_numbers",		//翻页界面类型
@@ -269,6 +269,42 @@ function retrieveData( sSource, aoData, fnCallback ) {
 			fnCallback(resp);
 		}
 	});
+}
+
+/**
+ * 重新设置iframe的高度
+ */
+function resetFrameHei(){
+	//设置高度， 延时
+	setTimeout(function() {
+		adjustIframe("relate_iframe");
+	}, 500);
+}
+
+/**
+ * 
+ * @param frameId frame的ID
+ */
+function adjustIframe(frameId) {
+	var iframe = document.getElementById(frameId);
+	if (!iframe) {
+		iframe = parent.document.getElementById(frameId);
+	}
+	var idoc = iframe.contentWindow && iframe.contentWindow.document
+			|| iframe.contentDocument;
+	var callback = function() {
+		var iheight = Math.max(idoc.body.scrollHeight,
+				idoc.documentElement.scrollHeight); //取得其高
+		iframe.style.height = iheight + 20 + "px";
+	}
+	if (iframe.attachEvent) {
+		iframe.attachEvent("onload", callback);
+	} else {
+		iframe.onload = callback
+	}
+	
+	var iheight = Math.max(idoc.body.scrollHeight, idoc.documentElement.scrollHeight); //取得其高
+	iframe.style.height = iheight + 20 + "px";
 }
 
 

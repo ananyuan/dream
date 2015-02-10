@@ -28,15 +28,15 @@ import com.dream.base.Page;
 import com.dream.message.MsgSender;
 import com.dream.model.ActLog;
 import com.dream.model.Article;
-import com.dream.model.Channel;
+import com.dream.model.DictEntry;
 import com.dream.model.Task;
 import com.dream.search.IndexArticleTask;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
-import com.dream.service.ChannelService;
 import com.dream.service.TaskService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
+import com.dream.utils.DictMgr;
 import com.dream.utils.DrThreadPool;
 import com.dream.utils.FileMgr;
 import com.dream.utils.FreeMarkerUtils;
@@ -64,8 +64,7 @@ public class ArticleController {
             mav.setViewName("article");
             
             //添加栏目列表
-            ChannelService chanService = SpringContextUtil.getBean("channelService");
-            List<Channel> chanList = chanService.selectAll();
+            List<DictEntry> chanList = DictMgr.getDict(Constant.DICT_CHANNEL).getChilds();
             
             mav.addObject("chanList", chanList);
             
@@ -140,9 +139,9 @@ public class ArticleController {
     	}
     	
     	int chanId = article.getChanId();
-    	ChannelService chanService = SpringContextUtil.getBean("channelService");
-    	Channel channel = chanService.findChannel(chanId);
-    	article.setChanname(channel.getName());
+    	
+    	DictEntry entry = DictMgr.getEntry(Constant.DICT_CHANNEL, String.valueOf(chanId));
+    	article.setChanname(entry.getName());
     	
     	String localurl = CommUtils.getArticleLocal(article.getId()); 
     	
@@ -195,9 +194,6 @@ public class ArticleController {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("articles", articles);
 		dataMap.put("_PAGE_", page);
-//		page.setInt("pageNo", page.getPageNo());
-//		page.setInt("totalPage", page.getTotalPage());
-		
 		
 		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
 		
@@ -210,16 +206,13 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 		
-    	//栏目
-        ChannelService chanService = SpringContextUtil.getBean("channelService");
-        List<Channel> chanList = chanService.selectAll();
-    	
         // 已/未 完成
         TaskService taskService = SpringContextUtil.getBean("taskService");
-        List<Task> finishTasks = taskService.findTasksFinish(page);
-        List<Task> todoTasks = taskService.findTasksTodo(page);
+        Page taskPage = new Page();
+        List<Task> finishTasks = taskService.findTasksFinish(taskPage);
+        List<Task> todoTasks = taskService.findTasksTodo(taskPage);
     	
-        dataMap.put("channels", chanList);
+        dataMap.put("channels", DictMgr.getDict(Constant.DICT_CHANNEL).getChilds());
         dataMap.put("finishTasks", finishTasks);
         dataMap.put("todoTasks", todoTasks);
         

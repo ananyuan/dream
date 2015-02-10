@@ -16,12 +16,26 @@ public class Constant {
     
     public static final String CACHE_TYPE_CONFIG = "CACHE_TYPE_CONFIG";
     
+    public static final String CACHE_TYPE_DICT = "CACHE_TYPE_DICT";
+    
+    
+    public static final String RTN_ERR_MSG = "_RTN_ERR_MSG_";
     
     public static final String ACT_TYPE_ADD = "add";
     
     public static final String ACT_TYPE_DELETE = "delete";
     
     public static final String ACT_TYPE_UPDATE = "modify";
+    
+    
+    public static final String COLUMN_XUHAO = "xuhao";
+    
+    public static final String COLUMN_CAOZUO = "caozuo";
+    
+    public static final String DICT_CHANNEL = "D_CHANNEL";
+    
+    public static final String DICT_TASK_STATUS = "D_TASK_STATUS";
+    
     
     /**
      * 查询字段的前缀
