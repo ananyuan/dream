@@ -1,47 +1,33 @@
 
-<jsp:include page="header.jsp" flush="true" />
+<jsp:include page="header_banner_no.jsp" flush="true" />
 
-		<div class="row-fluid">
-					
-			<div class="row-fluid">
-				<div class="login-box">
-					<div class="icons">
-						<a href="index.html"><i class="halflings-icon home"></i></a>
-						<a href="#"><i class="halflings-icon cog"></i></a>
-					</div>
-					<h2>Login to your account</h2>
-					<form class="form-horizontal" action="index.html" method="post">
-						<fieldset>
-							
-							<div class="input-prepend" title="Username">
-								<span class="add-on"><i class="halflings-icon user"></i></span>
-								<input class="input-large span10" name="username" id="username" type="text" placeholder="type username"/>
-							</div>
-
-							<div class="input-prepend" title="Password">
-								<span class="add-on"><i class="halflings-icon lock"></i></span>
-								<input class="input-large span10" name="password" id="password" type="password" placeholder="type password"/>
-							</div>
-
-							<div class="button-login">	
-								<button type="button" onclick="login()" class="btn btn-primary">Login</button>
-							</div>
-					</form>
-				</div><!--/span-->
-			</div><!--/row-->
-			
-
-	</div><!--/.fluid-container-->
+    <div class="container" style="margin-top:72px">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="用户名" id="username" type="text" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="密码" id="password" type="password" value="">
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <a href="#" onclick="login()" class="btn btn-lg btn-primary btn-block">Login</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-<!-- div style="margin:200px">
-
-帐号:<input type="text" id="username" value=""><br>  
-密码:<input type="password" id="password" value=""><br>  
-
-<input type="button" onclick="login()"  value="登录">  
-
-</div-->
 
 <script>
 

@@ -1,29 +1,17 @@
 
-<jsp:include page="../header.jsp" flush="true" />
+<jsp:include page="../header_banner_no.jsp" flush="true" />
 
-<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
-
-<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
-
-<style>
-body {
-	background-color:gray;
-	padding : 70px 20px 20px 20px;
-}
-
-.outter-div {
-	background-color : white;
-	padding:20px;
-	min-height: 500px;
-}
-
-</style>
 
 <div class="outter-div">
 <div class="content paper-border inner_div" style="margin-bottom:20px">
 
+<div class="center">
+	<h2>字典</h2>
+</div>
+
 <a href="/dict/edit/_ADD_" class="btn btn-primary btn-sm">添加</a>
+
+
 
 <table class="table table-bordered table-hover" id = "myTable">
 	<thead>
@@ -75,5 +63,10 @@ function querySearch(){
 	//刷新Datatable，会自动激发retrieveData
 	oTable.fnDraw();	
 }
+
+jQuery(document).ready(function(){
+	resetFrameHei();
+});
+
 
 </script>

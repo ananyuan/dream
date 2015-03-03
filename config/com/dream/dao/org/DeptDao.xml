@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.org.DeptDao">
+    
+    <insert id="insert" parameterType="com.dream.model.org.Dept">  
+        insert into tb_dept(code, pcode, name, dlevel, dsort, dpath) values(#{code}, #{pcode}, #{name}, #{dlevel}, #{dsort}, #{dpath})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.org.Dept">  
+        update tb_dept set pcode=#{pcode}, name=#{name}, dlevel=#{dlevel}, dsort=#{dsort}, dpath=#{dpath}  where code=#{code}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from tb_dept where code=#{code}
+    </delete>
+    
+    <select id="findDept" parameterType="String" resultType="com.dream.model.org.Dept">
+        select * from tb_dept where code=#{code}
+    </select>
+    
+    <select id="findDepts" resultType="com.dream.model.org.Dept" parameterType="com.dream.base.Page">
+        select * from tb_dept 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="pcode != null and pcode != '' ">  
+	            AND pcode = #{pcode}
+	        </if>            
+		</trim>        
+    </select>
+</mapper>

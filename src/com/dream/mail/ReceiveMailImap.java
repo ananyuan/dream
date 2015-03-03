@@ -1,17 +1,17 @@
 package com.dream.mail;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.mail.Flags.Flag;
 import javax.mail.search.MessageIDTerm;
 import javax.mail.search.SearchTerm;
 
@@ -173,9 +173,8 @@ public class ReceiveMailImap {
 	 * 收取邮件
 	 * @throws Exception 
 	 */
-	public HashMap<String, String> receiveMail() throws Exception {
-		
-		HashMap<String, String> fileMsgs = new HashMap<String, String>();
+	public List<MailBean> receiveMail() throws Exception {
+		List<MailBean> mails = new ArrayList<MailBean>();
 		
 		Folder folder = null;
 		Store store = null;
@@ -191,10 +190,12 @@ public class ReceiveMailImap {
 
 			for (int i = 0; i < messages.length; ++i) {
 				System.out.println("MESSAGE #" + (i + 1) + ":");
-				Message msg = messages[i];
+				Message message = messages[i];
 				
 				try {
-				   parseMsg(msg, fileMsgs);
+					MailBean mailBean = parseMsg(message);
+					
+					mails.add(mailBean);
 				} catch (Exception e) {
 					log.error("解析message出错 " , e);
 				}
@@ -212,24 +213,21 @@ public class ReceiveMailImap {
 					store.close();
 				}
 			} catch (MessagingException e) {
-				
-				//log.error("MessagingException:  ", e);
+				log.error("MessagingException:  ", e);
 			}
 		}
-		
-		
-		return fileMsgs;
+		return mails;
 	}
 
 	/**
 	 * 解析邮件内容
-	 * @param msg
+	 * @param message 一条邮件记录
 	 * @throws IOException
 	 * @throws MessagingException
 	 */
-	private void parseMsg(Message msg, HashMap<String, String> fileMsgs) throws IOException, MessagingException {
+	private MailBean parseMsg(Message message) throws IOException, MessagingException {
 		log.debug("~~~~~~~~~~~~~~~~~~~~~~~~ 解析开始 " );
-		ParseMessage parseMessage = new ParseMessage(msg, userMail);
+		ParseMessage parseMessage = new ParseMessage(message, userMail);
 		log.debug("~~~~~~~~~~~~~~~~~~~~~~~~ 解析结束 " );
 		
 		MailBean mailBean = parseMessage.getMailBean();
@@ -241,6 +239,10 @@ public class ReceiveMailImap {
 		    	String plainContent = plainContent(contentList);
 		    }
 		}
+		
+		mailBean.setContents(contentList);
+		
+		return mailBean;
 	}
 
 	/**

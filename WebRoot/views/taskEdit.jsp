@@ -1,6 +1,6 @@
 
 
-<jsp:include page="header.jsp" flush="true" />
+<jsp:include page="header_banner_no.jsp" flush="true" />
 
 <link rel="stylesheet" href="/css/datepicker3.css" />
 <script charset="utf-8" src="/js/bootstrap-datepicker.js"></script>
@@ -16,12 +16,15 @@ if (null != request.getAttribute("task")) {
 }
 
 %>
+
+<div class="outter-div">
+<div class="header-table">
+	<h2 class="page-header">
+		任务
+	</h2>
+</div>
+
 <form class="form-horizontal">
-  <div class="form-group">
-  	<div class="col-sm-2 control-label">
-  	<input type="button" class="btn btn-primary" id="submit" onclick="javascript:history.go(-1)" value="返回"/>
-  	</div>
-  </div>
 
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">标题</label>
@@ -71,6 +74,8 @@ if (null != request.getAttribute("task")) {
   
 </form>
 
+</div>
+
 <script>
 
 
@@ -93,5 +98,9 @@ function save() {
 	
 	window.location.href = "/task/list";
 }
+
+jQuery(document).ready(function(){
+	resetFrameHei();
+});
 
 </script>

@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp" flush="true" />
+<jsp:include page="header_banner_no.jsp" flush="true" />
 <%@ page import="com.dream.model.Article"%>
 <%@ page import="com.dream.model.DictEntry"%>
 <%@ page import="java.util.List"%>
@@ -26,6 +26,14 @@
 		chanList = (List) request.getAttribute("chanList");
 	}
 %>
+
+<div class="outter-div">
+<div class="header-table">
+	<h2 class="page-header">
+		发布文章
+	</h2>
+</div>
+
 <form class="form-horizontal">
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">标题</label> 
@@ -76,8 +84,8 @@
 		</div>
 	</div>
 
-	<div class="form-group col-sm-12">
-		<div style="text-align: center">
+	<div class="form-group">
+		<div style="text-align: center" class="col-sm-12">
 			<input type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存" />
 		</div>
 	</div>
@@ -86,7 +94,7 @@
 	<input type="hidden" id="imgids" value="<%=article.getImgids()%>">
 </form>
 
-
+</div>
 
 <script>
 	var editor;
@@ -112,7 +120,7 @@
 
 		// 设置HTML内容
 		//editor.html('HTML内容');
-		window.location.href = "/";
+		window.location.href = "/article/list";
 	}
 
 	function handleFileInfo(info) {
@@ -129,4 +137,10 @@
 
 		editor.insertHtml(imgHtml);
 	}
+
+
+	jQuery(document).ready(function(){
+		resetFrameHei();
+	});	
+	
 </script>

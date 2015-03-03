@@ -94,7 +94,7 @@ public class DictMgr {
 		Dict dict = getDict(dictId);
 		if (null != dict) {
 			return dict.getChilds();
-		}
+		} 
 		
 		return null;
 	}

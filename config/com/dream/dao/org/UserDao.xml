@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.org.UserDao">
+    <select id="countAll" resultType="int">  <!-- 查询表中记录总数 -->
+        select count(*) c from tb_user;
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.org.User">    <!-- 向数据库中插入用户 -->
+        insert into tb_user(id, username,password,email,sex,age,deptcode, usort, loginname) values(#{id}, #{username},#{password},#{email},#{sex},#{age}, #{deptcode}, #{usort}, #{loginname})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.org.User">     <!-- 更新库中的用户 -->
+        update tb_user set loginname=#{loginname}, username=#{username},email=#{email},sex=#{sex},age=#{age}, deptcode=#{deptcode}, usort=#{usort} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">    <!-- 删除用户 -->
+        delete from tb_user where id=#{id}
+    </delete>
+    
+    <select id="findUser" parameterType="String" resultType="com.dream.model.org.User">
+        select * from tb_user where id=#{id}
+    </select>
+    
+    <select id="findUserByLoginname" parameterType="String" resultType="com.dream.model.org.User">
+        select * from tb_user where loginname=#{loginname}
+    </select>    
+    
+    <select id="findUsers" resultType="com.dream.model.org.User" parameterType="com.dream.base.Page">
+        select * from tb_user 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="deptcode != null and deptcode != '' ">  
+	            AND deptcode = #{deptcode}
+	        </if>            
+		</trim>        
+    </select>    
+</mapper>

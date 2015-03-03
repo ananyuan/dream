@@ -8,7 +8,6 @@
        </plugin>  
     </plugins>    
     <mappers>
-        <mapper resource="com/dream/dao/UserDao.xml"/>
         <mapper resource="com/dream/dao/TaskDao.xml"/>
         <mapper resource="com/dream/dao/ChannelDao.xml"/>
         <mapper resource="com/dream/dao/ArticleDao.xml"/>

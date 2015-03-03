@@ -1,5 +1,7 @@
 package com.dream.mail;
 
+import java.util.List;
+
 public class MailBean {
 
 	private String subject = "";
@@ -25,6 +27,8 @@ public class MailBean {
 	private boolean isOpen = false;
 
 	private boolean hasFile = false;
+	
+	private List<MailContent> contents;
 
 	public String getSubject() {
 		return subject;
@@ -120,6 +124,14 @@ public class MailBean {
 
 	public void setHasFile(boolean hasFile) {
 		this.hasFile = hasFile;
+	}
+
+	public List<MailContent> getContents() {
+		return contents;
+	}
+
+	public void setContents(List<MailContent> contents) {
+		this.contents = contents;
 	}
 
 }

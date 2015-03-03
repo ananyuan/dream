@@ -1,5 +1,5 @@
 
-<jsp:include page="header.jsp" flush="true" />
+<jsp:include page="header_banner_no.jsp" flush="true" />
 
 <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
 
@@ -9,7 +9,7 @@
 <style>
 body {
 	background-color:gray;
-	padding : 70px 20px 20px 20px;
+	padding : 10px 20px 20px 20px;
 }
 
 .outter-div {
@@ -63,6 +63,10 @@ $(document).ready(function() {
 	var dataTableParam = getPageParam(columnsDef, reqUrl, defaultSort);
 	
     oTable = $('#myTable').dataTable(dataTableParam);	
+});
+
+jQuery(document).ready(function(){
+	resetFrameHei();
 });
 
 </script>

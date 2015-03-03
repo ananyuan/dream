@@ -1,6 +1,6 @@
 
 
-<jsp:include page="../header.jsp" flush="true" />
+<jsp:include page="../header_banner_no.jsp" flush="true" />
 
 <link rel="stylesheet" href="/css/datepicker3.css" />
 <script charset="utf-8" src="/js/bootstrap-datepicker.js"></script>

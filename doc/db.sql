@@ -133,3 +133,49 @@ ALTER TABLE `dream`.`dream_dict_entry`
 ADD COLUMN `DLEVEL` INT NULL COMMENT '层级' AFTER `DICTID`;
 
 
+CREATE TABLE `dream`.`dream_menu` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` VARCHAR(45) NULL COMMENT '名称',
+  `url` VARCHAR(45) NULL COMMENT '地址',
+  `mtype` VARCHAR(10) NULL COMMENT '类型',
+  `mclass` VARCHAR(100) NULL COMMENT '样式',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+COMMENT = '菜单';
+
+ALTER TABLE `dream`.`dream_menu` 
+ADD COLUMN `msort` INT NULL COMMENT '排序' AFTER `mclass`;
+
+
+ALTER TABLE `dream`.`dream_menu` 
+ADD COLUMN `pid` INT NULL COMMENT '父ID' AFTER `msort`;
+
+
+ALTER TABLE `dream`.`dream_menu` 
+ADD COLUMN `mlevel` INT NULL COMMENT '层级' AFTER `pid`,
+ADD COLUMN `mpath` VARCHAR(100) NULL COMMENT '路径' AFTER `mlevel`;
+
+
+
+CREATE TABLE `dream`.`tb_dept` (
+  `code` VARCHAR(45) NOT NULL COMMENT '编码',
+  `pcode` VARCHAR(45) NULL COMMENT '父编码',
+  `name` VARCHAR(50) NULL COMMENT '名称',
+  `dlevel` INT NULL COMMENT '层级',
+  `dpath` VARCHAR(200) NULL COMMENT '路径',
+  `dsort` INT NULL COMMENT '排序',
+  PRIMARY KEY (`code`))
+COMMENT = '部门';
+
+
+ALTER TABLE `dream`.`tb_user` 
+ADD COLUMN `deptcode` VARCHAR(45) NULL COMMENT '部门' AFTER `sex`,
+ADD COLUMN `usort` INT NULL COMMENT '排序' AFTER `deptcode`;
+
+ALTER TABLE `dream`.`tb_user` 
+CHANGE COLUMN `id` `id` VARCHAR(45) NOT NULL COMMENT '主键' ;
+
+ALTER TABLE `dream`.`tb_user` 
+ADD COLUMN `loginname` VARCHAR(45) NULL COMMENT '登录名' AFTER `id`;
+
+

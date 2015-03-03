@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.MenuDao">
+    
+    <insert id="insert" parameterType="com.dream.model.Menu">  
+        insert into dream_menu(id, name, url, mtype, mclass, msort, pid, mlevel, mpath) values(#{id}, #{name}, #{url}, #{mtype}, #{mclass}, #{msort}, #{pid}, #{mlevel}, #{mpath})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Menu">  
+        update dream_menu set url=#{url}, name=#{name}, mtype=#{mtype}, mclass=#{mclass}, msort=#{msort}, pid=#{pid}, mlevel=#{mlevel}, mpath=#{mpath}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_menu where id=#{id}
+    </delete>
+    
+    <select id="findMenu" parameterType="int" resultType="com.dream.model.Menu">
+        select * from dream_menu where id=#{id}
+    </select>
+    
+    <select id="findMenus" resultType="com.dream.model.Menu" parameterType="com.dream.base.Page">
+        select * from dream_menu 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="pid != null and pid != '' ">  
+	            AND pid = #{pid}
+	        </if>
+			<if test="mtype != null and mtype != '' ">  
+	            AND mtype = #{mtype}
+	        </if>	              
+		</trim>        
+    </select>
+</mapper>

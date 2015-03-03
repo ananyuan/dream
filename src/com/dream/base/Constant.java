@@ -8,6 +8,7 @@ package com.dream.base;
 public class Constant {
     public static final String PATH_SEPARATOR = "/";
     
+    public static final String COMMA_SEPARATOR = ",";
     
     public static final String FILE_PATH = "FILE_PATH";
     
@@ -17,6 +18,14 @@ public class Constant {
     public static final String CACHE_TYPE_CONFIG = "CACHE_TYPE_CONFIG";
     
     public static final String CACHE_TYPE_DICT = "CACHE_TYPE_DICT";
+    
+    public static final String CACHE_TYPE_USER = "CACHE_TYPE_USER";
+    
+    public static final String CACHE_TYPE_DEPT = "CACHE_TYPE_DEPT";
+    
+    public static final String CACHE_TYPE_USER_LIST = "CACHE_TYPE_USER_LIST";
+    
+    public static final String CACHE_TYPE_DEPT_LIST = "CACHE_TYPE_DEPT_LIST";
     
     
     public static final String RTN_ERR_MSG = "_RTN_ERR_MSG_";
@@ -36,9 +45,19 @@ public class Constant {
     
     public static final String DICT_TASK_STATUS = "D_TASK_STATUS";
     
+    public static final String DICT_SEX = "D_SEX";
+    
+    public static final String DICT_MENU_TYPE = "D_MENU_TYPE";
+   
+    
+    public static final int QUERY_COUNT_MAX = 1000;
     
     /**
      * 查询字段的前缀
      */
     public static final String PREFIX_FIELD_QUERY = "search_query_";
+
+	
+
+	
 }

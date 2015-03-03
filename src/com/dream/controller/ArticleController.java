@@ -2,6 +2,7 @@ package com.dream.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ import com.dream.utils.UuidUtils;
 
 @Controller
 @RequestMapping("/article")
-public class ArticleController {
+public class ArticleController extends AbsController {
 	
 	private static Log log = LogFactory.getLog(ArticleController.class);
 	
@@ -291,18 +292,9 @@ public class ArticleController {
 		String articlesHtml;
 		List<Article> articles = getArticles(page);
 		
-//		page.setInt("pageNo", page.getPageNo());
-//		page.setInt("totalPage", page.getTotalPage());
-		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("articles", articles);
 		dataMap.put("_PAGE_", page);
-		
-		if (null != session.getAttribute("USER")) {
-			rtnMap.put("_SESSION_", session.getAttribute("USER"));
-			
-			dataMap.put("canEdit", true);
-		} 
 		
 		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
 		
@@ -320,5 +312,44 @@ public class ArticleController {
     @RequestMapping(value="/list/{lasttime}", method = RequestMethod.GET)
 	public @ResponseBody List<Article> getArticlesInJSON(@PathVariable String lasttime) {
     	return articleService.findArticles(lasttime);
+	}
+    
+    
+    @RequestMapping(value="list")
+    public ModelAndView list(){
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("article/article_list");
+        
+        return mav;
+    }
+    
+    @Override
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+    	log.debug("SickController getRtnDataList");
+		
+    	Page page = listPage.getPage();
+    	
+		List<Article> rtnList = articleService.findArticles(page);
+		
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		
+		Map<String, String> entryMap = DictMgr.getEntrysMap(Constant.DICT_CHANNEL);
+		
+		for (Article article: rtnList) {
+			String caozuo = "<a href='/article/edit/"+article.getId()+"'>编辑</a>";
+			
+			caozuo += "&nbsp;<a href='#' onclick=deleteItem('"+article.getId()+"')>删除</a>";
+			
+			caozuo += "&nbsp;<a href='"+article.getLocalurl()+"' target='_blank'>预览</a>";
+			
+			Map<String, Object> map = pojoToMap(article);
+			map.put(Constant.COLUMN_CAOZUO, caozuo);
+			map.put("chanId", entryMap.get(String.valueOf(article.getChanId())));
+			
+			mapList.add(map);
+		}
+		
+		
+		listPage.setRtnList(mapList);
 	}
 }

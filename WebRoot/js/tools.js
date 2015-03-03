@@ -5,6 +5,11 @@ var System  = {
     }
 };
 
+function randomStr() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
+
+
 /**
  * 
  * @param ajaxUrl 请求url
@@ -290,6 +295,11 @@ function adjustIframe(frameId) {
 	if (!iframe) {
 		iframe = parent.document.getElementById(frameId);
 	}
+	
+	if (!iframe) {
+		return false;
+	}
+	
 	var idoc = iframe.contentWindow && iframe.contentWindow.document
 			|| iframe.contentDocument;
 	var callback = function() {

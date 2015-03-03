@@ -1,0 +1,40 @@
+/**
+ * 右侧 main_frame 中的样式，没有banner, 
+*/
+
+body {
+	background-color: gray;
+	padding : 10px 20px 20px 20px;
+}
+
+.center {
+	text-align: center;
+}
+
+.outter-div {
+	background-color : white;
+	padding:20px;
+	min-height: 500px;
+}
+
+.left-div {
+	border: 0px solid;
+	min-height: 500px;
+}
+
+.right-div {
+	border: 0px solid;
+	min-height: 500px;
+	
+}
+
+/** 设置树 下面的 按钮 居中 */
+.ui-dialog .ui-dialog-buttonpane {
+	padding: .3em .4em .5em .4em;
+	text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float : center;
+}
+

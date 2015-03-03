@@ -1,10 +1,7 @@
 
 <jsp:include page="../header_banner_no.jsp" flush="true" />
 
-<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
-
-<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="/css/relate.css" />
 
 <% 
 String dictId = "";
@@ -13,19 +10,6 @@ if (null != request.getAttribute("dictId")) {
 } 
 
 %>
-
-<style>
-body {
-	padding : 20px 20px 20px 20px;
-}
-
-.outter-div {
-	background-color : white;
-	padding:20px;
-	min-height: 500px;
-}
-
-</style>
 
 <div class="outter-div">
 <div class="content paper-border inner_div" style="margin-bottom:20px">

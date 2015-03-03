@@ -1,21 +1,6 @@
-<#if canEdit?? && canEdit>
-<div>
-<a href="/article/edit/_ADD_" class="btn btn-primary btn-sm">添加BLOG</a>
-<a href="/task/list" class="btn btn-primary btn-sm">TASKS</a>
-<a href="/task/edit/_ADD_" class="btn btn-primary btn-sm">添加TASK</a>
-<hr>
-</div>
-</#if>	
-
 <#list articles as article>
     <h2>
         <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
-		<#if canEdit?? && canEdit>
-			<div style="float:right">
-				<a class="btn btn-primary btn-sm" href="/article/edit/${article.id}">编辑</a>
-				<a class="btn btn-danger btn-sm" href="#" onclick="deleteItem('${article.id}')">删除</a>
-			</div>	
-		</#if>	
     </h2>
 
     <p><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>

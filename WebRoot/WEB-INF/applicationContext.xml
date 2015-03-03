@@ -24,14 +24,12 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
     
-
-    <!-- bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-         <property name="mapperInterface" value="com.dream.dao.UserDao"></property>
-         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-    </bean-->
-    
-    <bean id="userService" class="com.dream.service.impl.UserServiceImpl">
+    <bean id="userService" class="com.dream.service.org.UserServiceImpl">
         <property name="userDao" ref="userDao"></property>
+    </bean>
+    
+    <bean id="deptService" class="com.dream.service.org.DeptServiceImpl">
+        <property name="deptDao" ref="deptDao"></property>
     </bean>
     
     <bean id="taskService" class="com.dream.service.impl.TaskServiceImpl">
@@ -47,7 +45,10 @@
     </bean>
     <bean id="dictEntryService" class="com.dream.service.impl.DictEntryServiceImpl">
         <property name="dictEntryDao" ref="dictEntryDao"></property>
-    </bean>           
+    </bean>     
+    <bean id="menuService" class="com.dream.service.impl.MenuServiceImpl">
+        <property name="menuDao" ref="menuDao"></property>
+    </bean>
     
     <bean id="articleService" class="com.dream.service.impl.ArticleServiceImpl">
         <property name="articleDao" ref="articleDao"></property>
