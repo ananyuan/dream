@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Constant;
 import com.dream.base.Page;
+import com.dream.base.acl.AuthorityType;
+import com.dream.base.acl.FireAuthority;
 import com.dream.model.Menu;
 import com.dream.service.MenuService;
 import com.dream.utils.DictMgr;
@@ -34,6 +36,7 @@ public class MenuController extends AbsController {
 	@Autowired
 	private MenuService menuService;
 	
+	@FireAuthority(authorityTypes = {AuthorityType.SALES_ORDER_DELETE, AuthorityType.SALES_ORDER_CREATE})
     @RequestMapping(value="list")
     public ModelAndView list(){
         ModelAndView mav=new ModelAndView();
@@ -43,7 +46,7 @@ public class MenuController extends AbsController {
     }
 	
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("MenuController getRtnDataList");
 		
     	Page page = listPage.getPage();
@@ -56,7 +59,11 @@ public class MenuController extends AbsController {
 		
 		for (Menu menu: rtnList) {
 			String caozuo = "<a href='/menu/edit/"+menu.getId()+"'>编辑</a>&nbsp;";
-			caozuo += "&nbsp;<a href='#' onclick=deleteItem('"+menu.getId()+"')>删除</a>";
+			caozuo += "&nbsp;<a href='#' onclick=deleteItem('"+menu.getId()+"')>删除</a>&nbsp;";
+			
+			if (menu.getUrl().length() > 0) {
+				caozuo += "&nbsp;<a href='#' onclick=preview('"+menu.getUrl()+"')>预览</a>&nbsp;";	
+			}
 			
 			Map<String, Object> map = pojoToMap(menu);
 			map.put(Constant.COLUMN_CAOZUO, caozuo);

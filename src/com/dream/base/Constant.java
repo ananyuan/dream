@@ -17,6 +17,8 @@ public class Constant {
     
     public static final String CACHE_TYPE_CONFIG = "CACHE_TYPE_CONFIG";
     
+    public static final String CACHE_TYPE_WF = "CACHE_TYPE_WF";
+    
     public static final String CACHE_TYPE_DICT = "CACHE_TYPE_DICT";
     
     public static final String CACHE_TYPE_USER = "CACHE_TYPE_USER";
@@ -57,7 +59,13 @@ public class Constant {
      */
     public static final String PREFIX_FIELD_QUERY = "search_query_";
 
-	
+    public static final int YES = 1;
 
-	
+    public static final int NO = 2;
+    
+    
+    public static final int WF_NODE_START = 1;
+    
+    
+    public static final String WF_URL_SUFFIX = ".urlsuffix";
 }

@@ -7,6 +7,7 @@ public class DictEntry {
 	private int id = 0;
 	private String code = "";
 	private String pcode = "";
+	private String pname = "";
 	private String name = "";
 	private int esort = 0;
 	private String dictid = "";
@@ -61,6 +62,12 @@ public class DictEntry {
 	}
 	public void setChilds(List<DictEntry> childs) {
 		this.childs = childs;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
 	
 	

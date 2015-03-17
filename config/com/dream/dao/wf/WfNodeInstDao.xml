@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.wf.WfNodeInstDao">
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dream.model.wf.WfNodeInst">  
+        insert into dream_wf_node_inst(wfid, nodeid, nodename, totime, touser, tousername, fromuser, fromusername, running) 
+        values(#{wfid}, #{nodeid}, #{nodename}, #{totime}, #{touser}, #{tousername}, #{fromuser}, #{fromusername}, #{running})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.wf.WfNodeInst">  
+        update dream_wf_node_inst set donetime=#{donetime},doneuser=#{doneuser},doneusername=#{doneusername}, running=#{running}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_wf_node_inst where id=#{id}
+    </delete>
+    
+    <select id="findWfNodeInst" parameterType="int" resultType="com.dream.model.wf.WfNodeInst">
+        select * from dream_wf_node_inst where id=#{id}
+    </select>
+    
+    <select id="findWfNodeInsts" resultType="com.dream.model.wf.WfNodeInst" parameterType="com.dream.base.Page">
+        select * from dream_wf_node_inst 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="wfid != null and wfid != '' ">  
+	            AND wfid = #{wfid}
+	        </if>
+		</trim>        
+    </select>
+</mapper>

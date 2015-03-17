@@ -1,5 +1,4 @@
-var dr = new Object();
-
+GLOBAL.namespace("dr");
 
 dr.treeview = function(options) {
 	var defaults = {

@@ -179,3 +179,110 @@ ALTER TABLE `dream`.`tb_user`
 ADD COLUMN `loginname` VARCHAR(45) NULL COMMENT '登录名' AFTER `id`;
 
 
+ALTER TABLE `dream`.`dream_sicker` 
+ADD COLUMN `SEX` INT NULL COMMENT '性别' AFTER `AGE`;
+
+
+CREATE TABLE `dream`.`dream_sicker_record` (
+  `ID` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `SICKERID` VARCHAR(45) NULL COMMENT '病人ID',
+  `INTIME` VARCHAR(23) NULL COMMENT '开始时间',
+  `OUTTIME` VARCHAR(23) NULL COMMENT '结束时间',
+  `DURATION` VARCHAR(20) NULL COMMENT '持续时间',
+  `MEMO` VARCHAR(4000) NULL COMMENT '说明',
+  `RESULT` VARCHAR(4000) NULL COMMENT '结果',
+  `PARAM1` VARCHAR(45) NULL COMMENT '参数1',
+  `PARAM2` VARCHAR(45) NULL COMMENT '参数2',
+  `PARAM3` VARCHAR(45) NULL COMMENT '参数3',
+  PRIMARY KEY (`ID`))
+COMMENT = '病历';
+
+CREATE TABLE `dream`.`dream_sicker_log` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `RECORDID` VARCHAR(45) NULL COMMENT '批次',
+  `PARAM` VARCHAR(45) NULL COMMENT '参数',
+  `XAXIS` VARCHAR(45) NULL COMMENT 'X轴',
+  `XVALUE` VARCHAR(45) NULL COMMENT 'X值',
+  `YAXIS` VARCHAR(45) NULL COMMENT 'Y轴',
+  `YVALUE` VARCHAR(45) NULL COMMENT 'Y值',
+  PRIMARY KEY (`ID`))
+COMMENT = '日志记录';
+
+
+CREATE TABLE `dream`.`tb_seat` (
+  `seatid` VARCHAR(45) NOT NULL COMMENT '主键',
+  `name` VARCHAR(45) NULL COMMENT '名称',
+  `sdesc` VARCHAR(45) NULL COMMENT '说明',
+  `userid` VARCHAR(45) NULL COMMENT '人员',
+  PRIMARY KEY (`seatid`))
+COMMENT = '座位';
+
+
+CREATE TABLE `dream`.`dream_todo` (
+  `ID` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` VARCHAR(400) NULL COMMENT '标题',
+  `userid` VARCHAR(45) NULL COMMENT '待办人',
+  `fromuser` VARCHAR(45) NULL COMMENT '来自',
+  `url` VARCHAR(400) NULL COMMENT 'url',
+  `tdtime` VARCHAR(23) NULL COMMENT '时间',
+  `tdname` VARCHAR(40) NULL COMMENT '模块名称',
+  `tdtype` INT NULL COMMENT '是否完成',
+  PRIMARY KEY (`ID`))
+COMMENT = '待办';
+
+
+CREATE TABLE `dream`.`dream_wf_def` (
+  `CODE` VARCHAR(80) NOT NULL COMMENT '编码',
+  `NAME` VARCHAR(45) NULL COMMENT '名称',
+  `jsondef` TEXT NULL COMMENT '定义json文件',
+  PRIMARY KEY (`CODE`))
+COMMENT = '流程定义';
+
+
+CREATE TABLE `dream`.`dream_wf_node` (
+  `ID` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `jsonstr` TEXT NULL COMMENT '定义json',
+  `wfcode` VARCHAR(80) NULL COMMENT '流程编码',
+  PRIMARY KEY (`ID`))
+COMMENT = '节点定义';
+
+
+
+CREATE TABLE `dream`.`dream_wf_line` (
+  `ID` INT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `jsonstr` TEXT NULL COMMENT '定义信息',
+  `wfcode` VARCHAR(80) NULL COMMENT '流程编码',
+  PRIMARY KEY (`ID`))
+COMMENT = '连线定义';
+
+
+CREATE TABLE `dream`.`dream_wf_inst` (
+  `ID` INT NOT NULL COMMENT '主键',
+  `wfcode` VARCHAR(45) NULL COMMENT '流程编码',
+  `dataid` VARCHAR(45) NULL COMMENT '数据ID',
+  `complete` INT NULL COMMENT '是否办结',
+  `btime` VARCHAR(23) NULL COMMENT '开始时间',
+  `etime` VARCHAR(23) NULL COMMENT '结束时间',
+  PRIMARY KEY (`ID`))
+COMMENT = '流程实例';
+
+CREATE TABLE `dream`.`dream_wf_node_inst` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `wfid` VARCHAR(45) NULL COMMENT '流程实例ID',
+  `nodeid` VARCHAR(45) NULL COMMENT '节点ID',
+  `nodename` VARCHAR(45) NULL COMMENT '节点名称',
+  `totime` VARCHAR(23) NULL COMMENT '送交时间',
+  `touser` VARCHAR(45) NULL COMMENT '接收人',
+  `tousername` VARCHAR(45) NULL COMMENT '接收人',
+  `donetime` VARCHAR(23) NULL COMMENT '办理时间',
+  `doneuser` VARCHAR(45) NULL COMMENT '办理人',
+  `doneusername` VARCHAR(45) NULL COMMENT '办理人名字',
+  `fromuser` VARCHAR(45) NULL COMMENT '送交人',
+  `fromusername` VARCHAR(45) NULL COMMENT '送交人',
+  `nodestate` INT NULL COMMENT '节点是否正在办理',
+  PRIMARY KEY (`ID`))
+COMMENT = '节点实例';
+
+
+
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.sicker.SickerRecordDao">
+    <insert id="insert" parameterType="com.dream.model.sicker.SickerRecord">  
+        insert into dream_sicker_record(id, sickerid, intime, outtime, duration, memo, result, param1, param2, param3) values(#{id},#{sickerid},#{intime},#{outtime},#{duration}, #{memo},#{result},#{param1}, #{param2}, #{param3})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.sicker.SickerRecord">  
+        update dream_sicker_record set intime=#{intime},outtime=#{outtime},duration=#{duration},memo=#{memo},result=#{result}, param1=#{param1}, param2=#{param2}, param3=#{param3} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_sicker_record where id=#{id}
+    </delete>
+    
+    <delete id="deleteBySickerId" parameterType="int">  
+        delete from dream_sicker_record where sickerid=#{sickerid}
+    </delete>    
+    
+    <select id="findRecord" parameterType="int" resultType="com.dream.model.sicker.SickerRecord">
+        select * from dream_sicker_record where id=#{id}
+    </select>
+    
+    <select id="findRecords" resultType="com.dream.model.sicker.SickerRecord" parameterType="com.dream.base.Page">
+        select * from dream_sicker_record 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="sickerid != null and sickerid != '' ">  
+	            AND sickerid=#{sickerid}
+	        </if>     
+		</trim>      
+    </select>
+</mapper>

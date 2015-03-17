@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.wf.WfDao">
+    
+    <insert id="insert" parameterType="com.dream.model.wf.WfBean">  
+        insert into dream_wf_def(code, name, jsondef) values(#{code}, #{name}, #{jsondef})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.wf.WfBean">  
+        update dream_wf_def set code=#{code},name=#{name},jsondef=#{jsondef}  where code=#{code}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_wf_def where code=#{code}
+    </delete>
+    
+    <select id="findWf" parameterType="String" resultType="com.dream.model.wf.WfBean">
+        select * from dream_wf_def where code=#{code}
+    </select>
+    
+    <select id="findWfs" resultType="com.dream.model.wf.WfBean" parameterType="com.dream.base.Page">
+        select * from dream_wf_def 
+    </select>
+</mapper>

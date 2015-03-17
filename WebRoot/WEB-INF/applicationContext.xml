@@ -2,8 +2,17 @@
 <beans
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
     xmlns:p="http://www.springframework.org/schema/p"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+     xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd"> 
     
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -24,6 +33,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
     
+    
     <bean id="userService" class="com.dream.service.org.UserServiceImpl">
         <property name="userDao" ref="userDao"></property>
     </bean>
@@ -31,6 +41,10 @@
     <bean id="deptService" class="com.dream.service.org.DeptServiceImpl">
         <property name="deptDao" ref="deptDao"></property>
     </bean>
+
+    <bean id="seatService" class="com.dream.service.org.SeatServiceImpl">
+        <property name="seatDao" ref="seatDao"></property>
+    </bean>    
     
     <bean id="taskService" class="com.dream.service.impl.TaskServiceImpl">
         <property name="taskDao" ref="taskDao"></property>
@@ -39,13 +53,19 @@
     <bean id="sickService" class="com.dream.service.serial.impl.SickServiceImpl">
         <property name="sickerDao" ref="sickerDao"></property>
     </bean>
+    <bean id="sickerRecordService" class="com.dream.service.serial.impl.SickerRecordServiceImpl">
+        <property name="sickerRecordDao" ref="sickerRecordDao"></property>
+    </bean>
+    <bean id="sickerLogService" class="com.dream.service.serial.impl.SickerLogServiceImpl">
+        <property name="sickerLogDao" ref="sickerLogDao"></property>
+    </bean>
     
     <bean id="dictService" class="com.dream.service.impl.DictServiceImpl">
         <property name="dictDao" ref="dictDao"></property>
     </bean>
     <bean id="dictEntryService" class="com.dream.service.impl.DictEntryServiceImpl">
         <property name="dictEntryDao" ref="dictEntryDao"></property>
-    </bean>     
+    </bean>
     <bean id="menuService" class="com.dream.service.impl.MenuServiceImpl">
         <property name="menuDao" ref="menuDao"></property>
     </bean>
@@ -53,7 +73,35 @@
     <bean id="articleService" class="com.dream.service.impl.ArticleServiceImpl">
         <property name="articleDao" ref="articleDao"></property>
     </bean>
-
+    
+    <bean id="todoService" class="com.dream.service.impl.TodoServiceImpl">
+        <property name="todoDao" ref="todoDao"></property>
+    </bean>    
+    
+    <bean id="wfService" class="com.dream.service.wf.WfServiceImpl">
+        <property name="wfDao" ref="wfDao"></property>
+    </bean>
+    
+    <bean id="nodeService" class="com.dream.service.wf.NodeServiceImpl">
+        <property name="nodeDao" ref="nodeDao"></property>
+    </bean>
+    
+    <bean id="lineService" class="com.dream.service.wf.LineServiceImpl">
+        <property name="lineDao" ref="lineDao"></property>
+    </bean>    
+    
+    <bean id="wfInstService" class="com.dream.service.wf.WfInstServiceImpl">
+        <property name="wfInstDao" ref="wfInstDao"></property>
+    </bean>
+    
+    <bean id="wfNodeInstService" class="com.dream.service.wf.WfNodeInstServiceImpl">
+        <property name="wfNodeInstDao" ref="wfNodeInstDao"></property>
+    </bean>
+    
+    <bean id="vacationService" class="com.dream.service.bi.VacationServiceImpl">
+        <property name="vacationDao" ref="vacationDao"></property>
+    </bean>
+    
     <bean id="channelService" class="com.dream.service.impl.ChannelServiceImpl">
         <property name="channelDao" ref="channelDao"></property>
     </bean>
@@ -120,6 +168,8 @@
                 <ref bean="complexTrigger"/>  
             </list>  
         </property>  
-    </bean>      
+    </bean>
+
     
+	
 </beans>

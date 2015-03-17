@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Constant;
 import com.dream.base.Page;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.model.Dict;
 import com.dream.service.DictEntryService;
 import com.dream.service.DictService;
@@ -45,7 +47,7 @@ public class DictController extends AbsController {
     }
 	
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("DictController getRtnDataList");
 		
     	Page page = listPage.getPage();
@@ -85,6 +87,8 @@ public class DictController extends AbsController {
         return mav;
     }
     
+    
+    @NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/getDict/{id}", method = RequestMethod.GET)
     public @ResponseBody Dict getDict(@PathVariable String id, HttpSession session){
         Dict dict = DictMgr.getDict(id);

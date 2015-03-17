@@ -1,3 +1,17 @@
+var GLOBAL = new Object();
+GLOBAL.namespace = function(fullNameSpaceName) {
+    var nsArray = fullNameSpaceName.split('.');
+    var sEval = "";
+    var sNS = ""; 
+    var len = nsArray.length;
+    for (var i = 0; i < len; i++) {
+        if (i != 0) sNS += ".";
+        sNS += nsArray[i];
+        sEval += "if (typeof(" + sNS + ") == 'undefined') " + sNS + " = new Object();";
+    }
+    if (sEval != "") eval(sEval);
+};
+
 
 var System  = {
     getMode:function() {
@@ -305,6 +319,11 @@ function adjustIframe(frameId) {
 	var callback = function() {
 		var iheight = Math.max(idoc.body.scrollHeight,
 				idoc.documentElement.scrollHeight); //取得其高
+		
+		if (iheight < 500) {
+			iheight = 500;
+		}
+		
 		iframe.style.height = iheight + 20 + "px";
 	}
 	if (iframe.attachEvent) {
@@ -314,6 +333,10 @@ function adjustIframe(frameId) {
 	}
 	
 	var iheight = Math.max(idoc.body.scrollHeight, idoc.documentElement.scrollHeight); //取得其高
+	if (iheight < 500) {
+		iheight = 500;
+	}	
+	
 	iframe.style.height = iheight + 20 + "px";
 }
 

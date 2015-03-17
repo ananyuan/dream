@@ -29,29 +29,34 @@ if (null != request.getAttribute("itemObj")) {
 <form class="form-horizontal" data-toggle="validator" id="formId">
 	<div class="form-group col-sm-6">
 		<label for="code" class="col-sm-4 control-label">编码</label> 
-		<div class="col-sm-6">
+		<div class="col-sm-7">
 	        <input type="text" class="form-control item-code" id="code" value="<%=entry.getCode()%>" required data-error="该项必填">
 	        <div class="help-block with-errors"></div>
 	    </div>
 	</div>
 	<div class="form-group col-sm-6">
 		<label for="pcode" class="col-sm-4 control-label">父编码</label> 
-		<div class="col-sm-6">
-	      <input type="text" class="form-control item-code" id="pcode" value="<%=entry.getPcode()%>">
-	      <div class="help-block with-errors"></div>
+		<div class="col-sm-7">
+			<div class="input-group field-pname">
+		        <input type="text" class="form-control item-code" id="pname" value="<%=entry.getPname()%>">
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-zoom-in"></i></span>
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-remove"></i></span>
+		        <input type="hidden" class="item-code" id="pcode" value="<%=entry.getPcode()%>">
+	        </div>
+	        <div class="help-block with-errors"></div>		
 	    </div>
 	</div>
 
 	<div class="form-group col-sm-6">
 		<label for="name" class="col-sm-4 control-label">名称</label> 
-		<div class="col-sm-6">
+		<div class="col-sm-7">
 	        <input type="text" class="form-control item-code" id="name" value="<%=entry.getName()%>" required data-error="该项必填">
 	        <div class="help-block with-errors"></div>
 	    </div>
 	</div>
 	<div class="form-group col-sm-6">
 		<label for="esort" class="col-sm-4 control-label">排序</label> 
-		<div class="col-sm-6">
+		<div class="col-sm-7">
 	      <input type="number" class="form-control item-code" id="esort" value="<%=entry.getEsort()%>">
 	      <div class="help-block with-errors"></div>
 	    </div>
@@ -59,7 +64,7 @@ if (null != request.getAttribute("itemObj")) {
 	
 	<div class="form-group col-sm-6">
 		<label for="dlevel" class="col-sm-4 control-label">层级</label> 
-		<div class="col-sm-6">
+		<div class="col-sm-7">
 	      <input type="number" class="form-control item-code" id="dlevel" readonly value="<%=entry.getDlevel()%>">
 	      <div class="help-block with-errors"></div>
 	    </div>
@@ -118,6 +123,16 @@ function back() {
 }
 
 jQuery(document).ready(function(){
+	jQuery(".field-pname").find(".glyphicon-zoom-in").bind("click", function(){
+		var options = {};
+		options.dict_id = dictId;
+		options.field_id = "pcode";
+		options.field_name = "pname";
+		
+		var treeDictLeft = new dr.treedict(options);
+		treeDictLeft.showDialog();
+	});
+	
 	resetFrameHei();
 });
 

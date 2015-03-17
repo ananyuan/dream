@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.wf.LineDao">
+    
+    <insert id="insert" parameterType="com.dream.model.wf.Line">  
+        insert into dream_wf_line(id, wfcode, jsonstr) values(#{id}, #{wfcode}, #{jsonstr})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.wf.Line">  
+        update dream_wf_line set wfcode=#{wfcode},jsonstr=#{jsonstr}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_wf_line where id=#{id}
+    </delete>
+    
+    <select id="findLine" parameterType="String" resultType="com.dream.model.wf.Line">
+        select * from dream_wf_line where id=#{id}
+    </select>
+    
+    <select id="findLines" resultType="com.dream.model.wf.Line" parameterType="com.dream.base.Page">
+        select * from dream_wf_line
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="wfcode != null and wfcode != '' ">  
+	            AND wfcode = #{wfcode}
+	        </if>
+		</trim>         
+    </select>
+</mapper>

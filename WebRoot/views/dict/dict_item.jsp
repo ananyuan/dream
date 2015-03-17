@@ -57,7 +57,7 @@ if (null != request.getAttribute("itemObj")) {
 </form>
 
 
-<iframe id="relate_iframe" src="">
+<iframe id="relate_iframe" min-height="500px" src="">
 
 
 </iframe>
@@ -74,6 +74,7 @@ $(document).ready(function() {
 	if (dictId.length > 0) {
 		//关联列表
 		jQuery("#relate_iframe").attr("src", "/dictentry/relate/" + dictId);
+		debugger;
 		
 		resetFrameHei();
 	} else {

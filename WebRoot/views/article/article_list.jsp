@@ -9,11 +9,17 @@
 		<h2>文章</h2>
 	</div>
 
-	<div class="btn-bar col-md-12">
+	<div class="btn-bar col-md-12 div-hide">
 		<a href="/article/edit/_ADD_" class="btn btn-primary btn-sm">添加</a>
 	</div>
+
+	<div class="left-div col-md-2">
+		<input type="hidden" id="search_query_chanid" value="">
+		<ul id="leftTreeView" class="ztree"></ul>
+		
+	</div>
 	
-	<div class="right-div col-md-12">
+	<div class="right-div col-md-10">
 		<div class="content paper-border inner_div" style="margin-bottom:20px">
 		
 		
@@ -57,9 +63,38 @@ $(document).ready(function() {
 	
     oTable = $('#myTable').dataTable(dataTableParam);	
     
+    initLeftTree();
+    
+    resetFrameHei();
+    
+    var loginFlag = jQuery(window.top.document).find(".user-logout").length;  //TODO
+    if (loginFlag > 0) {
+    	jQuery(".div-hide").show();
+    }
 });
 
 
+/**
+ * 设置查询的参数
+ */
+function setQueryParam(aoData) {
+	var search_query_chanid = jQuery("#search_query_chanid").val();
+	if (search_query_chanid.length > 0) {
+		aoData.push({"name":"search_query_chanid", "value":search_query_chanid});	
+	}
+}
+
+
+function initLeftTree() {
+	var options = {};
+	options.dict_id = "D_CHANNEL";
+	options.div_id = "leftTreeView"; 
+	options.field_id = "chanid";
+	options.refreshFunc = querySearch;
+	
+	var treeDictLeft = new dr.treedict(options);
+	treeDictLeft.showInPage();
+}
 
 
 function deleteItem(id) {
@@ -80,9 +115,5 @@ function querySearch(){
 	oTable.fnDraw();	
 }
 
-
-jQuery(document).ready(function(){
-	resetFrameHei();
-});
 
 </script>

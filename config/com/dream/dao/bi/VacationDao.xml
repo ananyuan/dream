@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.bi.VacationDao">
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dream.model.bi.Vacation">  
+        insert into dream_vacation(wfid, isrun, curuser, curnode, title, memo, vtime, usercode, username) 
+        values(#{wfid}, #{isrun}, #{curuser}, #{curnode}, #{title}, #{memo}, #{vtime}, #{usercode}, #{username})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.bi.Vacation">  
+        update dream_vacation 
+        set wfid=#{wfid}, curuser=#{curuser},curnode=#{curnode}, isrun=#{isrun}, vtime=#{vtime}, usercode=#{usercode}, username=#{username}
+        where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_vacation where id=#{id}
+    </delete>
+    
+    <select id="findVacation" parameterType="int" resultType="com.dream.model.bi.Vacation">
+        select * from dream_vacation where id=#{id}
+    </select>
+    
+    <select id="findVacations" resultType="com.dream.model.bi.Vacation" parameterType="com.dream.base.Page">
+        select * from dream_vacation 
+    </select>
+</mapper>

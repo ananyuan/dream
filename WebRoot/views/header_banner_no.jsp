@@ -17,6 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/zTreeStyle/zTreeStyle.css">
 	<link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">	
+	<link rel="stylesheet" href="/css/datepicker3.css" />
 	<link rel="stylesheet" type="text/css" href="/css/dream.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/model.css"/>
 	
@@ -28,8 +29,11 @@
 	<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
 	<script type="text/javascript" src="/js/jquery.ztree.all-3.5.min.js"></script>
+	<script charset="utf-8" src="/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/tools.js"></script>
     <script type="text/javascript" src="/js/model/treeview.js"></script>
+    <script type="text/javascript" src="/js/model/treedict.js"></script>
     
-    <script type="text/javascript" src="/js/tools.js"></script>		
+    
 </head>
 

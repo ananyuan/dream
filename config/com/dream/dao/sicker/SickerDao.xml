@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.sicker.SickerDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_sicker;
+    </select>
+    
+    <select id="selectAll" resultType="com.dream.model.sicker.Sicker">  
+        select * from dream_sicker order by intime desc
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.sicker.Sicker">  
+        insert into dream_sicker(NAME, AGE, SEX, JIGUAN, INTIME, OUTTIME, KESHI, BEDNUM, INNUM, SICKDESC, MEMO) values(#{name},#{age},#{sex},#{jiguan},#{intime},#{outtime}, #{keshi},#{bednum},#{innum},#{sickdesc},#{memo})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.sicker.Sicker">  
+        update dream_sicker set name=#{name},age=#{age},sex=#{sex},jiguan=#{jiguan},intime=#{intime},outtime=#{outtime}, keshi=#{keshi}, bednum=#{bednum}, innum=#{innum}, sickdesc=#{sickdesc}, memo=#{memo}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_sicker where id=#{id}
+    </delete>
+    
+    <select id="findSicker" parameterType="Integer" resultType="com.dream.model.sicker.Sicker">
+        select * from dream_sicker where id=#{id}
+    </select>    
+    
+    <select id="findSickers" resultType="com.dream.model.sicker.Sicker" parameterType="com.dream.base.Page">
+        select * from dream_sicker 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="name != null and name != '' ">  
+	            AND name like "%"#{name}"%"
+	        </if>
+	        <if test="age != null and age != '' ">  
+	            AND age = #{age}
+	        </if>
+	        <if test="keshi != null and keshi != '' ">  
+	            AND keshi = #{keshi}
+	        </if>	        
+		</trim>
+    </select>
+</mapper>

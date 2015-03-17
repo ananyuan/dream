@@ -48,7 +48,7 @@ public class DeptController extends AbsController {
     }
 	
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("MenuController getRtnDataList");
 		
     	Page page = listPage.getPage();

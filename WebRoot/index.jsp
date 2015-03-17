@@ -91,10 +91,10 @@ jQuery(document).ready(function(){
 	showArticles();
 	showChannel();
 	
-	jQuery("#full_search_btn").bind("click", function(){
+	jQuery("#full_search_btn").bind("click", function() {
 		var queryStr = jQuery("#query_str").val();
 		if (queryStr.length > 0) {
-			window.location = "/search/page/" + queryStr;	
+			window.location = "/search/page/" + queryStr;
 		}
 	});
 });
@@ -132,12 +132,21 @@ function showTaskFinish() {
 function showChannel() {
 	var channels = sendAjax("/channel/channels", {}, "get");
 
-	var channelStr = "";
+	
 	jQuery.each(channels , function (key, item) {
-		channelStr += "<li><h3><a href='#'>"+item.name+"</a></h3></li>";
+		var channelStr = "<li><h3><a href='#' id='"+item.code+"'>"+item.name+"</a></h3></li>";
+		
+		var channelObj = jQuery(channelStr).appendTo(jQuery("#channelsDiv"));
+		
+		channelObj.bind("click", function() {
+			window.location.href = "/article/list";
+		});
 	});
 	
-	jQuery(channelStr).appendTo(jQuery("#channelsDiv"));
+	
+	
+	
+	
 }
 
 function toTaskList() {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.TodoDao">
+    <select id="countAll" resultType="int">  
+        select count(*) c from dream_todo;
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.Todo">  
+        insert into dream_todo(title,userid,fromuser,url,tdtime,tdname,tdtype,wfnodeinstid) 
+        values(#{title},#{userid},#{fromuser},#{url},#{tdtime},#{tdname},#{tdtype},#{wfnodeinstid})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.Todo">  
+        update dream_todo set title=#{title},url=#{url},tdname=#{tdname},tdtype=#{tdtype} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_todo where id=#{id}
+    </delete>
+    
+    <select id="findTodo" parameterType="int" resultType="com.dream.model.Todo">
+        select * from dream_todo where id=#{id}
+    </select>
+    
+<!--     <select id="findTodosFinish" resultType="com.dream.model.Todo" parameterType="com.dream.base.Page">
+        select * from dream_todo where tdtype=2
+    </select> -->
+    
+    <select id="findTodos" resultType="com.dream.model.Todo" parameterType="com.dream.base.Page">
+        select * from dream_todo
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="tdtype != null and tdtype != '' ">  
+	            AND tdtype=#{tdtype}
+	        </if> 
+	        <if test="wfnodeinstid != null and wfnodeinstid != '' ">  
+	            AND wfnodeinstid=#{wfnodeinstid}
+	        </if>	            
+		</trim>
+    </select>
+</mapper>

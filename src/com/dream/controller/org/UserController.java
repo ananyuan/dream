@@ -47,6 +47,15 @@ public class UserController extends AbsController {
         return mav;
     }
     
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> logout(HttpSession session){
+        if (session != null) {
+            session.invalidate();
+        }
+        
+        return new HashMap<String, Object>();
+    }
+    
     @RequestMapping(value="/authenticate", method = RequestMethod.POST)
     public @ResponseBody User authenticate(@RequestBody User user, HttpSession session){
         if (!StringUtils.isEmpty(user.getUsername()) && !StringUtils.isEmpty(user.getPassword())) {
@@ -71,9 +80,10 @@ public class UserController extends AbsController {
         
         return mav;
     }
-	
+    
+    
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("UserController getRtnDataList");
 		
     	Page page = listPage.getPage();
@@ -169,5 +179,20 @@ public class UserController extends AbsController {
     public @ResponseBody List<TreeBean> getUserListForTree(HttpSession session){
     	
     	return UserMgr.getUserList();
-    }    
+    }
+    
+    @RequestMapping(value="/getUser/{userid}", method = RequestMethod.GET)
+    public @ResponseBody User getUser(@PathVariable String userid, HttpSession session){
+    	User user = UserMgr.getUser(userid);
+    	if (user.getDeptcode().length() > 0) {
+    		Dept dept = DeptMgr.getDept(user.getDeptcode());
+    		
+    		user.setDeptname(dept.getName());
+    	}
+    	
+    	return user;
+    }
+    
+    
+    
 }

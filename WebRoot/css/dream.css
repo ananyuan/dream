@@ -177,3 +177,39 @@ iframe {
 	border:0px solid gray;
 	/* min-height:600px; */
 }
+
+
+.input-group.date {
+   padding-left: 15px;
+   padding-right: 15px;
+}
+
+.form-group .area-left-padding {
+   padding-left: 11px;
+}
+
+.form-control .radio-inline {
+	padding-top:0px;
+}
+
+.input-group-addon {
+	padding: 6px;
+}
+
+.button_bar {
+	
+}
+
+.button_bar .right-margin-4 {
+	margin-right:4px;
+}
+
+.ui-widget-header {
+	border: 0px solid #261ADB;
+	background: url("") 50% 50% repeat-x; 
+	color: #5C14EF;	
+}
+
+.div-hide {
+	display : none;
+}

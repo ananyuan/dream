@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.org.SeatDao">
+    <select id="countAll" resultType="int">  <!-- 查询表中记录总数 -->
+        select count(*) c from tb_seat;
+    </select>
+    
+    <insert id="insert" parameterType="com.dream.model.org.Seat">    <!-- 向数据库中插入用户 -->
+        insert into tb_seat(seatid, name,sdesc,userid) values(#{seatid}, #{name},#{sdesc},#{userid})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.org.Seat">     <!-- 更新库中的用户 -->
+        update tb_seat set name=#{name}, sdesc=#{sdesc},userid=#{userid} where seatid=#{seatid}
+    </update>
+    
+    <delete id="delete" parameterType="String"> 
+        delete from tb_seat where seatid=#{seatid}
+    </delete>
+    
+    <select id="findSeat" parameterType="String" resultType="com.dream.model.org.Seat">
+        select * from tb_seat where seatid=#{seatid}
+    </select>
+    
+    <select id="findSeatByUser" parameterType="String" resultType="com.dream.model.org.Seat">
+        select * from tb_seat where userid=#{userid}
+    </select>    
+    
+</mapper>

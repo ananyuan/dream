@@ -236,11 +236,20 @@ jQuery(document).ready(function(){
 			window.location = "/search/page/" + queryStr;	
 		}
 	});
+	
+	jQuery("#channelsDiv a").each(function(index, item) {
+		jQuery(item).bind("click", function() {
+			window.location.href = "/article/list";
+		});	
+	});
 });
 
 function toTaskList() {
 	window.location = "/task/list";	
 }
+
+
+
 </script>
 
 </body>

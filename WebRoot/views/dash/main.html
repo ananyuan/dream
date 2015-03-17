@@ -48,13 +48,13 @@
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>New Comments!</div>
+                                    <div class=" todo-title">26</div>
+                                    <div class="todo-time">New Comments!</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
-                            <div class="panel-footer">
+                            <div class="panel-footer todo-url">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -70,13 +70,13 @@
                                     <i class="fa fa-tasks fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
+                                    <div class=" todo-title">12</div>
+                                    <div class="todo-time">New Tasks!</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
-                            <div class="panel-footer">
+                            <div class="panel-footer todo-url">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -92,13 +92,13 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
+                                    <div class=" todo-title">124</div>
+                                    <div class="todo-time">New Orders!</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
-                            <div class="panel-footer">
+                            <div class="panel-footer todo-url">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -114,13 +114,13 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class=" todo-title">13</div>
+                                    <div class="todo-time">Support Tickets!</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
-                            <div class="panel-footer">
+                            <div class="panel-footer todo-url">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -132,3 +132,24 @@
             
 </div>
 </div>            
+
+<script>
+$(document).ready(function() {
+	resetFrameHei();
+	
+	var param = {};
+	var rtnResult = sendAjax("/todo/latestTodo/", param, "get");
+	
+	jQuery.each(rtnResult, function(key, item){
+		jQuery(jQuery(".todo-title")[key]).text(item.title);
+		jQuery(jQuery(".todo-time")[key]).text(item.tdtime.substr(0, 10));
+		
+		jQuery(jQuery(".todo-url")[key]).bind("click", function(){
+			window.location.href = item.url;
+		});
+	});
+	
+	
+});
+
+</script>

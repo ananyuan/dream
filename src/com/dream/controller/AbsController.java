@@ -10,15 +10,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.dream.base.Constant;
 import com.dream.base.Page;
+import com.dream.model.WfBaseBean;
+import com.dream.model.wf.StepBean;
+import com.dream.service.wf.WfAct;
 import com.dream.utils.DataTableReturnObject;
 import com.dream.utils.JSONParam;
 
@@ -53,14 +60,14 @@ public class AbsController {
 	 */
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
-	public DataTableReturnObject search(@RequestBody JSONParam[] params, HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
+	public DataTableReturnObject search(@RequestBody JSONParam[] params, HttpServletRequest request, HttpSession session) throws IllegalAccessException, InvocationTargetException {
 		HashMap<String, String> map = convertToMap(params);
 		String sEcho = map.get("sEcho");
 		
 		Page page = getPageFromReq(map);
 		
 		ListPageData listPage = new ListPageData(page);
-		setRtnDataList(map, listPage);
+		setRtnDataList(map, listPage, session);
 		
 		int count = page.getTotalRecord();
 		List<Map<String, Object>> rtnList = listPage.getRtnList();
@@ -117,7 +124,7 @@ public class AbsController {
 	 * @param page 分页对象
 	 * @return
 	 */
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
 	}
 	
 	/**
@@ -144,6 +151,21 @@ public class AbsController {
 			log.error("pojo to map", e);
 		}
 		return hashMap;
+	}
+	
+	/**
+	 * 
+	 * @param wfBase 流程公共的字段
+	 * @param modelCode 模块名字
+	 * @param niid 节点实例ID
+	 * @return 能走的下一步
+	 */
+	public List<StepBean> getNextSteps(WfBaseBean wfBase, String modelCode, int niid) {
+		//TODO 判断当前人 正在办理才添加
+		
+		WfAct wfAct = new WfAct(niid);
+		
+		return wfAct.getNextSteps();
 	}
 }
 

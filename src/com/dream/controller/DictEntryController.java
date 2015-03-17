@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Constant;
 import com.dream.base.Page;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.model.DictEntry;
 import com.dream.service.DictEntryService;
 import com.dream.utils.DictMgr;
@@ -46,7 +49,7 @@ public class DictEntryController extends AbsController {
     }
     
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("DictController getRtnDataList");
 		
     	Page page = listPage.getPage();
@@ -85,6 +88,13 @@ public class DictEntryController extends AbsController {
         } else {
         	DictEntry entry = dictEntryService.findEntry(id);
             
+        	if (StringUtils.isNotBlank(entry.getPcode())) {
+        		DictEntry pentry = DictMgr.getEntry(dictid, entry.getPcode());
+        		if (null != pentry) {
+        			entry.setPname(pentry.getName());	
+        		}
+        	}
+        	
             mav.addObject("itemObj",entry);
         }
     	
@@ -94,6 +104,16 @@ public class DictEntryController extends AbsController {
     @RequestMapping(value="/save", method = RequestMethod.POST)
 	public @ResponseBody DictEntry save(@RequestBody DictEntry entry) {
     	int id = entry.getId();
+    	
+    	if (StringUtils.isNotBlank(entry.getPcode())) {
+    		String pcode = entry.getPcode();
+    		String dictid = entry.getDictid();
+    		DictEntry pentry = DictMgr.getEntry(dictid, pcode);
+    		
+    		if (null != pentry) {
+    			entry.setDlevel(pentry.getDlevel() + 1);
+    		}
+    	}
     	
     	if (id > 0) {
     		dictEntryService.update(entry);
@@ -123,5 +143,17 @@ public class DictEntryController extends AbsController {
     	DictMgr.clearCache(dictId);
     	
         return rtnMap;
+    }
+    
+    @NoNeedLogin(ResultTypeEnum.json)
+    @RequestMapping(value="/getDictItems/{dictId}", method = RequestMethod.GET)
+    public @ResponseBody List<DictEntry> getDictItems(@PathVariable String dictId, HttpSession session){
+    	
+    	Page page = new Page();
+    	page.put("dictid", dictId);
+    	page.setPageSize(Constant.QUERY_COUNT_MAX);
+    	page.setOrder("dlevel, esort");
+    	
+        return dictEntryService.findEntrys(page);
     }
 }

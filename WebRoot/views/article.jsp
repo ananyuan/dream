@@ -44,20 +44,16 @@
 	<div class="form-group">
 		<label for="chanId" class="col-sm-2 control-label">栏目</label> 
 		<div class="col-sm-3">
-	        <select class="form-control" id="chanId">
-	        	<% for (DictEntry channel: chanList) {
-	        		String option = "<option value='"+channel.getCode()+"' ";
-	        		if (channel.getCode().equals(String.valueOf(article.getChanId()))) {
-	        			option += " selected=\"selected\" ";
-	        		}
-	        		option +=  ">"+channel.getName()+"</option>";
-	        		
-	        		System.out.println("---------------------" + option);
-	        		
-	        		out.print(option);
-	        	} %>
-	        </select>
-	    </div>
+			<div class="input-group field-channame">
+		        <input type="text" class="form-control item-code" id="channame" value="<%=article.getChanname()%>">
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-zoom-in"></i></span>
+		        <span class="input-group-addon"><i class="glyphicon glyphicon-remove"></i></span>
+		        <input type="hidden" class="item-code" id="chanId" value="<%=article.getChanId()%>">
+	        </div>
+	        <div class="help-block with-errors"></div>		
+	    </div>	    
+	    
+	    
 		<label for="sortnum" class="col-sm-2 control-label">排序</label> 
 		<div class="col-sm-3">
 	      <input type="text" class="form-control" id="sortnum" value="<%=article.getSortnum()%>">
@@ -140,6 +136,16 @@
 
 
 	jQuery(document).ready(function(){
+		jQuery(".field-channame").find(".glyphicon-zoom-in").bind("click", function(){
+			var options = {};
+			options.dict_id = "D_CHANNEL";
+			options.field_id = "chanId";
+			options.field_name = "channame";
+			
+			var treeDictLeft = new dr.treedict(options);
+			treeDictLeft.showDialog();
+		});		
+		
 		resetFrameHei();
 	});	
 	

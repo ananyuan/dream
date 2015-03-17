@@ -53,14 +53,14 @@ if (null != request.getAttribute("task")) {
     <label for="start" class="col-sm-2 control-label">开始时间</label>
     <div class="col-sm-3 input-group date">
       <input type="text" class="form-control" id="start" value="<%=task.getStart()%>">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
     </div>
   </div>
   <div class="form-group">
     <label for="endTime" class="col-sm-2 control-label">结束时间</label>
     <div class="col-sm-3 input-group date">
       <input type="text" class="form-control" id="endTime" value="<%=task.getEndTime()%>">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
     </div>
   </div>  
   <input type="hidden" id ="id" value="<%=task.getId()%>">

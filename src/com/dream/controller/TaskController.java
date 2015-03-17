@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Constant;
 import com.dream.base.Page;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.model.Task;
 import com.dream.service.TaskService;
 import com.dream.utils.DictMgr;
@@ -28,6 +30,7 @@ public class TaskController extends AbsController  {
 	@Autowired
 	private TaskService taskService;
 	
+	@NoNeedLogin(ResultTypeEnum.page)
     @RequestMapping(value="list")
     public ModelAndView list(Task task){
         ModelAndView mav=new ModelAndView();
@@ -37,7 +40,7 @@ public class TaskController extends AbsController  {
     }
     
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	Page page = listPage.getPage();
     	
 		List<Task> rtnList = taskService.findTasks(page);
@@ -93,6 +96,7 @@ public class TaskController extends AbsController  {
     	return task;
     }	
     
+    @NoNeedLogin(ResultTypeEnum.page)
     @RequestMapping(value="timeline")
     public ModelAndView timeline(){
         ModelAndView mav=new ModelAndView();
@@ -123,12 +127,14 @@ public class TaskController extends AbsController  {
         return t;
     }
     
+    @NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/taskTodo", method = RequestMethod.GET)
     public @ResponseBody List<Task> taskTodo() {
     	Page page = new Page();
     	return taskService.findTasksTodo(page);
     }
     
+    @NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/taskFinish", method = RequestMethod.GET)
     public @ResponseBody List<Task> taskFinish() {
     	Page page = new Page();

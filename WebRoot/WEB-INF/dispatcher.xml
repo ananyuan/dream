@@ -47,4 +47,9 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView"></property>
 	</bean>
+	
+	<mvc:interceptors>
+        <!-- <bean class="com.dream.base.acl.AuthorityAnnotationInterceptor"></bean> -->
+        <bean class="com.dream.base.acl.LoginInterceptor"></bean>
+    </mvc:interceptors>	
 </beans>

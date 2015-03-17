@@ -38,3 +38,7 @@ body {
 	float : center;
 }
 
+.sm-padding-8 {
+	padding-left: 8px;
+	padding-right: 8px;
+}

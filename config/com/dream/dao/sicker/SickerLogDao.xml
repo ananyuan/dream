@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.sicker.SickerLogDao">
+    <insert id="insert" parameterType="com.dream.model.sicker.SickerLog">  
+        insert into dream_sicker_log(id, recordid, param, xaxis, xvalue, yaxis, yvalue) values(#{id},#{recordid},#{param},#{xaxis},#{xvalue}, #{yaxis},#{yvalue})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.sicker.SickerLog">  
+        update dream_sicker_log set param=#{param},xaxis=#{xaxis},xvalue=#{xvalue},yaxis=#{yaxis},yvalue=#{yvalue} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_sicker_log where id=#{id}
+    </delete>
+    
+    <delete id="deleteByRecordId" parameterType="int">  
+        delete from dream_sicker_log where recordid=#{recordid}
+    </delete>    
+    
+    <select id="findLog" parameterType="int" resultType="com.dream.model.sicker.SickerLog">
+        select * from dream_sicker_log where id=#{id}
+    </select>
+    
+    <select id="findLogs" resultType="com.dream.model.sicker.SickerLog" parameterType="com.dream.base.Page">
+        select * from dream_sicker_log 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="recordid != null and recordid != '' ">  
+	            AND recordid=#{recordid}
+	        </if>     
+		</trim>      
+    </select>
+</mapper>

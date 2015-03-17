@@ -137,7 +137,12 @@ public class DictMgr {
 				return entry;
 			}
 			if (entry.getChilds().size() > 0) {
-				return getEntry(entry.getChilds(), entryId);
+				DictEntry subEntry = getEntry(entry.getChilds(), entryId);
+				if (null == subEntry) {
+					continue;
+				} else {
+					return subEntry;
+				}
 			}
 		}
 		

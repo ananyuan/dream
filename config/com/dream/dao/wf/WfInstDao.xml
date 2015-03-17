@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.wf.WfInstDao">
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.dream.model.wf.WfInst">  
+        insert into dream_wf_inst(wfcode, dataid, running, btime, etime) values(#{wfcode}, #{dataid}, #{running}, #{btime}, #{etime})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.wf.WfInst">  
+        update dream_wf_inst set running=#{running},etime=#{etime} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">  
+        delete from dream_wf_inst where id=#{id}
+    </delete>
+    
+    <select id="findWfInst" parameterType="int" resultType="com.dream.model.wf.WfInst">
+        select * from dream_wf_inst where id=#{id}
+    </select>
+    
+    <select id="findWfInsts" resultType="com.dream.model.wf.WfInst" parameterType="com.dream.base.Page">
+        select * from dream_wf_inst 
+    </select>
+</mapper>

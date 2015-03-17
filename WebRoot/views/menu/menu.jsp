@@ -77,7 +77,7 @@ $(document).ready(function() {
 		                { "mData": "mtype", 'sClass':'center'},
 		                { "mData": "url", 'sClass':'left'},
 		                { "mData": "mclass", 'sClass':'left'},
-		                { "mData": "caozuo",'sClass':'center', "bSortable": false}
+		                { "mData": "caozuo",'sClass':'left', "bSortable": false}
 						];
 	var reqUrl = "/menu/search";
 	var defaultSort = "msort,asc";
@@ -121,6 +121,10 @@ function deleteItem(id) {
 		
 		querySearch();
 	}
+}
+
+function preview(url) {
+	window.open(url);
 }
 
 /**

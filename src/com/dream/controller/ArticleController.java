@@ -26,11 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dream.base.Constant;
 import com.dream.base.Context;
 import com.dream.base.Page;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.message.MsgSender;
 import com.dream.model.ActLog;
 import com.dream.model.Article;
 import com.dream.model.DictEntry;
 import com.dream.model.Task;
+import com.dream.model.org.User;
 import com.dream.search.IndexArticleTask;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
@@ -248,6 +251,7 @@ public class ArticleController extends AbsController {
 		return articles;
 	}
 
+	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value="/articles", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
@@ -308,7 +312,7 @@ public class ArticleController extends AbsController {
     	return articleService.findArticle(id);
 	}
     
-    
+    @NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/list/{lasttime}", method = RequestMethod.GET)
 	public @ResponseBody List<Article> getArticlesInJSON(@PathVariable String lasttime) {
     	return articleService.findArticles(lasttime);
@@ -324,9 +328,11 @@ public class ArticleController extends AbsController {
     }
     
     @Override
-	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage) {
+	protected void setRtnDataList(HashMap<String, String> reqMap, ListPageData listPage, HttpSession session) {
     	log.debug("SickController getRtnDataList");
 		
+    	User user = (User)session.getAttribute("USER");
+    	
     	Page page = listPage.getPage();
     	
 		List<Article> rtnList = articleService.findArticles(page);
@@ -336,15 +342,21 @@ public class ArticleController extends AbsController {
 		Map<String, String> entryMap = DictMgr.getEntrysMap(Constant.DICT_CHANNEL);
 		
 		for (Article article: rtnList) {
-			String caozuo = "<a href='/article/edit/"+article.getId()+"'>编辑</a>";
-			
-			caozuo += "&nbsp;<a href='#' onclick=deleteItem('"+article.getId()+"')>删除</a>";
+			String caozuo = "";
+			if (null != user) {
+				caozuo += "<a href='/article/edit/"+article.getId()+"'>编辑</a>";
+				
+				caozuo += "&nbsp;<a href='#' onclick=deleteItem('"+article.getId()+"')>删除</a>";
+			}
 			
 			caozuo += "&nbsp;<a href='"+article.getLocalurl()+"' target='_blank'>预览</a>";
 			
 			Map<String, Object> map = pojoToMap(article);
 			map.put(Constant.COLUMN_CAOZUO, caozuo);
 			map.put("chanId", entryMap.get(String.valueOf(article.getChanId())));
+			
+			String title = "<a href='" + article.getLocalurl() + "' target='_blank'>" + article.getTitle() + "</a>";
+			map.put("title", title);
 			
 			mapList.add(map);
 		}

@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/dream.css"/>
 	
-	<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>		
@@ -59,7 +59,10 @@
 
         <div class="row">
 						<h1><a href="#">${article.title}</a></h1>
-						<div class="content">
+						
+						<p><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
+						
+						<div class="content" style="padding-top:20px">
 							<p>${article.content}</p>
 						</div>        
         
@@ -80,44 +83,4 @@
 </body>
 
 
-</html>
-
-
-<!--body>
-	 <div class="paper">
-		<div class="banner paper-border">
-			<div>
-				<h1>DREAM</h1>
-				<p>If you have a dream,you got to protect it!</p>
-			</div>
-			<div class="menu">
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="/task/timeline">TimeLine</a></li>
-					<li><a href="/views/about.jsp">About</a></li>
-				</ul>
-			</div>
-		</div>
-
-		<div class="content paper-border">
-			<div id="mainArticleDiv" class="content-page">
-				<div class="article">
-					<div class="heading">
-						<h2><a href="#">${article.title}</a></h2>
-					</div>
-					<div class="content">
-						<p>${article.content}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="footer">
-			<div class="copyright">
-				<p>Copyright ? 2014</p>
-			</div>			
-		</div>
-	 </div>
-</body-->
 </html>

@@ -40,7 +40,7 @@ function login() {
 	var user = sendAjax("/user/authenticate", param);
 	
 	if (user && user.username && user.username.length > 0) {
-		window.location.href = "/";
+		window.location.href = "/index/dashboard";
 	} else {
 		alert("用户名密码错误");
 	}

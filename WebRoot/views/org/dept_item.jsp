@@ -129,15 +129,18 @@ function back() {
 
 function initDeptSelect() {
 	jQuery(".field-pname").find(".glyphicon-zoom-in").bind("click", function(){
-		var param = {};
+		var options = {};
+		options.request_url = "/dept/getDeptListForTree";
+		options.field_name = "pname"; 
+		options.field_id = "pcode";
+		
+		var treeDictLeft = new dr.treedict(options);
+		treeDictLeft.showDialog();
+		
+/* 		var param = {};
 		
 		var zNodes = sendAjax("/dept/getDeptListForTree", param, "get");
 		
-/* 		jQuery.each(zNodes, function(index, item){
-			item.pId = item.pcode;
-			item.id = item.code;
-			item.open = true;
-		}); */
 		
 		var options = {};
 		options.treeData = zNodes;
@@ -147,7 +150,7 @@ function initDeptSelect() {
 		options.callBack = callBack;
 		
 		var xx = new dr.treeview(options);
-		xx.render();
+		xx.render(); */
 	});
 	
 	jQuery(".field-pname").find(".glyphicon-remove").bind("click", function(){
