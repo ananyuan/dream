@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dream.base.Page;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.search.SolrMgr;
 import com.dream.utils.CommUtils;
 
@@ -26,7 +28,7 @@ public class SearchController {
 
 	private static Log log = LogFactory.getLog(SearchController.class);
 	
-	
+	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value="/{queryStr}", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> search(HttpServletRequest request, @PathVariable String queryStr) {
     	log.debug("queryStr = " + queryStr);
@@ -48,7 +50,7 @@ public class SearchController {
 		return rtnMap;
 	}
 	
-	
+	@NoNeedLogin(ResultTypeEnum.page)
 	@RequestMapping(value="/page/{queryStr}", method = RequestMethod.GET)
 	public ModelAndView toPage(HttpServletRequest request, @PathVariable String queryStr) {
     	log.debug("queryStr = " + queryStr);

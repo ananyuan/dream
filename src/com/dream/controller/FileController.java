@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.model.FileBean;
 import com.dream.service.FileService;
 import com.dream.utils.DateUtils;
@@ -49,6 +54,7 @@ public class FileController {
 		return upload(fileId, request, response);
 	}
 	
+	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value = "/upload/{fileId}", method = RequestMethod.POST)
 	public @ResponseBody String uploadFile(@PathVariable String fileId, HttpServletRequest request, HttpServletResponse response ) {
 		if (fileId.length() <= 0) {
@@ -147,11 +153,15 @@ public class FileController {
 	
 	
     @RequestMapping(value="/{fileid}", method = RequestMethod.GET)
-	public void download(@PathVariable String fileid, HttpServletRequest request, HttpServletResponse response) {
+	public void download(@PathVariable String fileid, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setHeader("Server", "server");
         response.setHeader("Cache-Control", "max-age=" + (3600 * 2 * 12));
         
         FileBean fileBean = fileService.findFile(fileid);
+        
+        if (null == fileBean) {
+        	throw new Exception("文件没找到");
+        }
         
         setDownFileName(request, response, fileBean.getName());
         

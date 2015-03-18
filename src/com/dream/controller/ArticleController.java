@@ -306,6 +306,7 @@ public class ArticleController extends AbsController {
 		return articlesHtml;
 	}
     
+	@NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/id/{id}", method = RequestMethod.GET)
 	public @ResponseBody Article getArticleInJSON(@PathVariable String id, HttpSession session) {
  

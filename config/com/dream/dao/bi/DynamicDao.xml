@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.bi.DynamicDao">
+    
+    <insert id="insert" parameterType="com.dream.model.bi.Dynamic">  
+        insert into dream_dynamic(id, position, atime, geopoint, imgIds, memo, itemtype) values(#{id},#{position},#{atime},#{geopoint},#{imgIds}, #{memo}, #{itemtype})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.model.bi.Dynamic">  
+        update dream_dynamic set position=#{position},atime=#{atime},geopoint=#{geopoint},imgIds=#{imgIds},memo=#{memo}  where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_dynamic where id=#{id}
+    </delete>
+    
+    <select id="findDynamic" parameterType="String" resultType="com.dream.model.bi.Dynamic">
+        select * from dream_dynamic where id=#{id}
+    </select>
+    
+    <select id="findDynamics" resultType="com.dream.model.bi.Dynamic" parameterType="com.dream.base.Page">
+        select * from dream_dynamic
+    </select>
+</mapper>
