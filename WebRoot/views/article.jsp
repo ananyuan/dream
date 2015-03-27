@@ -71,11 +71,15 @@
 	
 	<div class="form-group">
 		<label for="container" class="col-sm-2 control-label">选择图片</label>
-		<div class="col-sm-9">
+		<div class="col-sm-9" style="padding-top: 7px;">
 			<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
 
 			<div id="container">
 				<a id="pickfiles" href="javascript:;">[Select files]</a>
+			</div>
+			
+			<div id="file_list" class="file-list">
+				
 			</div>
 		</div>
 	</div>
@@ -93,6 +97,7 @@
 </div>
 
 <script>
+	var id = "<%=article.getId()%>";
 	var editor;
 	KindEditor.ready(function(K) {
 		editor = K.create('textarea[name="content"]', {
@@ -100,7 +105,7 @@
 		});
 	});
 
-	function save() {
+	function save(refresh) {
 		var param = {};
 		param.title = jQuery("#title").val();
 		param.id = jQuery("#id").val();
@@ -116,10 +121,12 @@
 
 		// 设置HTML内容
 		//editor.html('HTML内容');
-		window.location.href = "/article/list";
+		if (!refresh) {
+			window.location.href = "/article/list";	
+		}
 	}
 
-	function handleFileInfo(info) {
+	function handleFileInfo(file, info) {
 		var fileId = info.response;
 		//更新imgids
 		var oldImgids = jQuery("#imgids").val();
@@ -132,6 +139,12 @@
 		var imgHtml = "<img src='/file/" + info.response + "' style='max-width:100%;'/>";
 
 		editor.insertHtml(imgHtml);
+		
+		save("noRefresh");
+	}
+	
+	function getUploadParam() {
+		return {"model":"", "data_id":id};
 	}
 
 
@@ -145,6 +158,10 @@
 			var treeDictLeft = new dr.treedict(options);
 			treeDictLeft.showDialog();
 		});		
+		
+		if (id != "_ADD_") {
+			showFiles(id);	
+		}
 		
 		resetFrameHei();
 	});	

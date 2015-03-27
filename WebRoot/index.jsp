@@ -94,7 +94,7 @@ jQuery(document).ready(function(){
 	jQuery("#full_search_btn").bind("click", function() {
 		var queryStr = jQuery("#query_str").val();
 		if (queryStr.length > 0) {
-			window.location = "/search/page/" + queryStr;
+			window.location = "/search/page/" + queryStr + "/1";
 		}
 	});
 });

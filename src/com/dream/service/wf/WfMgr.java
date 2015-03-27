@@ -16,7 +16,7 @@ public class WfMgr {
 	 * @param data
 	 * @return 流程的ID
 	 */
-	public static int startProcess(WfBaseBean data) {
+	public static WfAct startProcess(WfBaseBean data, String title) {
 		//获取流程定义
 		WfDef wfDef  =WfDefMgr.getWfDef(data.getClass().getName());
 		
@@ -33,10 +33,10 @@ public class WfMgr {
 		WfProcess process = new WfProcess(wfInst);
 		WfAct wfAct = process.createStartWfNodeInst(new User());  //TODO
 		
-		wfAct.sendTodo(data, "---------------");
+		wfAct.sendTodo(data, title);
 		
 		
-		return wfInst.getId();
+		return wfAct;
 	}
 	
 	

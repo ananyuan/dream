@@ -16,4 +16,6 @@ public interface FileService {
 	public FileBean findFile(String id);
 	
 	public List<FileBean> findFiles(String dataid);
+	
+	public List<FileBean> findFiles2(String dataid, String model);
 }

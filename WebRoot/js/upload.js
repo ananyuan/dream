@@ -71,14 +71,21 @@ $(function() {
 			UploadProgress: function(up, file) {
 				document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
 			},
-
+			
+			BeforeUpload: function(up, file) {
+				var uploadParam = getUploadParam(); //{"model":"test", "data_id":"hahahahahha"}
+				
+				uploader.setOption("multipart_params", uploadParam);
+			},
+			
             FileUploaded: function(up, file, info) {
 				/** 
 				 * response: "6WrPohFPXtgfRUq3n8kGHm.png"
 				   responseHeaders: "Date: Sun, 16 Nov ..."
 				   status: 200
 				 */
-				handleFileInfo(info);
+				addNewFile(file, info);
+				handleFileInfo(file, info);
 	        },
 			
 			UploadComplete: function(up, files) {

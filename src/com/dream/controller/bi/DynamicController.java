@@ -1,6 +1,7 @@
 package com.dream.controller.bi;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,6 +42,11 @@ public class DynamicController extends AbsController {
     	return rtnMap;
     } 
 	
-	
+	@NoNeedLogin(ResultTypeEnum.json)
+    @RequestMapping(value="/list/{lasttime}", method = RequestMethod.GET)
+    public @ResponseBody List<Dynamic> getMoreDynamics(@PathVariable String lasttime, HttpSession session){
+		
+		return dynamicService.findNewDynamics(lasttime);
+    } 
 	
 }

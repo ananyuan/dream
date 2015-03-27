@@ -40,9 +40,14 @@ public class UserController extends AbsController {
 	private UserService userService;
     
     @RequestMapping(value="/login")
-    public ModelAndView login(){
+    public ModelAndView login(HttpSession session){
         ModelAndView mav=new ModelAndView();
-        mav.setViewName("login");
+        
+    	if (null == session.getAttribute("USER")) {
+    		mav.setViewName("login");
+    	} else {
+            mav.setViewName("dashboard");
+    	}
         
         return mav;
     }

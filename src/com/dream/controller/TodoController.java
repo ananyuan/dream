@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dream.base.Constant;
 import com.dream.base.Page;
 import com.dream.model.Todo;
+import com.dream.model.org.User;
 import com.dream.service.TodoService;
 import com.dream.utils.DictMgr;
 
@@ -57,11 +58,20 @@ public class TodoController extends AbsController {
 	}
     
     @RequestMapping(value="/latestTodo", method = RequestMethod.GET)
-    public @ResponseBody List<Todo> latestTodo() {
+    public @ResponseBody List<Todo> latestTodo(HttpSession session) {
     	Page page = new Page();
     	page.setOrder("tdtime desc");
     	page.setPageSize(4);
     	page.put("tdtype", Constant.YES);
+    	
+    	
+    	if (null == session.getAttribute("USER")) {
+    		// TODO
+    	} else {
+    		User user = (User)session.getAttribute("USER");
+    		
+    		page.put("userid", user.getId());
+    	}
     	
     	return todoService.findTodos(page);
     }

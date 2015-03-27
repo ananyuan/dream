@@ -74,9 +74,8 @@ $(document).ready(function() {
 	if (dictId.length > 0) {
 		//关联列表
 		jQuery("#relate_iframe").attr("src", "/dictentry/relate/" + dictId);
-		debugger;
 		
-		resetFrameHei();
+		adjustIframe("relate_iframe");
 	} else {
 		jQuery("#relate_iframe").hide();
 	}

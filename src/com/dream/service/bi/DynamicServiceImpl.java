@@ -5,7 +5,6 @@ import java.util.List;
 import com.dream.base.Page;
 import com.dream.dao.bi.DynamicDao;
 import com.dream.model.bi.Dynamic;
-import com.dream.model.bi.Vacation;
 
 public class DynamicServiceImpl implements DynamicService {
 
@@ -44,4 +43,8 @@ public class DynamicServiceImpl implements DynamicService {
 		this.dynamicDao = dynamicDao;
 	}
 
+	@Override
+	public List<Dynamic> findNewDynamics(String atime){
+		return this.dynamicDao.findNewDynamics(atime);
+	}
 }

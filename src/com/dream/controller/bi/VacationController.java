@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dream.controller.AbsController;
 import com.dream.model.bi.Vacation;
 import com.dream.service.bi.VacationService;
+import com.dream.service.wf.WfAct;
 import com.dream.service.wf.WfMgr;
 
 @Controller
@@ -67,10 +68,12 @@ public class VacationController extends AbsController {
     		vacationService.insert(vacation);
     		
     		vacation.setVmodel("vacation");
-    		int wfid = WfMgr.startProcess(vacation);
+    		WfAct wfAct = WfMgr.startProcess(vacation, vacation.getTitle());
     		
-    		vacation.setWfid(wfid);
+    		vacation.setWfid(wfAct.getProcess().getWfInstId());
     		vacationService.update(vacation);
+    		
+    		vacation.setNiid(wfAct.getId());
     	} else {
     		vacationService.update(vacation);
     	}

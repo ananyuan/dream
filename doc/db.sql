@@ -284,5 +284,18 @@ CREATE TABLE `dream`.`dream_wf_node_inst` (
 COMMENT = '节点实例';
 
 
+CREATE TABLE `dream`.`dream_dynamic` (
+  `ID` VARCHAR(45) NOT NULL,
+  `position` VARCHAR(100) NULL COMMENT '地点',
+  `atime` VARCHAR(23) NULL COMMENT '添加时间',
+  `geopoint` VARCHAR(100) NULL COMMENT '地理信息',
+  `imgIds` VARCHAR(45) NULL COMMENT '文件ID',
+  `memo` VARCHAR(450) NULL COMMENT '说明',
+  `itemtype` INT NULL COMMENT '类型',
+  PRIMARY KEY (`ID`))
+COMMENT = '动态';
 
+
+ALTER TABLE `dream`.`dream_file` 
+ADD COLUMN `model` VARCHAR(150) NULL COMMENT '所属模块' AFTER `ATIME`;
 

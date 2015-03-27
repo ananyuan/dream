@@ -1,4 +1,4 @@
-var dr = new Object();
+GLOBAL.namespace("dr");
 
 
 dr.menu = function(options) {
@@ -70,9 +70,13 @@ dr.menu.prototype.render = function () {
  * 菜单点击事件
  */
 dr.menu.prototype.clickEvent = function (menuItem) {
+	var frameId = "right_main_iframe";
+	var iframe = document.getElementById(frameId);
+	if (!iframe) {
+		iframe = parent.document.getElementById(frameId);
+	}	
+	iframe.style.height = "0px";
 	
-	jQuery("#relate_iframe").attr("src", menuItem.url);
-	
-	//resetFrameHei();
+	jQuery("#" + frameId).attr("src", menuItem.url);
 }
 

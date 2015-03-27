@@ -46,29 +46,26 @@ public class SearchController {
     	
     	rtnMap.put("_DATA_", result);
     	rtnMap.put("_PAGE_", page);
+    	rtnMap.put("_queryStr_", queryStr);
     	
 		return rtnMap;
 	}
 	
 	@NoNeedLogin(ResultTypeEnum.page)
-	@RequestMapping(value="/page/{queryStr}", method = RequestMethod.GET)
-	public ModelAndView toPage(HttpServletRequest request, @PathVariable String queryStr) {
+	@RequestMapping(value="/page/{queryStr}/{pageNo}", method = RequestMethod.GET)
+	public ModelAndView toPage(HttpServletRequest request, @PathVariable int pageNo, @PathVariable String queryStr) {
     	log.debug("queryStr = " + queryStr);
     	ModelAndView mav=new ModelAndView();
     	mav.setViewName("searchResult");
     	
-    	HashMap<String, Object> params = CommUtils.getParams(request);
-    	Page<?> page;
-    	if (null == params.get("_PAGE_")) {
-    		page = new Page<Object>();  //获取第一页的数据
-    	} else {
-    		page = CommUtils.getPage(String.valueOf(params.get("_PAGE_")));
-    	}
+    	Page<?> page = new Page<Object>();
+    	page.setPageNo(pageNo);
     	
     	List<HashMap<String, Object>> result = SolrMgr.query(queryStr, page);
     	
-    	mav.addObject("_DATA_",result);
-    	mav.addObject("_PAGE_",page);
+    	mav.addObject("_queryStr_", queryStr);
+    	mav.addObject("_DATA_", result);
+    	mav.addObject("_PAGE_", page);
     	
     	return mav;
 	}

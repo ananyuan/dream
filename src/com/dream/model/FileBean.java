@@ -10,6 +10,8 @@ public class FileBean {
 	private String path;
 	private String dataid;
 	private String atime;
+	private String model;
+	
 	public String getId() {
 		return id;
 	}
@@ -57,6 +59,12 @@ public class FileBean {
 	}
 	public void setAtime(String atime) {
 		this.atime = atime;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
 	}
 	
 }

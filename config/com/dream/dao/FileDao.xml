@@ -6,11 +6,11 @@
     </select>
 
     <insert id="insert" parameterType="com.dream.model.FileBean">  
-        insert into dream_file(id, name,disname,mtype,fsize,path,dataid,atime) values(#{id},#{name},#{disname},#{mtype},#{fsize},#{path},#{dataid},#{atime})
+        insert into dream_file(id, name,disname,mtype,fsize,path,dataid,atime, model) values(#{id},#{name},#{disname},#{mtype},#{fsize},#{path},#{dataid},#{atime}, #{model})
     </insert>
     
     <update id="update" parameterType="com.dream.model.FileBean">  
-        update dream_file set name=#{name},disname=#{disname} where id=#{id}
+        update dream_file set name=#{name},disname=#{disname}, dataid=#{dataid}, model=#{model} where id=#{id}
     </update>
     
     <delete id="delete" parameterType="String">  
@@ -22,6 +22,10 @@
     </select>
 
     <select id="findFiles" resultType="com.dream.model.FileBean" parameterType="String">  
-        select id, name,disname,mtype,fsize,path,dataid,atime from dream_file where dataid=#{dataid} order by atime desc
+        select * from dream_file where dataid=#{dataid} order by atime desc
     </select>
+    
+    <select id="findFiles2" resultType="com.dream.model.FileBean" parameterType="String">  
+        select * from dream_file where dataid=#{dataid} and model=#{model} order by atime desc
+    </select>    
 </mapper>

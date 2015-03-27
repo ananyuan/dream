@@ -26,6 +26,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     static {
     	noNeedLoginUrlMap.add("/article/list");
     	noNeedLoginUrlMap.add("/article/search");
+    	noNeedLoginUrlMap.add("/sick/search");
+    	noNeedLoginUrlMap.add("/slog/search");
+    	noNeedLoginUrlMap.add("/srecord/search");
     	noNeedLoginUrlMap.add("/task/search");
     	noNeedLoginUrlMap.add("/user/login");
     	noNeedLoginUrlMap.add("/user/authenticate");

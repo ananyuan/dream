@@ -53,5 +53,10 @@ public class FileServiceImp implements FileService {
 		
 		return fileDao.findFiles(dataid);
 	}
+	
+	@Override
+	public List<FileBean> findFiles2(String dataid, String model) {
+		return fileDao.findFiles2(dataid, model);
+	}
 
 }

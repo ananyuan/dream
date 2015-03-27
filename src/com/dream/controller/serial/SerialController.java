@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dream.base.Constant;
+import com.dream.base.acl.NoNeedLogin;
+import com.dream.base.acl.ResultTypeEnum;
 import com.dream.controller.serial.mgr.ReceiveData;
 import com.dream.controller.serial.mgr.SerialPortMgr;
 import com.dream.controller.serial.mgr.SerialPorter;
@@ -33,7 +35,7 @@ import com.dream.controller.serial.model.SerialParam;
 @RequestMapping("/serial")
 public class SerialController {
 
-	
+	@NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/listPort", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getPorts() {
     	HashMap<String, Object> rtnMap = new HashMap<String, Object>();
@@ -58,6 +60,7 @@ public class SerialController {
     	return rtnMap;
 	}
 	
+	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value="/sendData", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> sendData(@RequestBody SendData sendData, HttpServletRequest request) 
 			 {
@@ -107,6 +110,7 @@ public class SerialController {
 	 * @param request
 	 * @return
 	 */
+	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value="/receive/{portNum}", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> readData(@PathVariable String portNum, HttpServletRequest request, HttpServletResponse response) {
     	Map<String, Object> rtnMap = new HashMap<String, Object>();

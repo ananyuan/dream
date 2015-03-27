@@ -33,15 +33,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">DREAM</a>
+                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-globe"></i>DREAM</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/views/about.jsp">About</a>
+                    <li> 
+                        <a href="/views/about.jsp"><i class="glyphicon glyphicon-user"></i>About</a>
                     </li>
                     <li>
-                        <a href="/task/timeline">TimeLine</a>
+                        <a href="/task/timeline"><i class="glyphicon glyphicon-calendar"></i>TimeLine</a>
                     </li>
                 </ul>
                 
@@ -57,12 +57,12 @@
     <!-- Page Content -->
     <div class="container">
 
-        <div class="row">
+        <div class="">
 						<h1><a href="#">${article.title}</a></h1>
 						
-						<p><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
+						<p style="font-size: 14px; color: gray;"><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
 						
-						<div class="content" style="padding-top:20px">
+						<div class="content article-font">
 							<p>${article.content}</p>
 						</div>        
         
@@ -74,7 +74,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright © Your Website 2014</p>
+                    <p>Copyright © yuananan.cn 2015</p>
                 </div>
             </div>
         </footer>

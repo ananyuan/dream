@@ -40,15 +40,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">DREAM</a>
+                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-globe"></i>DREAM</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/views/about.jsp">About</a>
+                    <li> 
+                        <a href="/views/about.jsp"><i class="glyphicon glyphicon-user"></i>About</a>
                     </li>
                     <li>
-                        <a href="/task/timeline">TimeLine</a>
+                        <a href="/task/timeline"><i class="glyphicon glyphicon-calendar"></i>TimeLine</a>
                     </li>
                 </ul>
                 

@@ -296,8 +296,8 @@ function retrieveData( sSource, aoData, fnCallback ) {
 function resetFrameHei(){
 	//设置高度， 延时
 	setTimeout(function() {
-		adjustIframe("relate_iframe");
-	}, 500);
+		adjustIframe("right_main_iframe");
+	}, 50);
 }
 
 /**
@@ -305,6 +305,7 @@ function resetFrameHei(){
  * @param frameId frame的ID
  */
 function adjustIframe(frameId) {
+	
 	var iframe = document.getElementById(frameId);
 	if (!iframe) {
 		iframe = parent.document.getElementById(frameId);
@@ -317,27 +318,90 @@ function adjustIframe(frameId) {
 	var idoc = iframe.contentWindow && iframe.contentWindow.document
 			|| iframe.contentDocument;
 	var callback = function() {
-		var iheight = Math.max(idoc.body.scrollHeight,
-				idoc.documentElement.scrollHeight); //取得其高
+		var iheight = Math.max(idoc.body.scrollHeight, idoc.documentElement.scrollHeight); //取得其高
+		var outterHei = top.document.documentElement.scrollHeight;
 		
-		if (iheight < 500) {
-			iheight = 500;
+		if (iheight < outterHei) {
+			iheight = outterHei;
 		}
 		
-		iframe.style.height = iheight + 20 + "px";
+		iheight = iheight - 56;
+		
+		iframe.style.height = iheight + "px";
 	}
 	if (iframe.attachEvent) {
 		iframe.attachEvent("onload", callback);
+		callback();
 	} else {
-		iframe.onload = callback
+		iframe.onload = callback;
 	}
-	
-	var iheight = Math.max(idoc.body.scrollHeight, idoc.documentElement.scrollHeight); //取得其高
-	if (iheight < 500) {
-		iheight = 500;
-	}	
-	
-	iframe.style.height = iheight + 20 + "px";
 }
 
+/**
+ * 
+ */
+function getFiles(dataid, model) {
+	if (model) {
+		return sendAjax("/file/list/" + model + "/" + dataid, {}, "GET");
+	} else {
+		return sendAjax("/file/list/" + dataid, {}, "GET");
+	}
+}
 
+/**
+ * 显示文件
+ * @param dataid
+ * @param model
+ */
+function showFiles(dataid, model) {
+	var fileList = getFiles(dataid, model);
+	
+	var fileCon = jQuery("#file_list");
+	jQuery.each(fileList, function(index, item){
+		buildOnFile(fileCon, item);
+	});
+}
+
+/**
+ * 构建一条文件记录
+ * @param fileCon
+ * @param item
+ */
+function buildOnFile(fileCon, item) {
+	var fileLineStr = "<div class='row file' item_id='"+item.id+"'><div class='col-sm-4 file-name'>"+item.name+"</div>";
+	fileLineStr += "<div class='col-sm-3 file-time'>"+item.atime+"</div>";
+	fileLineStr += "<div class='col-sm-2 file-size'>"+item.fsize+"</div>";
+	fileLineStr += "<div class='col-sm-2 file-oper'></div>";
+	
+	fileLineStr += "</div>";
+	
+	var newFileOper = jQuery(fileLineStr).appendTo(fileCon).find(".file-oper");
+	
+	var fileOperDel = jQuery("<a href='#'>删除</a>").appendTo(newFileOper);
+	var fileOperDown = jQuery("<a href='#'>下载</a>").appendTo(newFileOper);
+	//var fileOperInsert = jQuery("<a href='#'>插入正文</a>").appendTo(newFileOper);
+	
+	fileOperDel.bind("click", function(){
+		alert("delete " + item.id + "  " + item.name);
+	});	
+	
+	fileOperDown.bind("click", function(){
+		window.open("/file/" + item.id);
+	});	
+
+}
+
+/**
+ * 刚上传的文件，显示到页面的文件列表上去
+ * @param file
+ * @param info
+ */
+function addNewFile(file, info) {
+	var fileCon = jQuery("#file_list");
+	var item = {};
+	item.id = info.response;
+	item.name = file.name;
+	item.fsize = file.size;
+	item.atime = "刚刚";
+	buildOnFile(fileCon, item);
+}

@@ -43,7 +43,8 @@ public class DictMgr {
 	    page.setPageSize(1000);
 	    page.setOrder("dlevel, esort");  //先按层级， 再按序号排序
 	    List<DictEntry> entrys = entryService.findEntrys(page);
-	    dict.setChilds(recurEntry(entrys));
+	    //dict.setChilds(recurEntry(entrys));
+	    dict.setChilds(entrys);
 		
 	    CacheMgr.getInstance().set(dictId, dict, Constant.CACHE_TYPE_DICT);
 		
@@ -136,14 +137,14 @@ public class DictMgr {
 			if (entry.getCode().equalsIgnoreCase(entryId)) {
 				return entry;
 			}
-			if (entry.getChilds().size() > 0) {
-				DictEntry subEntry = getEntry(entry.getChilds(), entryId);
-				if (null == subEntry) {
-					continue;
-				} else {
-					return subEntry;
-				}
-			}
+//			if (entry.getChilds().size() > 0) {
+//				DictEntry subEntry = getEntry(entry.getChilds(), entryId);
+//				if (null == subEntry) {
+//					continue;
+//				} else {
+//					return subEntry;
+//				}
+//			}
 		}
 		
 		return null;

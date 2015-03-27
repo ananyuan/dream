@@ -105,7 +105,6 @@ $(document).ready(function() {
 		var rtnResult = sendAjax("/vacation/editJson/" + id + "/" + niid, param, "get");
 		
 		initPageItems(rtnResult);
-		debugger;
 		addWfTrackBtn(rtnResult.itemObj.wfid);
 	}
 
@@ -206,13 +205,17 @@ function save() {
 
 	
  	var rtnResult = sendAjax("/vacation/save", param);
+ 	if (id == "_ADD_") {
+ 		id = rtnResult.id;
+ 		niid = rtnResult.niid;
+ 		
+ 		window.location.href = "/vacation/edit/" + id + "/" + niid;
+ 	}
  	
 }
 
 function back() {
-	//window.location.href = "/dashboard.jsp";
-	
-	window.history.go(-1);
+	window.top.location.href = "/index/dashboard";
 }
 
 </script>

@@ -147,5 +147,13 @@ public class WfAct {
 		
 		return steps;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getId() {
+		return this.wfNodeInst.getId();
+	}
 	
 }

@@ -32,6 +32,7 @@ public class IndexArticleTask extends ThreadTask {
 			basicData.setId(article.getId());
 			basicData.setCreate_time(DateUtils.getDateFromString(article.getAtime()));
 			basicData.setTitle(article.getTitle());
+			basicData.setSummery(article.getSummary());
 			basicData.setUrl(article.getLocalurl());
 			
 			List<String> keyWords = new ArrayList<String>();

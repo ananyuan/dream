@@ -19,6 +19,8 @@ public class WfBaseBean {
 
 	private String vmodel = "";
 	
+	private int niid = 0;
+	
 	public int getId() {
 		return id;
 	}
@@ -65,6 +67,14 @@ public class WfBaseBean {
 
 	public void setVmodel(String vmodel) {
 		this.vmodel = vmodel;
+	}
+
+	public int getNiid() {
+		return niid;
+	}
+
+	public void setNiid(int niid) {
+		this.niid = niid;
 	}
 	
 }

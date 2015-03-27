@@ -7,9 +7,9 @@
         <div class="row">
             <!-- Map Column -->
             <div class="col-md-8 about-pic-div">
-                <img width="600px" height="400px" src="/images/anan.jpg"></img>
+                <img width="100%" height="100%" src="/images/anan.jpg"></img>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 article-font">
 				<p>不才挣扎在命运的安排之下，生活工作学习都持中庸之道，不善言辞，更胸无大志，却幻想中头彩。</p>
 				<p>浑浑噩噩中，蓦然回首间，而立已多年，却变成了自己当初讨厌的那类人。</p>
 				<p>需时常勉励自己， 不忘初心。</p>
@@ -17,7 +17,7 @@
             
                 <h3>Contact Details</h3>
                 <p>
-                    	湖北武汉<br>光谷科技园<br>
+                    	湖北武汉<br>武大科技园<br>
                 </p>
                 <p><i class="fa fa-phone"></i> 
                     <abbr title="Phone">P</abbr>: 186XXXXXXXX</p>
@@ -32,7 +32,7 @@
 	    <footer>
 	        <div class="row">
 	            <div class="col-lg-12">
-	                <p>Copyright ©  2014</p>
+	                <p>Copyright © yuananan.cn 2015</p>
 	            </div>
 	        </div>
 	    </footer>

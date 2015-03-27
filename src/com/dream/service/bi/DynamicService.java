@@ -15,4 +15,6 @@ public interface DynamicService {
 	public List<Dynamic> findDynamics(Page<?> page);
 
 	public Dynamic findDynamic(String id);
+	
+	public List<Dynamic> findNewDynamics(String atime);
 }

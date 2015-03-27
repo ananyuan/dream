@@ -21,4 +21,9 @@
     <select id="findDynamics" resultType="com.dream.model.bi.Dynamic" parameterType="com.dream.base.Page">
         select * from dream_dynamic
     </select>
+    
+    <select id="findNewDynamics" resultType="com.dream.model.bi.Dynamic" parameterType="String">
+        select * from dream_dynamic where atime > #{atime} order by atime desc
+    </select>
+    
 </mapper>

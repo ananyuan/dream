@@ -13,6 +13,8 @@ public class BasicField {
 	private String id = "";
 
 	private String title = "";
+	
+	private String summery = "";
 
 	private String content = "";
 	
@@ -84,6 +86,14 @@ public class BasicField {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getSummery() {
+		return summery;
+	}
+
+	public void setSummery(String summery) {
+		this.summery = summery;
 	}
 
 }

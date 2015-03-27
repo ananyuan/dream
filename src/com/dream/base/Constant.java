@@ -68,4 +68,9 @@ public class Constant {
     
     
     public static final String WF_URL_SUFFIX = ".urlsuffix";
+    
+    
+    public static final String FILE_MULTIFORM_DATAID = "data_id";
+    
+    public static final String FILE_MULTIFORM_MODEL = "model";
 }

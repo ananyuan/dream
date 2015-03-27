@@ -34,7 +34,10 @@
 	        </if> 
 	        <if test="wfnodeinstid != null and wfnodeinstid != '' ">  
 	            AND wfnodeinstid=#{wfnodeinstid}
-	        </if>	            
+	        </if>	  
+	        <if test="userid != null and userid != '' ">  
+	            AND userid=#{userid}
+	        </if>
 		</trim>
     </select>
 </mapper>

@@ -27,7 +27,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -60,9 +60,7 @@
         </nav>
 
         <div id="page-wrapper">
-			
-			<iframe src="/views/dash/main.html" id="relate_iframe"></iframe>
-			
+			<iframe src="/views/dash/main.html" id="right_main_iframe"></iframe>
         </div>
 
     </div>
@@ -86,8 +84,6 @@ menu.render();
 
 
 jQuery(document).ready(function(){
-	resetFrameHei();
-	
 	jQuery(".user-logout").bind("click", function(){
 		if (confirm("确定退出?")) {
 			sendAjax("/user/logout", {}, "get");
@@ -95,6 +91,19 @@ jQuery(document).ready(function(){
 			window.location.href = "/user/login";
 		}
 	});
+	
+	
+	//设置右边的最小高度
+	var screenHeight = top.document.documentElement.clientHeight - 51;
+	
+	jQuery("#page-wrapper").css("min-height", screenHeight);
+	
+	var frameId = "right_main_iframe";
+	var iframe = document.getElementById(frameId);
+	if (!iframe) {
+		iframe = parent.document.getElementById(frameId);
+	}	
+	iframe.style.height = screenHeight - 5 + "px";
 });
 	
 </script>

@@ -44,6 +44,8 @@ $(document).ready(function() {
 	var dataTableParam = getPageParam(columnsDef, reqUrl, defaultSort);
 	
     oTable = $('#myTable').dataTable(dataTableParam);	
+    
+    resetFrameHei();
 });
 
 function deleteItem(id) {
@@ -63,10 +65,6 @@ function querySearch(){
 	//刷新Datatable，会自动激发retrieveData
 	oTable.fnDraw();	
 }
-
-jQuery(document).ready(function(){
-	resetFrameHei();
-});
 
 
 </script>

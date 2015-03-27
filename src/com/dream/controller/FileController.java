@@ -8,7 +8,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
+import com.dream.base.Constant;
 import com.dream.base.acl.NoNeedLogin;
 import com.dream.base.acl.ResultTypeEnum;
 import com.dream.model.FileBean;
@@ -46,6 +45,19 @@ public class FileController {
 
 	@Autowired
 	private FileService fileService;
+	
+	@RequestMapping(value = "/list/{dataId}", method = RequestMethod.GET)
+	public @ResponseBody List<FileBean> list(@PathVariable String dataId, HttpServletRequest request, HttpServletResponse response ) {
+		
+		return fileService.findFiles(dataId);
+	}
+	
+	@RequestMapping(value = "/list/{model}/{dataId}", method = RequestMethod.GET)
+	public @ResponseBody List<FileBean> list(@PathVariable String model, @PathVariable String dataId, HttpServletRequest request, HttpServletResponse response ) {
+		
+		return fileService.findFiles2(dataId, model);
+	}
+	
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadFile(HttpServletRequest request, HttpServletResponse response ) {
@@ -71,6 +83,8 @@ public class FileController {
 	 * @return
 	 */
 	private String upload(String fileId, HttpServletRequest request, HttpServletResponse response) {
+		String dataId = "";
+		String model = "";
 		
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         List<FileItem> items = new ArrayList<FileItem>();
@@ -81,6 +95,13 @@ public class FileController {
                 List<FileItem> allItems = upload.parseRequest(request);
                 for (FileItem item : allItems) {
                     if (item.isFormField()) {
+                    	String fieldName = item.getFieldName();
+                    	if (fieldName.equalsIgnoreCase(Constant.FILE_MULTIFORM_DATAID)) {
+                    		dataId = item.getString();                    	
+                    	} else if (fieldName.equalsIgnoreCase(Constant.FILE_MULTIFORM_MODEL)) {
+                    		model = item.getString();
+                    	}
+                    	
                         continue;
                     }
 
@@ -121,6 +142,13 @@ public class FileController {
                 fileBean.setPath(filePath);
                 fileBean.setId(fileId);
                 
+                if (StringUtils.isNotBlank(dataId)) {
+                	fileBean.setDataid(dataId);
+                }
+                if (StringUtils.isNotBlank(model)) {
+                	fileBean.setModel(model);
+                }
+                
                 fileService.insert(fileBean);
                 
                 rtnStr += fileId + ",";
@@ -151,7 +179,7 @@ public class FileController {
 		return contentType;
 	}
 	
-	
+	@NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/{fileid}", method = RequestMethod.GET)
 	public void download(@PathVariable String fileid, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setHeader("Server", "server");

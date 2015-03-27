@@ -87,6 +87,7 @@ $(document).ready(function() {
     
     initLeftTree();
     
+    resetFrameHei();
 });
 
 function initLeftTree() {
@@ -144,10 +145,6 @@ function setQueryParam(aoData) {
 		aoData.push({"name":"search_query_pid", "value":search_query_pid});	
 	}
 }
-
-jQuery(document).ready(function(){
-	resetFrameHei();
-});
 
 function hihi() {
 	var param = {};

@@ -53,6 +53,11 @@ public class SolrMgr {
 		if (null != title && 0 < title.length()) {
 			doc.addField("title", title);
 		}
+		
+		String summery = basicData.getSummery();
+		if (null != summery && 0 < summery.length()) {
+			doc.addField("summery", summery);
+		}
 
 		String content = basicData.getContent();
 		if (null != content && 0 < content.length()) {
@@ -127,7 +132,7 @@ public class SolrMgr {
         query.setQuery(queryStr);
         query.setParam("sort", "");
         query.setHighlight(true); 
-        query.setFields("content,id,title,url,create_time");
+        query.setFields("summery,id,title,url,create_time");
         int pageSize = page.getPageSize();
         query.setStart((page.getPageNo() - 1) * pageSize);
         query.setRows(pageSize);
