@@ -74,7 +74,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright © yuananan.cn 2015</p>
+                    <p>Copyright © yuananan.cn 2015 鄂ICP备15004825号</p>
                 </div>
             </div>
         </footer>

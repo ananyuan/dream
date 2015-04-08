@@ -405,3 +405,20 @@ function addNewFile(file, info) {
 	item.atime = "刚刚";
 	buildOnFile(fileCon, item);
 }
+
+Date.prototype.add = function(milliseconds){
+	var m = this.getTime() + milliseconds;
+	return new Date(m);
+};
+Date.prototype.addSeconds = function(second){
+	return this.add(second * 1000);
+};
+Date.prototype.addMinutes = function(minute){
+	return this.addSeconds(minute*60);
+};
+Date.prototype.addHours = function(hour){
+	return this.addMinutes(60*hour);
+};
+Date.prototype.addDays = function(day){
+	return this.addHours(day * 24);
+};

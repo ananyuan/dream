@@ -22,7 +22,7 @@
                 <p><i class="fa fa-phone"></i> 
                     <abbr title="Phone">P</abbr>: 186XXXXXXXX</p>
                 <p><i class="fa fa-envelope-o"></i> 
-                    <abbr title="Email">E</abbr>: <a href="mailto:191339096@qq.com">191339096@qq.com</a>
+                    <abbr title="Email">E</abbr>: <a href="mailto:anan@yuananan.cn">anan@yuananan.cn</a>
                 </p>
 
             </div>
@@ -32,7 +32,7 @@
 	    <footer>
 	        <div class="row">
 	            <div class="col-lg-12">
-	                <p>Copyright © yuananan.cn 2015</p>
+	                <p>Copyright © yuananan.cn 2015 鄂ICP备15004825号</p>
 	            </div>
 	        </div>
 	    </footer>
