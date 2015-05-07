@@ -29,6 +29,8 @@ public class Constant {
     
     public static final String CACHE_TYPE_DEPT_LIST = "CACHE_TYPE_DEPT_LIST";
     
+    public static final String CACHE_TYPE_INS_DEF = "CACHE_TYPE_INS_DEF";
+    
     
     public static final String RTN_ERR_MSG = "_RTN_ERR_MSG_";
     
@@ -50,6 +52,8 @@ public class Constant {
     public static final String DICT_SEX = "D_SEX";
     
     public static final String DICT_MENU_TYPE = "D_MENU_TYPE";
+    
+    public static final String DICT_INS_INPUT_TYPE = "D_INS_INPUT_TYPE";
    
     
     public static final int QUERY_COUNT_MAX = 1000;

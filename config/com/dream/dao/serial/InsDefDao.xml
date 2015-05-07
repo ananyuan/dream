@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.dream.dao.serial.InsDefDao">
+    <insert id="insert" parameterType="com.dream.controller.serial.model.InsDef">  
+        insert into dream_ins_def(id, code, name, model, channum, command) values(#{id},#{code},#{name},#{model},#{channum}, #{command})
+    </insert>
+    
+    <update id="update" parameterType="com.dream.controller.serial.model.InsDef">  
+        update dream_ins_def set code=#{code},name=#{name},model=#{model},channum=#{channum},command=#{command} where id=#{id}
+    </update>
+    
+    <delete id="delete" parameterType="String">  
+        delete from dream_ins_def where id=#{id}
+    </delete>
+    
+    <select id="findDef" parameterType="String" resultType="com.dream.controller.serial.model.InsDef">
+        select * from dream_ins_def where id=#{id}
+    </select>
+    
+    <select id="findDefs" resultType="com.dream.controller.serial.model.InsDef" parameterType="com.dream.base.Page">
+        select * from dream_ins_def 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="id != null and id != '' ">  
+	            AND id=#{id}
+	        </if>     
+		</trim>      
+    </select>
+</mapper>

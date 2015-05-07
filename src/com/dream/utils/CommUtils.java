@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dream.base.Constant;
 import com.dream.base.Page;
@@ -27,6 +25,10 @@ import com.dream.base.Page;
  */
 public class CommUtils {
 
+	
+	public static final String KEY_PATTERN = "#((\\w|_|[\u4e00-\u9fa5])*)#";
+	
+	
     /**
      * @param fileName 文件地址
      * @return 属性文件
@@ -163,4 +165,23 @@ public class CommUtils {
 		return Constant.PATH_SEPARATOR + "html" + Constant.PATH_SEPARATOR  + "article" 
 				+ Constant.PATH_SEPARATOR;
 	}
+	
+	
+    /**
+     * 
+     * eg, src为：“你好，#TEST_NAME#”，data 中TEST_NAME键值为"world"，替换后为：“你好，world”
+     * 
+     */
+    public static String replaceValues(String src, HashMap<String, Object> dataBean) {
+        Pattern pattern = Pattern.compile(KEY_PATTERN, Pattern.CASE_INSENSITIVE); 
+        Matcher mt = pattern.matcher(src);
+        StringBuffer sb = new StringBuffer();
+        while (mt.find()) {
+            String temp = (String)dataBean.get(mt.group(1));
+            temp = StringUtils.replace(temp, "$", "\\$");
+            mt.appendReplacement(sb, temp);
+        }
+        mt.appendTail(sb);
+        return sb.toString();
+    }
 }

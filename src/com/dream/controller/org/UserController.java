@@ -29,6 +29,7 @@ import com.dream.model.org.User;
 import com.dream.service.org.UserService;
 import com.dream.utils.DictMgr;
 import com.dream.utils.UuidUtils;
+import com.easemob.server.example.httpclient.apidemo.EasemobIMUsers;
  
 @Controller
 @RequestMapping("/user")
@@ -154,6 +155,8 @@ public class UserController extends AbsController {
     	
     	if (addFlag) {
     		userService.insert(user);
+    		
+    		EasemobIMUsers.addHxUser(user.getLoginname(), user.getPassword());
     	} else {
     		userService.update(user);
     	}

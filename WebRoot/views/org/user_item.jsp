@@ -80,6 +80,13 @@ if (null != request.getAttribute("itemObj")) {
 	      <div class="help-block with-errors"></div>
 	    </div>
 	</div>	
+	<div class="form-group col-sm-6">
+		<label for="password" class="col-sm-4 control-label">密码</label> 
+		<div class="col-sm-7">
+	      <input type="text" class="form-control item-code" id="password" value="<%=user.getPassword()%>" required data-error="该项必填">
+	      <div class="help-block with-errors"></div>
+	    </div>
+	</div>	
 			
 	<input type="hidden" class="item-code" id ="id" value="<%=user.getId()%>">
 

@@ -172,6 +172,17 @@
                         </span>
                     </div>
                 </div>
+                
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled" id="android_download_url">
+                            	<li><h3><a href='http://pan.baidu.com/s/1jGIfvIu' target="_blank">ANDROID客户端下载</a></h3></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>                
+                
                 <div class="well">
                     <div class="row">
                         <div class="col-lg-12">

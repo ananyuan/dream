@@ -60,6 +60,17 @@
         <property name="sickerLogDao" ref="sickerLogDao"></property>
     </bean>
     
+    <bean id="insDefService" class="com.dream.service.serial.impl.InsDefServiceImpl">
+        <property name="insDefDao" ref="insDefDao"></property>
+    </bean>
+    <bean id="insBtnService" class="com.dream.service.serial.impl.InsBtnServiceImpl">
+        <property name="insBtnDao" ref="insBtnDao"></property>
+    </bean>
+    <bean id="insFieldService" class="com.dream.service.serial.impl.InsFieldServiceImpl">
+        <property name="insFieldDao" ref="insFieldDao"></property>
+    </bean>    
+    
+    
     <bean id="dictService" class="com.dream.service.impl.DictServiceImpl">
         <property name="dictDao" ref="dictDao"></property>
     </bean>
@@ -73,6 +84,10 @@
     <bean id="articleService" class="com.dream.service.impl.ArticleServiceImpl">
         <property name="articleDao" ref="articleDao"></property>
     </bean>
+    
+    <bean id="dynamicService" class="com.dream.service.bi.DynamicServiceImpl">
+        <property name="dynamicDao" ref="dynamicDao"></property>
+    </bean>    
     
     <bean id="todoService" class="com.dream.service.impl.TodoServiceImpl">
         <property name="todoDao" ref="todoDao"></property>

@@ -325,7 +325,8 @@ function adjustIframe(frameId) {
 			iheight = outterHei;
 		}
 		
-		iheight = iheight - 56;
+		//iheight = iheight - 56;
+		iheight = iheight + 17;
 		
 		iframe.style.height = iheight + "px";
 	}
