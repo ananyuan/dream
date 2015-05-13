@@ -6,7 +6,8 @@
     </select>
     
     <insert id="insert" parameterType="com.dream.model.ActLog">  
-        insert into dream_act_log(model_type,act_type,dataid,atime) values(#{modelType},#{actType},#{dataId},#{atime})
+        insert into dream_act_log(model_type,act_type,dataid,atime,memo,descp,reluser,actname,result,portnum) 
+        values(#{modelType},#{actType},#{dataId},#{atime},#{memo},#{descp},#{reluser},#{actname},#{result},#{portnum})
     </insert>
     
     
@@ -17,6 +18,19 @@
     <select id="findActLog" parameterType="int" resultType="com.dream.model.ActLog">
         select * from dream_act_log where id=#{id}
     </select>
+    
+    <select id="findActLogs" resultType="com.dream.model.ActLog" parameterType="com.dream.base.Page">
+        select * from dream_act_log 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="modelType != null and modelType != '' ">  
+	            AND model_type=#{modelType}
+	        </if>
+	        <if test="actType != null and actType != '' ">  
+	            AND act_type=#{actType}
+	        </if>       
+		</trim>  
+    </select>    
+    
     
     <select id="findActLogsByType" resultType="com.dream.model.ActLog" parameterType="com.dream.model.ActLog">
         select * from dream_act_log where model_type = #{modelType} and act_type=#{actType} order by atime desc

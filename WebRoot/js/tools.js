@@ -298,6 +298,19 @@ function resetFrameHei(){
 	setTimeout(function() {
 		adjustIframe("right_main_iframe");
 	}, 50);
+	
+
+	resetParentHei();
+}
+
+function resetParentHei() {
+	if (window.frameElement) {
+		var iframeId = window.frameElement.id;
+		
+		if (iframeId) {
+			adjustIframe(iframeId);
+		}
+	}
 }
 
 /**

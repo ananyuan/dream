@@ -104,6 +104,9 @@ jQuery(document).ready(function(){
 		iframe = parent.document.getElementById(frameId);
 	}	
 	iframe.style.height = screenHeight - 5 + "px";
+	
+
+	resetFrameHei();
 });
 	
 </script>

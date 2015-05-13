@@ -51,7 +51,7 @@
 
 
 
-<body style="padding-top:0px">
+<body style="padding-top:0px; overflow-x:hidden;">
 
 	<div id="page_board" style="width:100%;margin:0px;">
 

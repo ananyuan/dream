@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +17,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dream.base.Constant;
+import com.dream.base.Context;
 import com.dream.base.acl.NoNeedLogin;
 import com.dream.base.acl.ResultTypeEnum;
 import com.dream.controller.serial.mgr.InsDefMgr;
 import com.dream.controller.serial.mgr.InsMgr;
 import com.dream.controller.serial.mgr.SerialPortMgr;
-import com.dream.controller.serial.model.InsActLog;
 import com.dream.controller.serial.model.InsBtn;
 import com.dream.controller.serial.model.InsDef;
+import com.dream.model.ActLog;
+import com.dream.service.ActLogService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
+import com.dream.utils.UuidUtils;
 
 
 @Controller
@@ -33,6 +39,9 @@ public class InsDefController {
 
 	
 	private static Log log = LogFactory.getLog(InsDefController.class);
+	
+	@Autowired
+	private ActLogService actLogService;
 	
 	
     @RequestMapping(value="/page/{inscode}", method = RequestMethod.GET)
@@ -45,11 +54,6 @@ public class InsDefController {
     	InsDefMgr insDefMgr = InsMgr.getInsDef(inscode);
     	
     	InsDef insDef = insDefMgr.getInsDef();
-//    	insDef.setId(UuidUtils.base58Uuid());
-//    	insDef.setCode("yiqiX");
-//    	insDef.setName("仪器X");
-//    	insDef.setChannum(4);
-//    	insDef.setModel("");
     	
     	mav.addObject("insDef", insDef);
     	
@@ -63,13 +67,6 @@ public class InsDefController {
     	
     	mav.addObject("inscode", inscode);
     	mav.addObject("channelport", channelport);
-    	
-//    	InsDef insDef = new InsDef();
-//    	insDef.setId(UuidUtils.base58Uuid());
-//    	insDef.setCode("yiqiX");
-//    	insDef.setName("仪器X");
-//    	insDef.setChannum(4);
-//    	insDef.setModel("");
     	
     	InsDefMgr insDefMgr = InsMgr.getInsDef(inscode);
     	
@@ -89,50 +86,7 @@ public class InsDefController {
 		
 		
     	Map<String, Object> rtnMap = new HashMap<String, Object>();
-//    	InsDef insDef = new InsDef();
-//    	insDef.setId(UuidUtils.base58Uuid());
-//    	insDef.setCode("yiqiX");
-//    	insDef.setName("仪器X");
-//    	insDef.setChannum(4);
-//    	insDef.setModel("");
-//    	List<InsField> insFields = new ArrayList<InsField>();
-//    	for (int i=0;i<7;i++) {
-//    		InsField instField = new InsField();
-//    		instField.setCode("code" + i);
-//    		instField.setName("名称"+i);
-//    		if (i==6) {
-//    			instField.setItemtype("INPUT");	
-//    		} else if (i == 1) {
-//    			instField.setItemtype("SLIDER");
-//    		} else if (i==2) {
-//    			instField.setItemtype("SELECT");
-//    		} else if (i==3) {
-//    			instField.setItemtype("DESCP");
-//    		} else if (i==4) {
-//    			instField.setItemtype("ONOFF");
-//    		} else if (i==5) {
-//    			instField.setItemtype("DYNAMICGRAPH");
-//    		} else if (i==0) {
-//    			instField.setItemtype("COUNTDOWN");
-//    		} 
-//    		
-//    		insFields.add(instField);
-//    	}
-//    	
-//    	
-//    	List<InsBtn> insBtns = new ArrayList<InsBtn>();
-//    	for (int i=0;i<3;i++) {
-//    		InsBtn instBtn = new InsBtn();
-//    		instBtn.setCode("btncode" + i);
-//    		instBtn.setName("按钮名" + i);
-//    		instBtn.setCommand("#code"+i+"#");
-//    		insBtns.add(instBtn);
-//    	}
-//    	
-//    	insDef.setInsBtns(insBtns);
-//    	insDef.setInsFields(insFields);
-    	
-    	
+
     	InsDefMgr insDefMgr = InsMgr.getInsDef(inscode);
     	
     	InsDef insDef = insDefMgr.getInsDef();
@@ -145,107 +99,150 @@ public class InsDefController {
 		return rtnMap;
 	}
 	
+	@NoNeedLogin(ResultTypeEnum.json)
+	@RequestMapping(value = "/matchport", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> matchport(HttpServletRequest request, HttpSession session) {
+		HashMap<String, Object> params = CommUtils.getParams(request);
+		
+		String inscode = (String)params.get("inscode");
+		InsDefMgr insDefMgr = InsMgr.getInsDef(inscode);
+		
+		String portNum = SerialPortMgr.getMatchPortNum(insDefMgr.getInsDef().getValidateres());
+		
+		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
+		
+		if (StringUtils.isNotBlank(portNum)) {
+			rtnMap.put("serial_port_num", portNum);	
+		} else {
+			rtnMap.put("serial_port_num", "__ERROR__");	
+		}
+		
+		return rtnMap;
+	}
+	
+	
+	@RequestMapping(value = "/dynamicdata", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> dynamicdata(HttpServletRequest request, HttpSession session) {
+		HashMap<String, Object> params = CommUtils.getParams(request);
+		
+		String inscode = (String)params.get("inscode");
+		String dytype = (String)params.get("dytype");
+		
+		
+		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("_DATA_", Math.random());
+		
+		return rtnMap;
+	}
+	
 	
 	@RequestMapping(value = "/csstart", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> csstart(HttpServletRequest request, HttpSession session) {
-		HashMap<String, Object> params = CommUtils.getParams(request);
-		String insCode = (String) request.getParameter("inscode");
-		String channelPort = (String)params.get("channelport");
-		
-		InsDefMgr insDefMgr = InsMgr.getInsDef(insCode);
-		InsBtn insBtn = insDefMgr.getInsBtn("csstart");
-		
-		String btnCommand = CommUtils.replaceValues(insBtn.getCommand(), params);
-		
-		
-		
-		// 记录日志
-		InsActLog insAct = getBaseActLog("csstart");
-		insAct.setActname(insBtn.getName());
-		insAct.setCommand(btnCommand);
-		
-		// 发送命令
-		//TODO 
-		String portNum = "COM4";
-		
-		try {
-			SerialPortMgr.sendData(portNum, btnCommand);
-		} catch (Exception e) {
-			log.error("SerialPortMgr.sendData", e);
-		}
-		
-		return new HashMap<String, Object>();
+		return doAct("csstart", request);
 	}
 	
 	
 	@RequestMapping(value = "/cspause", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> cspause(HttpServletRequest request, HttpSession session) {
-		HashMap<String, Object> params = CommUtils.getParams(request);
-		String insCode = (String) request.getParameter("inscode");
-		String channelPort = (String)params.get("channelport");
-		
-		InsDefMgr insDefMgr = InsMgr.getInsDef(insCode);
-		InsBtn insBtn = insDefMgr.getInsBtn("csstart");
-		
-		String btnCommand = CommUtils.replaceValues(insBtn.getCommand(), params);
-		
-		
-		
-		// 记录日志
-		InsActLog insAct = getBaseActLog("cspause");
-		insAct.setActname(insBtn.getName());
-		insAct.setCommand(btnCommand);
-		
-		// 发送命令
-		//TODO 
-		String portNum = "COM4";
-		
-		try {
-			SerialPortMgr.sendData(portNum, btnCommand);
-		} catch (Exception e) {
-			log.error("SerialPortMgr.sendData", e);
-		}
-		
-		return new HashMap<String, Object>();
+		return doAct("cspause", request);
 	}
 	
 	@RequestMapping(value = "/csstop", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> csstop(HttpServletRequest request, HttpSession session) {
+		return doAct("csstop", request);
+	}
+	
+	@RequestMapping(value = "/act", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> act(HttpServletRequest request, HttpSession session) {
+		return doAct("", request);
+	}
+	
+	
+	/**
+	 * 
+	 * @param actCode 操作
+	 * @param request request
+	 * @return 操作的结果
+	 */
+	private Map<String, Object> doAct(String actCode,  HttpServletRequest request) {
 		HashMap<String, Object> params = CommUtils.getParams(request);
+		
 		String insCode = (String) request.getParameter("inscode");
 		String channelPort = (String)params.get("channelport");
+		String portNum = (String)params.get("serialportnum");
+		String userid = (String)params.get("userid");
+		
+		if (StringUtils.isEmpty(actCode)) {
+			actCode = (String)params.get("act_code");
+		}
+		
+		log.debug("send command actcode is " + actCode);
+		
+		String pici = (String)params.get("pici");
+		if (!params.containsKey("pici") && StringUtils.isNotBlank("pici")) {
+			pici = UuidUtils.base58Uuid();
+		}
+		
+		if (actCode.equalsIgnoreCase("csstart")) {
+			
+			HashMap<String, Object> conObj = new HashMap<String, Object>();
+			conObj.put("userid", userid);
+			conObj.put("pici", pici);
+			
+			Context.addContextObj(Constant.CONTEXT_KEY_SERIAL, conObj);
+		} else if (actCode.equalsIgnoreCase("csstop")) {
+			Context.removeContextObj(Constant.CONTEXT_KEY_SERIAL);
+		}
+		
 		
 		InsDefMgr insDefMgr = InsMgr.getInsDef(insCode);
-		InsBtn insBtn = insDefMgr.getInsBtn("csstart");
+		InsBtn insBtn = insDefMgr.getInsBtn(actCode);
 		
 		String btnCommand = CommUtils.replaceValues(insBtn.getCommand(), params);
-		
-		
+
+		if (StringUtils.isBlank(portNum)) {
+			portNum = SerialPortMgr.getMatchPortNum(insDefMgr.getInsDef().getValidateres());
+		}
 		
 		// 记录日志
-		InsActLog insAct = getBaseActLog("csstop");
+		ActLog insAct = getBaseActLog(actCode);
 		insAct.setActname(insBtn.getName());
-		insAct.setCommand(btnCommand);
+		insAct.setMemo(btnCommand);
+		insAct.setPortnum(channelPort);
+		insAct.setModelType(insDefMgr.getInsDef().getName());
+		insAct.setDataId(pici);
+		
+		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("pici", pici);
+		
+		if (StringUtils.isBlank(portNum)) {
+			rtnMap.put("_ERROR_MSG_", "关联端口未找到");
+			
+			return rtnMap;
+		}
 		
 		// 发送命令
-		//TODO 
-		String portNum = "COM4";
-		
 		try {
 			SerialPortMgr.sendData(portNum, btnCommand);
 		} catch (Exception e) {
 			log.error("SerialPortMgr.sendData", e);
+			rtnMap.put("_ERROR_MSG_", e.getMessage());
+			insAct.setResult(e.getMessage());
 		}
 		
-		return new HashMap<String, Object>();
+		if (actCode.equalsIgnoreCase("csstop")) {
+			pici = ""; //重置
+		}
+		
+		actLogService.insert(insAct);
+		
+		return rtnMap;
 	}
 	
-	
-	
-	private InsActLog getBaseActLog(String act) {
-		InsActLog insAct = new InsActLog();
-		insAct.setActcode(act);
-		insAct.setLogtime(DateUtils.getDatetime());
+	private ActLog getBaseActLog(String act) {
+		ActLog insAct = new ActLog();
+		insAct.setActType(act);
+		insAct.setAtime(DateUtils.getDatetime());
 		
 		
 		return insAct;

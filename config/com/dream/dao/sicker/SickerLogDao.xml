@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.dream.dao.sicker.SickerLogDao">
     <insert id="insert" parameterType="com.dream.model.sicker.SickerLog">  
-        insert into dream_sicker_log(id, recordid, param, xaxis, xvalue, yaxis, yvalue) values(#{id},#{recordid},#{param},#{xaxis},#{xvalue}, #{yaxis},#{yvalue})
+        insert into dream_sicker_log(id, recordid, param, xaxis, xvalue, yaxis, yvalue, userid) 
+        values(#{id},#{recordid},#{param},#{xaxis},#{xvalue}, #{yaxis},#{yvalue}, #{userid})
     </insert>
     
     <update id="update" parameterType="com.dream.model.sicker.SickerLog">  
-        update dream_sicker_log set param=#{param},xaxis=#{xaxis},xvalue=#{xvalue},yaxis=#{yaxis},yvalue=#{yvalue} where id=#{id}
+        update dream_sicker_log set param=#{param},xaxis=#{xaxis},xvalue=#{xvalue},yaxis=#{yaxis},yvalue=#{yvalue},userid=#{userid} 
+        where id=#{id}
     </update>
     
     <delete id="delete" parameterType="int">  
@@ -26,7 +28,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND|OR">  
 	        <if test="recordid != null and recordid != '' ">  
 	            AND recordid=#{recordid}
-	        </if>     
+	        </if>
 		</trim>      
     </select>
 </mapper>

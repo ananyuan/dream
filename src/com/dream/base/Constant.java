@@ -77,4 +77,14 @@ public class Constant {
     public static final String FILE_MULTIFORM_DATAID = "data_id";
     
     public static final String FILE_MULTIFORM_MODEL = "model";
+    
+    /** 验证是否需要的串口的前缀 */
+    public static final String SERIAL_VALIDATE_RESPONSE_PREFIX = "SERIAL_VALIDATE_RESPONSE";
+    
+    /** 验证 串口的 请求 */ 
+    public static final String SERIAL_VALIDATE_REQUEST = "SERIAL_VALIDATE_REQUEST";
+    
+    
+    /** serial 上下文对象 */
+    public static final String CONTEXT_KEY_SERIAL = "CONTEXT_KEY_SERIAL";
 }

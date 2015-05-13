@@ -61,6 +61,8 @@ public class InsDefMgrController extends AbsController {
 			
 			caozuo += "&nbsp;<a href='#' onclick=deleteItem('" + entry.getId() + "')>删除</a>";
 			
+			caozuo += "&nbsp;<a href='/insDef/page/"+entry.getId()+"' target='_blank'>预览</a>";
+			
 			
 			Map<String, Object> map = pojoToMap(entry);
 			map.put(Constant.COLUMN_CAOZUO, caozuo);

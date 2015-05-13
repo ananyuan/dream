@@ -79,6 +79,8 @@ public class AbsController {
 		int iDisplayStart = Integer.parseInt(map.get("iDisplayStart")); 
 		for (Map<String, Object> base: rtnList) {
 			base.put(Constant.COLUMN_XUHAO, ++iDisplayStart);
+			
+			base.put("DT_RowId", base.get("id"));
 		}
 		
 		

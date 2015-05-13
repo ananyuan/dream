@@ -31,6 +31,11 @@ public class InsDef {
 	 */
 	private String command = "";
 	
+	/** 验证命令 */
+	private String validatereq = "";
+	
+	private String validateres = "";
+	
 	private List<InsField> insFields;
 	
 	
@@ -100,6 +105,23 @@ public class InsDef {
 	public void setCommand(String command) {
 		this.command = command;
 	}
+
+	public String getValidatereq() {
+		return validatereq;
+	}
+
+	public void setValidatereq(String validatereq) {
+		this.validatereq = validatereq;
+	}
+
+	public String getValidateres() {
+		return validateres;
+	}
+
+	public void setValidateres(String validateres) {
+		this.validateres = validateres;
+	}
+
 	
 	
 	

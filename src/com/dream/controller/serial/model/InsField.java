@@ -46,6 +46,9 @@ public class InsField {
 	 */
 	private String cssplus = "";
 	
+	
+	private String extconfig = "";
+	
 	public String getId() {
 		return id;
 	}
@@ -124,6 +127,14 @@ public class InsField {
 
 	public void setCommand(String command) {
 		this.command = command;
+	}
+
+	public String getExtconfig() {
+		return extconfig;
+	}
+
+	public void setExtconfig(String extconfig) {
+		this.extconfig = extconfig;
 	}
 	
 }

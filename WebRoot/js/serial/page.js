@@ -51,30 +51,108 @@ dr.pageObj.prototype._showBtns = function() {
 	
 	var btnCon = jQuery("<div class='btn-con'></div>").appendTo(_self.mainCon);
 	
+	this.btnObjMap = {};
 	jQuery.each(_self.insBtns, function(index, item){
-		var btnStr = "<button type='button' class='btn btn-primary' id='"+item.code+"' value='"+item.code+"'>"+item.name+"</button>";
-		var btnObj = jQuery(btnStr).appendTo(btnCon);
-		if (item.code == "cstart" || item.code == "btncode0") { //开始
-			
-			//btnObj.disabled();
-			
-			//获取按钮定义的command, 后台做,
-			btnObj.bind("click", function(){		
-				debugger;
-				_self.getFieldData();
-			});
+		var cssplus = "<span class='"+item.cssplus+"' aria-hidden='true'></span>";
 		
-			
-		} else if (item.code == "cstop") { //结束
-			
-			
-		} else if (item.code == "cpause") { //暂停
-			
+		var btnStr = "<button type='button' class='btn btn-primary' id='"+item.code+"' value='"+item.code+"'>"+ cssplus + item.name+"</button>";
+		var btnObj = jQuery(btnStr).appendTo(btnCon);
+		_self.btnObjMap[item.code] = btnObj;
+		
+		if (item.code == "cspause" || item.code == "csstop") {
+			btnObj.addClass("disabled");
 		}
 		
-		
+		btnObj.bind("click", function() {  //注册点击事件
+			if (item.code == "csstop") {
+				if (!confirm("确定停止？")) {
+					return;
+				}
+			}
+			
+			var reluserid = _self.getRelUserId();
+			
+			if (item.code == "csstart" && !reluserid) { //判断绑定人员了没，如果没有，则提示
+				if (!confirm("未关联人员， 是否继续？\n继续点 确定 \n否则点 取消 进行绑定人员操作")) {
+					return;
+				}
+			}			
+			
+			var paramdata = _self.getFieldData();
+			paramdata.channelport = _self.channelport;
+			paramdata.inscode = _self.inscode;
+			paramdata.act_code = item.code;
+			paramdata.userid = reluserid;
+			
+			var actRes = sendAjaxParam("/insDef/act", paramdata);
+			
+			var oldpici = _self.pici;
+			
+			_self.pici = actRes.pici;
+			
+			
+			if (item.code == "csstart") { //开始
+				_self.btnObjMap["csstart"].addClass("disabled");
+				_self.btnObjMap["csstop"].removeClass("disabled");
+				_self.btnObjMap["cspause"].removeClass("disabled");
+				
+				//所有的动态图开始工作 ， 清除之前的数据
+				jQuery.each(_self.fieldItemMap, function(index, item){
+					if(item.fieldDef.itemtype.toUpperCase() == "DYNAMICGRAPH") {
+						if (oldpici != undefined && oldpici.length == 0) {
+							item.setValue("clearon"); 
+						} else {
+							item.setValue("on");
+						}
+					} else if (item.fieldDef.itemtype.toUpperCase() == "COUNTDOWN") {
+						if (oldpici != undefined && oldpici.length == 0) {
+							item.setValue("clearon"); 
+						} else {
+							item.setValue("START");
+						}
+					}
+				});
+				
+			} else if (item.code == "csstop") { //结束
+				_self.btnObjMap["csstart"].removeClass("disabled");
+				_self.btnObjMap["csstop"].addClass("disabled");
+				_self.btnObjMap["cspause"].addClass("disabled");
+				//所有的动态图 清零
+				jQuery.each(_self.fieldItemMap, function(index, item){
+					if(item.fieldDef.itemtype.toUpperCase() == "DYNAMICGRAPH") {
+						item.setValue("off");
+					} else if (item.fieldDef.itemtype.toUpperCase() == "COUNTDOWN") {
+						item.setValue("STOP");
+					}
+				});	
+			} else if (item.code == "cspause") { //暂停
+				_self.btnObjMap["csstart"].removeClass("disabled");
+				_self.btnObjMap["csstop"].removeClass("disabled");
+				_self.btnObjMap["cspause"].addClass("disabled");
+				
+				//所有的动态图停止工作
+				jQuery.each(_self.fieldItemMap, function(index, item){
+					if(item.fieldDef.itemtype.toUpperCase() == "DYNAMICGRAPH") {
+						item.setValue("off");
+					} else if (item.fieldDef.itemtype.toUpperCase() == "COUNTDOWN") {
+						item.setValue("STOP");
+					}
+				});				
+			} 
+		});
 	});
 }
+
+dr.pageObj.prototype.getRelUserId = function() {
+	var _self = this;
+	
+	var reluserid = jQuery(parent.document).find("#right_reluser").find("span").attr("reluserid"); 
+	
+	return reluserid;
+}
+
+
+
 
 dr.pageObj.prototype.getFieldData = function() {
 	var _self = this;
@@ -84,7 +162,9 @@ dr.pageObj.prototype.getFieldData = function() {
 		
 		fieldData[index] = item.getValue();
 	});
-	
+	if (_self.pici) {
+		fieldData["pici"] = _self.pici;
+	}
 	
 	return fieldData;
 }
@@ -121,54 +201,7 @@ dr.pageObj.prototype._showFields = function() {
 			
 			fieldObj.getFieldObj().appendTo(contentObj);
 			
-			if (item.itemtype == "COUNTDOWN") {
-				fieldObj.setValue(90);
-
-			} else if (item.itemtype == "DYNAMICGRAPH") {
-				var dps = []; // dataPoints
-
-				var chart = new CanvasJS.Chart("dfjslkdjgdsjgd", {
-//					title :{
-//						text: "Live Random Data"
-//					},			
-					data: [{
-						type: "line",
-						dataPoints: dps 
-					}]
-				});
-
-				var xVal = 0;
-				var yVal = 100;	
-				var updateInterval = 1000;
-				var dataLength = 500; // number of dataPoints visible at any point
-
-				var updateChart = function (count) {
-					count = count || 1;
-					// count is number of times loop runs to generate random dataPoints.
-					
-					for (var j = 0; j < count; j++) {	
-						yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-						dps.push({
-							x: xVal,
-							y: yVal
-						});
-						xVal++;
-					};
-					if (dps.length > dataLength)
-					{
-						//dps.shift();				
-					}
-					
-					chart.render();		
-
-				};
-
-				// generates first set of dataPoints
-				updateChart(dataLength); 
-
-				// update chart after specified time. 
-				setInterval(function(){updateChart()}, updateInterval); 
-			}
+			fieldObj.afterInit();
 		} else {
 			jQuery(fieldStr).appendTo(contentObj);	
 		}

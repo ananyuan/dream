@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.dream.dao.serial.InsDefDao">
     <insert id="insert" parameterType="com.dream.controller.serial.model.InsDef">  
-        insert into dream_ins_def(id, code, name, model, channum, command) values(#{id},#{code},#{name},#{model},#{channum}, #{command})
+        insert into dream_ins_def(id, code, name, model, channum, command, validatereq, validateres) 
+        values(#{id},#{code},#{name},#{model},#{channum}, #{command}, #{validatereq}, #{validateres})
     </insert>
     
     <update id="update" parameterType="com.dream.controller.serial.model.InsDef">  
-        update dream_ins_def set code=#{code},name=#{name},model=#{model},channum=#{channum},command=#{command} where id=#{id}
+        update dream_ins_def set code=#{code},name=#{name},model=#{model},channum=#{channum},command=#{command}, validatereq=#{validatereq}, validateres=#{validateres} where id=#{id}
     </update>
     
     <delete id="delete" parameterType="String">  

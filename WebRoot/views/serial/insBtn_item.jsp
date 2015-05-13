@@ -77,9 +77,9 @@ body {
 		</div>
 
 
-		<div class="form-group col-sm-6">
-			<label for="command" class="col-sm-4 control-label">点击发送命令</label> 
-			<div class="col-sm-6">
+		<div class="form-group col-sm-12">
+			<label for="command" class="col-sm-2 control-label">点击发送命令</label> 
+			<div class="col-sm-9">
 		        <input type="text" class="form-control item-code" id="command" value="<%=itemObj.getCommand()%>">
 		        <div class="help-block with-errors"></div>
 		    </div>

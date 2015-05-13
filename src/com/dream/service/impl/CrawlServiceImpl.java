@@ -14,11 +14,12 @@ public class CrawlServiceImpl implements CrawlService {
 	
 	@Override
 	public void crawl() {
+		/**
 		log.debug("in crawl --------------------------------" + DateUtils.getDatetime());
 		
 		MailUser userMail = new MailUser();
-		userMail.setMail("anzuo_1@163.com");
-		userMail.setPassword("wangyi821026");
+		userMail.setMail("");
+		userMail.setPassword("");
 		
 		
 		try {
@@ -28,6 +29,8 @@ public class CrawlServiceImpl implements CrawlService {
 		} catch (Exception e) {
 			log.error("receive error", e);
 		}
+		
+		*/
 	}
 
 	

@@ -2,6 +2,7 @@ package com.dream.service.impl;
 
 import java.util.List;
 
+import com.dream.base.Page;
 import com.dream.dao.ActLogDao;
 import com.dream.model.ActLog;
 import com.dream.service.ActLogService;
@@ -46,6 +47,11 @@ public class ActLogServiceImpl implements ActLogService {
 
 	public void setActLogDao(ActLogDao actLogDao) {
 		this.actLogDao = actLogDao;
+	}
+
+	@Override
+	public List<ActLog> findActLogs(Page<?> page) {
+		return this.actLogDao.findActLogs(page);
 	}
 
 }

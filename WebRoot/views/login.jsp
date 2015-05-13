@@ -50,6 +50,7 @@ jQuery(document).ready(function(){
 	jQuery("#skin").remove();
 	jQuery(".banner").remove();
 	jQuery("#").remove();
+	resetFrameHei();
 });
 
 </script>

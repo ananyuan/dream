@@ -8,17 +8,15 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.TooManyListenersException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import com.dream.base.Constant;
 import com.dream.controller.serial.model.SerialParam;
 import com.dream.utils.DrThreadPool;
 
@@ -28,6 +26,9 @@ public class SerialPorter implements Runnable, SerialPortEventListener {
 
 	static CommPortIdentifier portId;
 	private String portName = ""; // 端口名称
+	private String validateReq = "";
+	private String validateRes = "";
+	
 	int delayRead = 200;
 	int numBytes; // buffer中的实际数据字节数
 	private static byte[] readBuffer = new byte[4096]; // 4k的buffer空间,缓存串口读入的数据
@@ -196,6 +197,12 @@ public class SerialPorter implements Runnable, SerialPortEventListener {
 					ReadSerialDataTask readTask = new ReadSerialDataTask(portName, result);
 					DrThreadPool.getDefaultPool().execute(readTask);
 					
+					
+					if (result.startsWith(Constant.SERIAL_VALIDATE_RESPONSE_PREFIX)) {
+						this.setValidateRes(result);
+					}
+					
+					
 					receiveData.push(result);
 				} catch (IOException e) {
 					log.error("serialEvent DATA_AVAILABLE ", e);
@@ -242,6 +249,22 @@ public class SerialPorter implements Runnable, SerialPortEventListener {
 			}
 		}
 		return h;
+	}
+
+	public String getValidateRes() {
+		return validateRes;
+	}
+
+	public void setValidateRes(String validateRes) {
+		this.validateRes = validateRes;
+	}
+
+	public String getValidateReq() {
+		return validateReq;
+	}
+
+	public void setValidateReq(String validateReq) {
+		this.validateReq = validateReq;
 	}
 
 }

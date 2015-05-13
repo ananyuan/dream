@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.dream.dao.serial.InsFieldDao">
     <insert id="insert" parameterType="com.dream.controller.serial.model.InsField">  
-        insert into dream_ins_field(id, code, name, itemtype, reldict, defaultval, sortnum, insid, command, cssplus) 
-        values(#{id},#{code},#{name},#{itemtype},#{reldict}, #{defaultval},#{sortnum},#{insid},#{command}, #{cssplus})
+        insert into dream_ins_field(id, code, name, itemtype, reldict, defaultval, sortnum, insid, command, cssplus, extconfig) 
+        values(#{id},#{code},#{name},#{itemtype},#{reldict}, #{defaultval},#{sortnum},#{insid},#{command}, #{cssplus}, #{extconfig})
     </insert>
     
     <update id="update" parameterType="com.dream.controller.serial.model.InsField">  
-        update dream_ins_field set code=#{code},name=#{name},itemtype=#{itemtype},reldict=#{reldict},defaultval=#{defaultval},sortnum=#{sortnum},cssplus=#{cssplus},insid=#{insid},command=#{command} where id=#{id}
+        update dream_ins_field set code=#{code},name=#{name},itemtype=#{itemtype},reldict=#{reldict},defaultval=#{defaultval},sortnum=#{sortnum},cssplus=#{cssplus},insid=#{insid},command=#{command},extconfig=#{extconfig} where id=#{id}
     </update>
     
     <delete id="delete" parameterType="String">  

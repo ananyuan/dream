@@ -33,6 +33,9 @@ __parent.prototype._init = function(fieldDef) {
 __parent.prototype.render = function(fieldDef) {
 };
 
+__parent.prototype.afterInit = function(fieldDef) {
+};
+
 __parent.prototype.getFieldObj = function() {
 	return this._jQueryItemObj;
 }
@@ -95,16 +98,24 @@ __slider.prototype.render = function(fieldDef) {
 	
 	var editStr = jQuery("<div id='"+fieldDef.id+"' style='width:100%'></div>");
 	this.editObj = jQuery(editStr).appendTo(editCon);
-	this.stepnum = 5;
-	this.minnum = 30;
-	this.maxnum = 90;
+	
+	var extconfigObj;
+	if (fieldDef.extconfig) {
+		extconfigObj = StrToJson(fieldDef.extconfig);
+	}
+	
+	
+	this.stepnum = parseInt(extconfigObj.STEP) || 5;
+	this.minnum = parseInt(extconfigObj.MIN) || 30;
+	this.maxnum = parseInt(extconfigObj.MAX) || 90;
+	this.defaultVal = parseInt(fieldDef.defaultval) || 50;
 	
 	this.sliderObj = this.editObj.labeledslider({
 	      min: this.minnum,
 	      max: this.maxnum,
 	      range: false,
 	      step : this.stepnum, 
-	      value: 45
+	      value: this.defaultVal
 	});
 	
 	var addBtnObj = jQuery("<div class='btn btn-primary col-sm-1'>+</div>").insertAfter(editCon);
@@ -144,6 +155,9 @@ __countdown = function(fieldDef) {
 __extend(__countdown, __parent);
 
 __countdown.prototype.render = function(fieldDef) {
+	var _self = this;
+	this.fieldDef = fieldDef;
+	
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
 	var CDArray = new Array();
 	 CDArray.push("<div id='div_time' class='col-sm-6' style='height:75px;display:inline-block;text-align: center;'>");
@@ -212,23 +226,59 @@ __countdown.prototype.render = function(fieldDef) {
 	
 }
 
+__countdown.prototype.afterInit = function() {
+	var _self = this;
+    var currentTime = new Date();
+	var futureTime = (new Date()).addMinutes(_self.fieldDef.defaultval);
+	_self.editObj.find('.countdown').final_countdown({
+			'start': currentTime.getTime(),
+			'end': futureTime.getTime(),
+			'now': currentTime.getTime()
+	}, function() {
+		alert("完成");
+	});
+}
+
+
 __countdown.prototype.getValue = function() {
 	return "";
 }
 
 __countdown.prototype.setValue = function(value) {
+	var _self = this;
+	
+	if (value == "STOP") {
+		_self.countDownObj.stopCounter();
+		
+		return;
+	}
+	
+	
     var currentTime = new Date();
-	var futureTime = (new Date()).addMinutes(value);
-	this.editObj.find('.countdown').final_countdown({
+	var futureTime = (new Date()).addMinutes(_self.fieldDef.defaultval);
+	
+	if (_self.countDownObj) { //如果已经构造了，说明之前已经执行过，但是停止了， 时间就得算没走完的时间
+		var remainSecond = _self.editObj.find(".clock-seconds .val").text();
+		var remainMinute = _self.editObj.find(".clock-minutes .val").text();
+		var remainHour = _self.editObj.find(".clock-hours .val").text();
+		
+		futureTime = (new Date()).addHours(remainHour).addMinutes(remainMinute).addSeconds(remainSecond);
+	}
+	
+	if (value == "clearon") {
+		futureTime = (new Date()).addMinutes(_self.fieldDef.defaultval);
+		_self.countDownObj = undefined;
+	}
+	
+	_self.countDownObj = _self.editObj.find('.countdown').final_countdown({
+			'startFlag' : 'TRUE',
 			'start': currentTime.getTime(),
 			'end': futureTime.getTime(),
 			'now': currentTime.getTime()
 	}, function() {
 		alert("over");
-			
-	});	
+	});
 }
-
 
 
 __select = function(fieldDef) {
@@ -239,12 +289,17 @@ __extend(__select, __parent);
 __select.prototype.render = function(fieldDef) {
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
 	
-	var $select = $('<select class=""></select>');
+	var $select = $('<select class="form-control form-con-select"></select>');
 	//获取字典项的list
 	var param = {};
-	var dictItems = sendAjax("/dict/getDict/D_CHANNEL", param, "get").childs; 
+	var dictItems = sendAjax("/dict/getDict/" + fieldDef.reldict, param, "get").childs; 
 	jQuery.each(dictItems, function(index, option){
-		var $option = $('<option value="' + option["code"] + '">' + option["name"] + '</option>');
+		var checked = "";
+		if (option["code"] == fieldDef.defaultval) {
+			checked = "selected";
+		}
+		
+		var $option = $('<option '+checked+' value="' + option["code"] + '">' + option["name"] + '</option>');
 		$select.append($option);
 	});
 	
@@ -280,9 +335,6 @@ __extend(__descp, __parent);
 __descp.prototype.render = function(fieldDef) {
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
 	this.fieldDef = fieldDef;
-	
-	//TODO
-	fieldDef.defaultval = "这是一段提醒说明的文字"
 	
 	var editStr = jQuery("<div id='"+fieldDef.id+"' >"+fieldDef.defaultval+"</div>");
 	
@@ -345,15 +397,23 @@ __dynamicGraph.prototype.render = function(fieldDef) {
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
 	this.fieldDef = fieldDef;
 	
-	fieldDef.id = "dfjslkdjgdsjgd";
-	
-	var editStr = jQuery("<div id='"+fieldDef.id+"' style='height: 300px; width:100%;'></div>");
+	var editStr = jQuery("<div id='"+fieldDef.id+"' class='graph-dynamic'></div>");
 	
 	this.editObj = jQuery(editStr).appendTo(rightDivObj);
+}
 
-
+__dynamicGraph.prototype.afterInit = function() {
+	var _self = this;
 	
-	
+	this.dps = [];
+	this.xVal = 0;
+	this.chart = new CanvasJS.Chart(this.fieldDef.id, {
+		data: [{
+			type: "line",
+			dataPoints: _self.dps 
+		}]
+	});
+	this.chart.render();	
 }
 
 __dynamicGraph.prototype.getValue = function() {
@@ -361,7 +421,45 @@ __dynamicGraph.prototype.getValue = function() {
 }
 
 __dynamicGraph.prototype.setValue = function(value) { 
+	var _self = this;
+
+	if (value == "off") {
+		window.clearInterval(_self.interval)
+		
+		return;
+	} else if(value == "clearon") {
+		_self.dps = [];
+		_self.xVal = 0;
+		_self.chart = undefined;
+		_self.afterInit();
+	}
 	
+	var yVal = 100;	
+	var updateInterval = 1000;
+	var dataLength = 500; // number of dataPoints visible at any point
+	
+	var dynamicData = {"inscode": "", "tytype":"tytype"};
+
+	var updateChart = function() {
+		var resData = sendAjaxParam("/insDef/dynamicdata", dynamicData);
+		
+		//yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+		
+		yVal = resData._DATA_;
+		_self.dps.push({
+			x: _self.xVal,
+			y: yVal
+		});
+		_self.xVal++;
+		
+		if (_self.dps.length > dataLength) {
+			//dps.shift();
+		}
+		
+		_self.chart.render();
+	};
+
+	this.interval = setInterval(function(){updateChart()}, updateInterval); 	
 }
 
 

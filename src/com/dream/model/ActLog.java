@@ -6,6 +6,44 @@ public class ActLog {
 	private String actType = "";
 	private String dataId;
 	private String atime;
+	private String memo;
+	private String descp;
+	private String reluser;
+	private String actname;
+	private String result;
+	private String portnum;
+
+	public String getReluser() {
+		return reluser;
+	}
+
+	public void setReluser(String reluser) {
+		this.reluser = reluser;
+	}
+
+	public String getActname() {
+		return actname;
+	}
+
+	public void setActname(String actname) {
+		this.actname = actname;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getPortnum() {
+		return portnum;
+	}
+
+	public void setPortnum(String portnum) {
+		this.portnum = portnum;
+	}
 
 	public String getId() {
 		return id;
@@ -45,5 +83,21 @@ public class ActLog {
 
 	public void setAtime(String atime) {
 		this.atime = atime;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public String getDescp() {
+		return descp;
+	}
+
+	public void setDescp(String descp) {
+		this.descp = descp;
 	}
 }

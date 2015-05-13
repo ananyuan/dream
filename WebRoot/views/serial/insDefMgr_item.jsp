@@ -87,7 +87,14 @@ body {
 						      <div class="help-block with-errors"></div>
 						    </div>
 						</div>
-					
+
+						<div class="form-group col-sm-6">
+							<label for="validateres" class="col-sm-4 control-label">验证返回结果</label> 
+							<div class="col-sm-6">
+						        <input type="text" class="form-control item-code" id="validateres" value="<%=itemObj.getValidateres()%>" required data-error="该项必填">
+						        <div class="help-block with-errors"></div>
+						    </div>
+						</div>
 					
 						<div class="form-group col-sm-12">
 							<div style="text-align: center">

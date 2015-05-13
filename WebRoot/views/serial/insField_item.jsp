@@ -106,7 +106,7 @@ body {
 						<div class="form-group col-sm-6">
 							<label for="defaultval" class="col-sm-4 control-label">默认值</label> 
 							<div class="col-sm-6">
-						      <input type="text" class="form-control item-code" id="sortnum" value="<%=itemObj.getDefaultval()%>" >
+						      <input type="text" class="form-control item-code" id="defaultval" value="<%=itemObj.getDefaultval()%>" >
 						      <div class="help-block with-errors"></div>
 						    </div>
 						</div>
@@ -135,6 +135,13 @@ body {
 						    </div>
 						</div>
 
+						<div class="form-group col-sm-12">
+							<label for="extconfig" class="col-sm-2 control-label">扩展配置</label> 
+							<div class="col-sm-9">
+								<textarea id="extconfig" title="滑块:{'MIN':'20','MAX':'100','STEP':'10'}" name="content" class="form-control item-code" style="height: 80px;"><%=itemObj.getExtconfig()%></textarea>
+						        <div class="help-block with-errors"></div>
+						    </div>
+						</div>
 					
 						<div class="form-group col-sm-12">
 							<div style="text-align: center">

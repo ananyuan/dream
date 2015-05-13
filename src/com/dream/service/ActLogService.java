@@ -2,6 +2,7 @@ package com.dream.service;
 
 import java.util.List;
 
+import com.dream.base.Page;
 import com.dream.model.ActLog;
 
 public interface ActLogService {
@@ -14,6 +15,8 @@ public interface ActLogService {
 	public int countAll();
 
 	public ActLog findActLog(String id);
+	
+	public List<ActLog> findActLogs(Page<?> page);
 	
 	public List<ActLog> findActLogsByType(String modelType, String actType);
 }
