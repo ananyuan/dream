@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
 	});
 	
 	
-	//设置右边的最小高度
+	/** 设置右边的最小高度
 	var screenHeight = top.document.documentElement.clientHeight - 51;
 	
 	jQuery("#page-wrapper").css("min-height", screenHeight);
@@ -104,9 +104,9 @@ jQuery(document).ready(function(){
 		iframe = parent.document.getElementById(frameId);
 	}	
 	iframe.style.height = screenHeight - 5 + "px";
-	
+	*/
 
-	resetFrameHei();
+	//resetFrameHei();
 });
 	
 </script>

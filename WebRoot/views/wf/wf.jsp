@@ -9,7 +9,7 @@
 	<h2>流程定义</h2>
 </div>
 
-<a href="/wfdef/edit/_ADD_" class="btn btn-primary btn-sm">添加</a>
+<a href="/wfdef/edit/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>
 
 
 

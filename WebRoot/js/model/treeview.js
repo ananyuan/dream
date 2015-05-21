@@ -25,10 +25,10 @@ dr.treeview.prototype.render = function () {
 	
 	
 	
-	_self.posAttr = {my: "center", at : "left+300 top+100", of : window, collision : "fit"};
-	if (_self._opts.position) {
-		_self.posAttr = _self._opts.position;
-	}
+	_self.posAttr = {my: "center", at : "center", of : window, collision : "fit"};
+//	if (_self._opts.position) {
+//		_self.posAttr = _self._opts.position;
+//	}
 	
     $("#" + _self._opts.id).dialog({
         modal: true,

@@ -36,6 +36,12 @@ __parent.prototype.render = function(fieldDef) {
 __parent.prototype.afterInit = function(fieldDef) {
 };
 
+__parent.prototype.disable = function(fieldDef) {
+};
+
+__parent.prototype.enable = function(fieldDef) {
+};
+
 __parent.prototype.getFieldObj = function() {
 	return this._jQueryItemObj;
 }
@@ -62,7 +68,7 @@ __extend(__input, __parent);
 __input.prototype.render = function(fieldDef) {
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
 	
-	var editStr = jQuery("<input type=text class='form-control' value='' id = '"+fieldDef.id+"'>");
+	var editStr = jQuery("<input type=text class='form-control' value='"+fieldDef.defualtval+"' id = '"+fieldDef.id+"'>");
 	
 	this.editObj = jQuery(editStr).appendTo(rightDivObj);
 }
@@ -118,8 +124,8 @@ __slider.prototype.render = function(fieldDef) {
 	      value: this.defaultVal
 	});
 	
-	var addBtnObj = jQuery("<div class='btn btn-primary col-sm-1'>+</div>").insertAfter(editCon);
-	var plusBtnObj = jQuery("<div class='btn btn-primary col-sm-1'>-</div>").insertBefore(editCon);
+	var addBtnObj = jQuery("<div class='btn btn-primary col-sm-1'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></div>").insertAfter(editCon);
+	var plusBtnObj = jQuery("<div class='btn btn-primary col-sm-1'><span class='glyphicon glyphicon-minus' aria-hidden='true'></span></div>").insertBefore(editCon);
 	
 	addBtnObj.bind("click", function(){
 		if (_self.getValue() < _self.maxnum) {
@@ -224,6 +230,49 @@ __countdown.prototype.render = function(fieldDef) {
 	
 	this.editObj = jQuery(editStr).appendTo(rightDivObj);
 	
+	
+	_self.setValBtnObj = jQuery("<button class='btn'>设置时间</button>").appendTo(rightDivObj);;
+	_self.setValBtnObj.bind("click", function(){
+		_self._setVal();
+	});
+	
+	
+	_self.durationval = fieldDef.defaultval;
+}
+
+__countdown.prototype._setVal = function() {
+	var _self = this;
+	
+	jQuery("#setting_countdown").remove();
+	
+	var dialog = jQuery("<div id='setting_countdown' title='时间设置'></div>").appendTo(jQuery("body"));
+	
+	var inputDiv = jQuery("<div id='setting_countdown_con'><input id='setting_countdown_value' type='text' value=''>分钟</div>").appendTo(dialog);
+	
+	var posAttr = {my: "center", at : "center", of : window, collision : "fit"};
+	
+	$("#setting_countdown").dialog({
+	    modal: true,
+	    width : 600,
+		height : 400,
+		resizable : true,
+		position : posAttr,
+	    buttons: {
+	      "确定": function() {
+	    	  
+	    	  var timeval = $(this).find("#setting_countdown_value").val();
+	    	  _self.durationval = timeval;
+	    	  
+	    	  _self.setValue("RESET" + timeval);
+	    	  
+	          $(this).dialog("close");
+	          //$(this).remove();
+	      },"取消":function(){
+	    	 $(this).remove();
+		  }
+	    }
+	});	
+
 }
 
 __countdown.prototype.afterInit = function() {
@@ -239,9 +288,19 @@ __countdown.prototype.afterInit = function() {
 	});
 }
 
+__countdown.prototype.disable = function() {
+	var _self = this;
+	_self.setValBtnObj.addClass("disabled");
+}
+
+__countdown.prototype.enable = function() {
+	var _self = this;
+	_self.setValBtnObj.removeClass("disabled");
+}
 
 __countdown.prototype.getValue = function() {
-	return "";
+	var _self = this;
+	return _self.durationval;
 }
 
 __countdown.prototype.setValue = function(value) {
@@ -255,29 +314,46 @@ __countdown.prototype.setValue = function(value) {
 	
 	
     var currentTime = new Date();
-	var futureTime = (new Date()).addMinutes(_self.fieldDef.defaultval);
+    
+    var startFlag = "TRUE";
+    var setMinVal = _self.durationval;
+    if (value.indexOf("RESET") == 0) {
+    	setMinVal = value.replace("RESET", "");
+    	startFlag = "false";
+    	_self.countDownObj = undefined;
+    }
+    
+	var futureTime = (new Date()).addMinutes(setMinVal);
 	
 	if (_self.countDownObj) { //如果已经构造了，说明之前已经执行过，但是停止了， 时间就得算没走完的时间
 		var remainSecond = _self.editObj.find(".clock-seconds .val").text();
 		var remainMinute = _self.editObj.find(".clock-minutes .val").text();
 		var remainHour = _self.editObj.find(".clock-hours .val").text();
+		if (_self.editObj.find(".clock-hours").is(":hidden")) {
+			remainHour = 0;
+		}
+		
 		
 		futureTime = (new Date()).addHours(remainHour).addMinutes(remainMinute).addSeconds(remainSecond);
 	}
 	
 	if (value == "clearon") {
-		futureTime = (new Date()).addMinutes(_self.fieldDef.defaultval);
+		futureTime = (new Date()).addMinutes(_self.durationval);
 		_self.countDownObj = undefined;
 	}
 	
 	_self.countDownObj = _self.editObj.find('.countdown').final_countdown({
-			'startFlag' : 'TRUE',
+			'startFlag' : startFlag,
 			'start': currentTime.getTime(),
 			'end': futureTime.getTime(),
 			'now': currentTime.getTime()
 	}, function() {
 		alert("over");
 	});
+	
+    if (value.indexOf("RESET") == 0) {
+    	_self.countDownObj = undefined;
+    }
 }
 
 

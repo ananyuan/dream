@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="btn-bar col-md-12">
-		<a href="/menu/edit/_ADD_" class="btn btn-primary btn-sm">添加</a>	
+		<a href="/menu/edit/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>	
 		<a href="javascript:void(0);" onclick="hihi()">dialog</a>
 		<a href="javascript:void(0);" id="dialog_postion" onclick="userDialog()">dialog</a>
 		

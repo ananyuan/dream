@@ -37,6 +37,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     	noNeedLoginUrlMap.add("/insDef/page/xxx/channel2");
     	noNeedLoginUrlMap.add("/insDef/page/xxx/channel3");
     	noNeedLoginUrlMap.add("/insDef/page/xxx/channel4");
+    	noNeedLoginUrlMap.add("/insDef/page/QnhyFaNao7vbu9kzP2jjuJ");
+    	noNeedLoginUrlMap.add("/insDef/page/QnhyFaNao7vbu9kzP2jjuJ/channel1");
     }
     
     

@@ -1,6 +1,7 @@
 package com.dream.controller.serial;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +27,14 @@ import com.dream.controller.serial.mgr.InsMgr;
 import com.dream.controller.serial.mgr.SerialPortMgr;
 import com.dream.controller.serial.model.InsBtn;
 import com.dream.controller.serial.model.InsDef;
+import com.dream.controller.serial.model.InsField;
 import com.dream.model.ActLog;
+import com.dream.model.sicker.SickerRecord;
 import com.dream.service.ActLogService;
+import com.dream.service.serial.SickerRecordService;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
+import com.dream.utils.DictMgr;
 import com.dream.utils.UuidUtils;
 
 
@@ -42,6 +47,10 @@ public class InsDefController {
 	
 	@Autowired
 	private ActLogService actLogService;
+	
+	
+	@Autowired
+	private SickerRecordService sickerRecordService;
 	
 	
     @RequestMapping(value="/page/{inscode}", method = RequestMethod.GET)
@@ -178,6 +187,8 @@ public class InsDefController {
 		
 		log.debug("send command actcode is " + actCode);
 		
+		InsDefMgr insDefMgr = InsMgr.getInsDef(insCode);
+		
 		String pici = (String)params.get("pici");
 		if (!params.containsKey("pici") && StringUtils.isNotBlank("pici")) {
 			pici = UuidUtils.base58Uuid();
@@ -190,12 +201,27 @@ public class InsDefController {
 			conObj.put("pici", pici);
 			
 			Context.addContextObj(Constant.CONTEXT_KEY_SERIAL, conObj);
+			
+			if (StringUtils.isBlank((String)params.get("pici"))) {
+				SickerRecord sickerRecord = new SickerRecord();
+				sickerRecord.setId(pici);
+				sickerRecord.setSickerid(Integer.parseInt(userid));
+				sickerRecord.setIntime(DateUtils.getDatetime());
+				
+				String memo = getMemoFieldData(insDefMgr.getFields(), params);
+				sickerRecord.setMemo(memo);
+				
+				sickerRecordService.insert(sickerRecord);
+			}
 		} else if (actCode.equalsIgnoreCase("csstop")) {
 			Context.removeContextObj(Constant.CONTEXT_KEY_SERIAL);
+			
+			SickerRecord sickerRecord = sickerRecordService.findRecord(pici);
+			sickerRecord.setOuttime(DateUtils.getDatetime());
+			sickerRecordService.update(sickerRecord);
 		}
 		
 		
-		InsDefMgr insDefMgr = InsMgr.getInsDef(insCode);
 		InsBtn insBtn = insDefMgr.getInsBtn(actCode);
 		
 		String btnCommand = CommUtils.replaceValues(insBtn.getCommand(), params);
@@ -239,6 +265,37 @@ public class InsDefController {
 		return rtnMap;
 	}
 	
+	/**
+	 * 
+	 * @param fields 字段列表
+	 * @param params 上传的页面参数
+	 * @return 页面设置的值
+	 */
+	private String getMemoFieldData(List<InsField> fields,
+			HashMap<String, Object> params) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (InsField field: fields) {
+			if (field.getItemtype().equalsIgnoreCase("DYNAMICGRAPH") ||
+					field.getItemtype().equalsIgnoreCase("DESCP")) {
+				continue;
+			}
+			
+			String value = (String)params.get(field.getCode());
+			
+			if (StringUtils.isNotBlank(field.getReldict())) {
+				Map<String, String> entryMap = DictMgr.getEntrysMap(field.getReldict());
+				
+				value = entryMap.get(value);
+			}
+			
+			sb.append(field.getName()).append(":").append(value).append(";\n");
+		}
+		
+		
+		return sb.toString();
+	}
+
 	private ActLog getBaseActLog(String act) {
 		ActLog insAct = new ActLog();
 		insAct.setActType(act);

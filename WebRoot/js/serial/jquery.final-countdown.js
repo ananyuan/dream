@@ -203,6 +203,7 @@
 		
         // Hours
 		if ((timer.hours > 0 && timer.hours !=24 ) || (timer.days > 0) )  {
+			jQuery(".clock-hours").show();
 			var hours_width = $('#' + settings.selectors.canvas_hours).width();
 			var hoursStage = new Kinetic.Stage({
 				container: settings.selectors.canvas_hours,

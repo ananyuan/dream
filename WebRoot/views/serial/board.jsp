@@ -111,12 +111,7 @@ function showSetting() {
 
 	var treeDiv = jQuery("<div id='setting_serial_con'></div>").appendTo(dialog);
 	
-	
-	
-	
-	
-	
-	var posAttr = {my: "center", at : "left+300 top+100", of : window, collision : "fit"};
+	var posAttr = {my: "center", at : "center", of : window, collision : "fit"};
 	
     $("#setting_serial").dialog({
         modal: true,

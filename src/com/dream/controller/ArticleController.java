@@ -2,12 +2,14 @@ package com.dream.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -253,9 +255,7 @@ public class ArticleController extends AbsController {
 
 	@NoNeedLogin(ResultTypeEnum.json)
 	@RequestMapping(value="/articles", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> getArticles(HttpServletRequest request, HttpSession session) {
-    	Map<String, Object> rtnMap = new HashMap<String, Object>();
-    	
+	public void getArticles(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
     	HashMap<String, Object> params = CommUtils.getParams(request);
     	Page page;
     	if (null == params.get("_PAGE_")) {
@@ -273,27 +273,32 @@ public class ArticleController extends AbsController {
 				articlesHtml = FileUtils.readFileToString(file, "UTF-8");
 			} catch (IOException e) {
 				log.error("getArticles", e);
-				articlesHtml = setArticlesInfo(session, rtnMap, page);
+				articlesHtml = getArticleHtmlFromFtl(page);
 			}
     	} else {
-        	articlesHtml = setArticlesInfo(session, rtnMap, page);
+        	articlesHtml = getArticleHtmlFromFtl(page);
     	}
     	
-    	rtnMap.put("_DATA_", articlesHtml);
+    	String header = "text/html; charset=utf-8";
+    	String content = "{\"_DATA_\":\""+CommUtils.encode(articlesHtml)+"\"}";
     	
-		return rtnMap;
+    	try {
+	    	response.setContentType(header);
+	        PrintWriter out = response.getWriter();
+	        out.write(content);
+	        out.flush();
+	        out.close();
+    	}catch (Exception e) {
+    		log.error("getArticles ", e);
+    	}
 	}
 	
 	/**
 	 * 
-	 * @param session
-	 * @param rtnMap
-	 * @param page
-	 * @return
+	 * @param page 分页信息
+	 * @return 通过ftl替换后的页面
 	 */
-	private String setArticlesInfo(HttpSession session,
-			Map<String, Object> rtnMap, Page page) {
-		String articlesHtml;
+	private String getArticleHtmlFromFtl(Page page) {
 		List<Article> articles = getArticles(page);
 		
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -302,7 +307,7 @@ public class ArticleController extends AbsController {
 		
 		String fileDir = Context.getSYSPATH() + "ftl" + File.separator;
 		
-		articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
+		String articlesHtml = FreeMarkerUtils.parseString(fileDir, "articles.ftl", dataMap); //TODO
 		return articlesHtml;
 	}
     

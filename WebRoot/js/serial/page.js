@@ -111,6 +111,8 @@ dr.pageObj.prototype._showBtns = function() {
 							item.setValue("START");
 						}
 					}
+					
+					item.disable();
 				});
 				
 			} else if (item.code == "csstop") { //结束
@@ -124,7 +126,10 @@ dr.pageObj.prototype._showBtns = function() {
 					} else if (item.fieldDef.itemtype.toUpperCase() == "COUNTDOWN") {
 						item.setValue("STOP");
 					}
+					
+					item.enable();
 				});	
+				_self.pici = "";
 			} else if (item.code == "cspause") { //暂停
 				_self.btnObjMap["csstart"].removeClass("disabled");
 				_self.btnObjMap["csstop"].removeClass("disabled");

@@ -30,10 +30,8 @@ dr.dialogselect.prototype.render = function () {
 
 	var treeDiv = jQuery("<div id='"+_self._opts.id+"_dialogselect' class='dialogselect'></div>").appendTo(dialog);
 	
-	_self.posAttr = {my: "center", at : "left+300 top+100", of : window, collision : "fit"};
-	if (_self._opts.position) {
-		_self.posAttr = _self._opts.position;
-	}
+	_self.posAttr = {my: "center", at : "center", of : window, collision : "fit"};
+
 	
     $("#" + _self._opts.id).dialog({
         modal: true,

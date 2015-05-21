@@ -23,7 +23,7 @@ body {
 <div class="outter-div">
 <div class="content paper-border inner_div" style="margin-bottom:20px">
 
-<a href="/task/edit/_ADD_" class="btn btn-primary btn-sm">添加TASK</a>
+<a href="/task/edit/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加TASK</a>
 
 <table class="table table-bordered table-hover" id = "myTable">
 	<thead>

@@ -78,5 +78,7 @@ dr.menu.prototype.clickEvent = function (menuItem) {
 	iframe.style.height = "0px";
 	
 	jQuery("#" + frameId).attr("src", menuItem.url);
+	
+	resetFrameHei();
 }
 

@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="btn-bar col-md-12 div-hide">
-		<a href="/article/edit/_ADD_" class="btn btn-primary btn-sm">添加</a>
+		<a href="/article/edit/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>
 	</div>
 
 	<div class="left-div col-md-2">

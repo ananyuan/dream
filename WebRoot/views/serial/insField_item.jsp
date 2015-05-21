@@ -146,11 +146,11 @@ body {
 						<div class="form-group col-sm-12">
 							<div style="text-align: center">
 								<button type="button" class="btn btn-primary" id="submit" onclick="saveField()" value="保存" />
-								<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
 								保存
 								</button>
 								<button type="button" class="btn btn-primary" id="back_his" onclick="back()" value="返回" />
-								<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
 								返回
 								</button>			
 							</div>

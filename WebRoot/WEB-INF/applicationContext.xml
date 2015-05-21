@@ -77,6 +77,10 @@
     <bean id="dictEntryService" class="com.dream.service.impl.DictEntryServiceImpl">
         <property name="dictEntryDao" ref="dictEntryDao"></property>
     </bean>
+    
+    <bean id="commentService" class="com.dream.service.impl.CommentServiceImpl">
+        <property name="commentDao" ref="commentDao"></property>
+    </bean>
     <bean id="menuService" class="com.dream.service.impl.MenuServiceImpl">
         <property name="menuDao" ref="menuDao"></property>
     </bean>

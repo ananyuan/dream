@@ -9,7 +9,7 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" onSubmit="javascript:login()">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="用户名" id="username" type="text" autofocus>
@@ -17,8 +17,8 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="密码" id="password" type="password" value="">
                                 </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <a href="#" onclick="login()" class="btn btn-lg btn-primary btn-block">Login</a>
+                                
+                                <button type='submit' class="btn btn-lg btn-primary btn-block">Login</button>
                             </fieldset>
                         </form>
                     </div>

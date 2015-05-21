@@ -184,4 +184,46 @@ public class CommUtils {
         mt.appendTail(sb);
         return sb.toString();
     }
+    
+    
+    /**
+     * @param s 字符串
+     * @return 字符串
+     */
+    public static String encode(String s) {
+        StringBuffer sb = new StringBuffer();
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);     
+            switch (c) {
+            case '\"':     
+                sb.append("\\\"");     
+                break;     
+            case '\\':     
+                sb.append("\\\\");     
+                break;     
+            case '/':     
+                sb.append("\\/");     
+                break;     
+            case '\b':      //退格
+                sb.append("\\b");     
+                break;     
+            case '\f':      //走纸换页
+                sb.append("\\f");     
+                break;     
+            case '\n':     
+                sb.append("\\n"); //换行    
+                break;     
+            case '\r':      //回车
+                sb.append("\\r");     
+                break;     
+            case '\t':      //横向跳格
+                sb.append("\\t");     
+                break;
+            default:     
+                sb.append(c);    
+            }
+        }
+        return sb.toString();     
+     }
 }

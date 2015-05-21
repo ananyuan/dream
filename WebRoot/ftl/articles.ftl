@@ -1,4 +1,4 @@
-<#list articles as article>
+﻿<#list articles as article>
     <h2>
         <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
     </h2>

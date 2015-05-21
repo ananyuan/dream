@@ -99,11 +99,11 @@ body {
 						<div class="form-group col-sm-12">
 							<div style="text-align: center">
 								<button type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存" />
-								<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								保存
 								</button>
 								<button type="button" class="btn btn-primary" id="back_his" onclick="back()" value="返回" />
-								<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
 								返回
 								</button>			
 							</div>
@@ -112,7 +112,7 @@ body {
 			</div>
 
 			<div role="tabpanel" class="tab-pane" id="ins_field">
-					<a href="/insField/edit/<%=itemObj.getId()%>/_ADD_" class="btn btn-primary btn-sm">添加</a>
+					<a href="/insField/edit/<%=itemObj.getId()%>/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>
 					<table class="table table-bordered table-hover" id = "table_field">
 						<thead>
 							<tr>
@@ -129,7 +129,7 @@ body {
 					</table>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="ins_btn">
-					<a href="/insBtn/edit/<%=itemObj.getId()%>/_ADD_" class="btn btn-primary btn-sm">添加</a>
+					<a href="/insBtn/edit/<%=itemObj.getId()%>/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>
 					<table class="table table-bordered table-hover" id = "table_btn">
 						<thead>
 							<tr>

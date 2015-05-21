@@ -10,7 +10,7 @@
     </insert>
     
     <update id="update" parameterType="com.dream.model.Article">
-        update dream_article set title=#{title},content=#{content},chanid=#{chanId},channame=#{channame}, summary=#{summary}, imgids=#{imgids}, sortnum=#{sortnum} where id=#{id}
+        update dream_article set title=#{title},content=#{content},chanid=#{chanId},channame=#{channame}, summary=#{summary}, imgids=#{imgids}, sortnum=#{sortnum}, localurl=#{localurl} where id=#{id}
     </update>
     
     <delete id="delete" parameterType="String">  

@@ -9,15 +9,15 @@
         update dream_sicker_record set intime=#{intime},outtime=#{outtime},duration=#{duration},memo=#{memo},result=#{result}, param1=#{param1}, param2=#{param2}, param3=#{param3} where id=#{id}
     </update>
     
-    <delete id="delete" parameterType="int">  
+    <delete id="delete" parameterType="String">  
         delete from dream_sicker_record where id=#{id}
     </delete>
     
-    <delete id="deleteBySickerId" parameterType="int">  
+    <delete id="deleteBySickerId" parameterType="String">  
         delete from dream_sicker_record where sickerid=#{sickerid}
     </delete>    
     
-    <select id="findRecord" parameterType="int" resultType="com.dream.model.sicker.SickerRecord">
+    <select id="findRecord" parameterType="String" resultType="com.dream.model.sicker.SickerRecord">
         select * from dream_sicker_record where id=#{id}
     </select>
     

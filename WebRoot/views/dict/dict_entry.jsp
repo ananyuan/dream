@@ -14,7 +14,7 @@ if (null != request.getAttribute("dictId")) {
 <div class="outter-div">
 <div class="content paper-border inner_div" style="margin-bottom:20px">
 
-<a href="/dictentry/edit/<%=dictId%>/_ADD_" class="btn btn-primary btn-sm">添加</a>
+<a href="/dictentry/edit/<%=dictId%>/_ADD_" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加</a>
 
 <table class="table table-bordered table-hover" id = "myTable">
 	<thead>

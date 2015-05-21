@@ -33,7 +33,7 @@ if (null != request.getAttribute("itemObj")) {
 	
 	<div class="col-md-8">
 		<button type="button" class="btn btn-primary" id="back_wf" onclick="back()"/>
-		<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
 		返回
 		</button>
 	</div>
@@ -44,12 +44,12 @@ if (null != request.getAttribute("itemObj")) {
 	
 	<div class="right-div col-md-3">
 		<button type="button" class="btn btn-primary" id="add_node" onclick="addNode()"/>
-		<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		添加节点
 		</button>
 
 		<button type="button" class="btn btn-primary" id="save_wf" onclick="saveWf()"/>
-		<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 		保存流程
 		</button>
 
@@ -93,12 +93,12 @@ if (null != request.getAttribute("itemObj")) {
 			
 			<div class="center">
 					<button type="button" class="btn btn-primary" id="save_node" onclick="saveNode()"/>
-					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 					保存
 					</button>	
 					
 					<button type="button" class="btn btn-primary" id="remove_node" onclick="removeNode()"/>
-					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					删除
 					</button>
 			</div>
@@ -126,12 +126,12 @@ if (null != request.getAttribute("itemObj")) {
 			
 			<div class="center">
 					<button type="button" class="btn btn-primary" id="save_link" onclick="saveLink()"/>
-					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 					保存
 					</button>	
 					
 					<button type="button" class="btn btn-primary" id="remove_link" onclick="removeLink()"/>
-					<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					删除
 					</button>
 			</div>

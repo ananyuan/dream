@@ -206,7 +206,7 @@ function goPage(pageNum, reqLocation, locInPage) {
 	param._PAGE_ = JSON.stringify(page);
 	
 	var article = sendAjaxParam("/article/articles", param);
-	
+	debugger;
 	jQuery("#mainArticleDiv").html(article._DATA_);
 }
 
@@ -338,8 +338,12 @@ function adjustIframe(frameId) {
 			iheight = outterHei;
 		}
 		
+		if ($(window.parent).height() > iheight) {
+			iheight = $(window.parent).height() - 56;
+		}
+		
 		//iheight = iheight - 56;
-		iheight = iheight + 17;
+		//iheight = iheight + 17;
 		
 		iframe.style.height = iheight + "px";
 	}

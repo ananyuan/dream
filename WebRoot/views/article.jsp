@@ -86,7 +86,11 @@
 
 	<div class="form-group">
 		<div style="text-align: center" class="col-sm-12">
-			<input type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存" />
+			<button type="button" class="btn btn-primary" id="submit" onclick="save()" value="保存" />
+			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+			保存
+			</button>			
+			
 		</div>
 	</div>
 	<input type="hidden" id="id" value="<%=article.getId()%>"> 

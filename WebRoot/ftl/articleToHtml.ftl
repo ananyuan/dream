@@ -57,7 +57,7 @@
     <!-- Page Content -->
     <div class="container">
 
-        <div class="">
+        <div class="article-content">
 						<h1><a href="#">${article.title}</a></h1>
 						
 						<p style="font-size: 14px; color: gray;"><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>

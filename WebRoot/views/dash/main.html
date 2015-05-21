@@ -135,8 +135,6 @@
 
 <script>
 $(document).ready(function() {
-	resetFrameHei();
-	
 	var param = {};
 	var rtnResult = sendAjax("/todo/latestTodo/", param, "get");
 	
@@ -149,7 +147,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	
+	resetFrameHei();
 });
 
 </script>
