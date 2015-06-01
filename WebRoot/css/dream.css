@@ -276,3 +276,30 @@ iframe {
 .file .file-oper a{
 	padding-right:7px;
 }
+
+.validate-row {
+	padding-top:8px;
+	padding-bottom:8px;
+}
+
+.comment-input-user {
+	width:60px;
+}
+
+.comment-input-certval {
+	width:60px;
+}
+
+.comment-list {
+	
+}
+
+.comment-list .item {
+	border-top: 1px solid #ECECEC;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.comment-save {
+	margin-bottom: 10px;
+}

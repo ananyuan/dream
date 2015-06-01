@@ -146,13 +146,16 @@ public class MenuController extends AbsController {
         return recurEntry(menuList);
     }
  
-    @RequestMapping(value="/getMenuList", method = RequestMethod.GET)
-    public @ResponseBody List<Menu> getMenuList(HttpSession session){
+    @RequestMapping(value="/getMenuList/{includeleaf}", method = RequestMethod.GET)
+    public @ResponseBody List<Menu> getMenuList(@PathVariable int includeleaf, HttpSession session){
     	
     	Page page = new Page();
     	page.setPageSize(1000);
     	page.setOrder("msort asc");
-    	page.setStr("mtype", "FOLDER");
+    	
+    	if (includeleaf != 1) { //   /getMenuList/1 获取所有，包含叶子  /getMenuList/2 获取所有Folder
+    		page.setStr("mtype", "FOLDER");	
+    	}
     	
     	List<Menu> menuList = menuService.findMenus(page);
     	

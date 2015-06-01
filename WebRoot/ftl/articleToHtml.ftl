@@ -20,6 +20,7 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>		
+    <script type="text/javascript" src="/js/model/comment.js"></script>		
 </head>
 
 
@@ -82,5 +83,14 @@
     </div>
 </body>
 
+<script>
+
+jQuery(document).ready(function(){
+	var ddcommnet = new dcommnet({});
+	ddcommnet.render();
+	
+});
+
+</script>
 
 </html>

@@ -36,7 +36,7 @@ public class IdentifyController {
 			'9' };
 
 	@NoNeedLogin(ResultTypeEnum.json)
-	@RequestMapping(value="/getImg", method = RequestMethod.GET)
+	@RequestMapping(value="/getImg/{random}", method = RequestMethod.GET)
 	public void getImg(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
        try {
             OutputStream outputStream = response.getOutputStream();
@@ -97,7 +97,7 @@ public class IdentifyController {
 		if (width <= 0)
 			width = 60;
 		if (height <= 0)
-			height = 20;
+			height = 26;
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		// 获取图形上下文
 		Graphics g = image.getGraphics();
@@ -115,7 +115,7 @@ public class IdentifyController {
 		}
 		// 将认证码显示到图像中，如果要生成更多位的验证码，增加drawString语句
 		g.setColor(Color.black);
-		g.setFont(new Font("AtlanticInline", Font.PLAIN, 18));
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		String str = strEnsure.substring(0, 1);
 		g.drawString(str, 8, 17);
 		str = strEnsure.substring(1, 2);

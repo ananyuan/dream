@@ -93,7 +93,7 @@ $(document).ready(function() {
 function initLeftTree() {
 	var param = {};
 	
-	var zNodes = sendAjax("/menu/getMenuList", param, "get");
+	var zNodes = sendAjax("/menu/getMenuList/2", param, "get");
 	
 	jQuery.each(zNodes, function(index, item){
 		item.pId = item.pid;
@@ -149,7 +149,7 @@ function setQueryParam(aoData) {
 function hihi() {
 	var param = {};
 	
-	var zNodes = sendAjax("/menu/getMenuList", param, "get");
+	var zNodes = sendAjax("/menu/getMenuList/2", param, "get");
 	
 	jQuery.each(zNodes, function(index, item){
 		item.pId = item.pid;
