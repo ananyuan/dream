@@ -180,6 +180,9 @@ public class InsDefController {
 		String channelPort = (String)params.get("channelport");
 		String portNum = (String)params.get("serialportnum");
 		String userid = (String)params.get("userid");
+		if (StringUtils.isEmpty(userid)) {
+			userid = "0";
+		}
 		
 		if (StringUtils.isEmpty(actCode)) {
 			actCode = (String)params.get("act_code");

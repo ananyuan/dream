@@ -12,7 +12,14 @@ var __parent = function(fieldDef) {
 }
 
 __parent.prototype._init = function(fieldDef) {
-	this.fieldDef = fieldDef;
+	
+	var extconfigObj = {};
+	if (fieldDef.extconfig) {
+		extconfigObj = StrToJson(fieldDef.extconfig);
+	}
+	
+	this.fieldDef = jQuery.extend(fieldDef, extconfigObj);
+	
 	//外层div
 	var fieldItemArr = new Array();
 	fieldItemArr.push("<div class='form-group col-sm-12'>");
@@ -471,7 +478,6 @@ __extend(__dynamicGraph, __parent);
 
 __dynamicGraph.prototype.render = function(fieldDef) {
 	var rightDivObj = this._jQueryItemObj.find(".edit_div");
-	this.fieldDef = fieldDef;
 	
 	var editStr = jQuery("<div id='"+fieldDef.id+"' class='graph-dynamic'></div>");
 	
@@ -514,8 +520,8 @@ __dynamicGraph.prototype.setValue = function(value) {
 	var updateInterval = 1000;
 	var dataLength = 500; // number of dataPoints visible at any point
 	
-	var dynamicData = {"inscode": "", "tytype":"tytype"};
-
+	var dynamicData = {"inscode": "", "tytype":_self.fieldDef.DYTYPE};
+	
 	var updateChart = function() {
 		var resData = sendAjaxParam("/insDef/dynamicdata", dynamicData);
 		
