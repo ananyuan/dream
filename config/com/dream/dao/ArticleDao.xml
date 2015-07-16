@@ -10,7 +10,7 @@
     </insert>
     
     <update id="update" parameterType="com.dream.model.Article">
-        update dream_article set title=#{title},content=#{content},chanid=#{chanId},channame=#{channame}, summary=#{summary}, imgids=#{imgids}, sortnum=#{sortnum}, localurl=#{localurl} where id=#{id}
+        update dream_article set title=#{title},content=#{content},chanid=#{chanId},channame=#{channame}, summary=#{summary}, imgids=#{imgids}, sortnum=#{sortnum}, localurl=#{localurl} , clickcount=#{clickcount} where id=#{id}
     </update>
     
     <delete id="delete" parameterType="String">  
@@ -37,6 +37,20 @@
 		</trim>
         order by sortnum, atime desc
     </select>
+    
+    <select id="findArticlesHasImgs" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">  
+        select id,title,chanid,channame,atime,summary,localurl,imgids,sortnum from dream_article 
+        <trim prefix="WHERE" prefixOverrides="AND|OR">  
+	        <if test="title != null and title != '' ">  
+	            AND title like "%"#{title}"%"
+	        </if>
+	        <if test="chanid != null and chanid != '' ">  
+	            AND chanid = #{chanid}
+	        </if>
+	        and length(imgids) > 0
+		</trim>
+        order by sortnum, atime desc
+    </select>    
 
     <select id="findArticlesByChannelId" resultType="com.dream.model.Article" parameterType="com.dream.base.Page">
         select id,title,chanid,channame,atime,summary,localurl,sortnum from dream_article where chanid=#{chanId} order by sortnum, atime desc

@@ -317,6 +317,17 @@ public class ArticleController extends AbsController {
  
     	return articleService.findArticle(id);
 	}
+	
+	@NoNeedLogin(ResultTypeEnum.json)
+    @RequestMapping(value="/clickCount/{id}", method = RequestMethod.GET)
+	public @ResponseBody int clickCount(@PathVariable String id, HttpSession session) {
+		Article article = articleService.findArticle(id);
+		article.setClickcount(article.getClickcount() + 1);
+		articleService.update(article);
+		
+    	return article.getClickcount();
+	}
+	
     
     @NoNeedLogin(ResultTypeEnum.json)
     @RequestMapping(value="/list/{lasttime}", method = RequestMethod.GET)

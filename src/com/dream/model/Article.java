@@ -16,6 +16,7 @@ public class Article {
 	private String localurl;
 	private String imgids = "";
 	private int sortnum = 0;
+	private int clickcount = 0;
 	
 	public String getId() {
 		return id;
@@ -76,6 +77,12 @@ public class Article {
 	}
 	public void setChanname(String channame) {
 		this.channame = channame;
+	}
+	public int getClickcount() {
+		return clickcount;
+	}
+	public void setClickcount(int clickcount) {
+		this.clickcount = clickcount;
 	}
 
 }

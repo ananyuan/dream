@@ -22,6 +22,9 @@ public interface ArticleDao {
 	public List<Article> findNewArticles(String atime);
 	
 	public List<Article> findArticles(Page<?> page);
+	
+	public List<Article> findArticlesHasImgs(Page<?> page);
+	
 
 	public List<Article> findArticlesByChannelId(@Param("page") Page<?> page, int channelId);
 }

@@ -20,7 +20,8 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>		
-    <script type="text/javascript" src="/js/model/comment.js"></script>		
+    <script type="text/javascript" src="/js/clickcount.js"></script>	
+    <script type="text/javascript" src="/js/model/comment.js"></script>	
 </head>
 
 
@@ -61,7 +62,7 @@
         <div class="article-content">
 						<h1><a href="#">${article.title}</a></h1>
 						
-						<p style="font-size: 14px; color: gray;"><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
+						<p style="font-size: 14px; color: gray;"><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame} &nbsp; 被浏览<span id="clickcount"></span>次</p>
 						
 						<div class="content article-font">
 							<p>${article.content}</p>

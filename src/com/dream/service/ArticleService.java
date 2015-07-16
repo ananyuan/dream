@@ -25,5 +25,9 @@ public interface ArticleService {
 	
 	public List<Article> findArticles(Page<?> page);
 	
+	
+	public List<Article> findArticlesHasImgs(Page<?> page);
+	
+	
 	public List<Article> findArticlesByChannelId(Page<?> page, int channelId);
 }

@@ -63,6 +63,11 @@ public class ArticleServiceImpl implements ArticleService {
 		this.articleDao = articleDao;
 	}
 
+	@Override
+	public List<Article> findArticlesHasImgs(Page<?> page) {
+		return this.articleDao.findArticlesHasImgs(page);
+	}
+
 
 
 }
