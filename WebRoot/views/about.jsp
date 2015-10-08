@@ -1,9 +1,12 @@
 <jsp:include page="header.jsp" flush="true" />
+<style>
+body{
+    background-color: #eee;
+}
+</style>
 
 
-
-
-    <div class="container">
+    <div class="container well">
         <div class="row">
             <!-- Map Column -->
             <div class="col-md-8 about-pic-div">
@@ -27,6 +30,13 @@
 
             </div>
         </div>
+		
+		
+		<div class="btn ">
+		<a href="/views/wxtest.jsp">微信测试1</a>
+		<a href="/views/wxtest.html">微信测试2</a>
+		
+		</div>
 		
 		    <!-- Footer -->
 	    <footer>

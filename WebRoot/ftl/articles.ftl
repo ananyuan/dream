@@ -1,6 +1,7 @@
-﻿<#list articles as article>
+<#list articles as article>
+	<div class="well">
     <h2>
-        <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
+        <a href="#" onclick="window.open('${article.localurl}')" style="text-decoration: none;">${article.title}</a>
     </h2>
 
     <p><span class="glyphicon glyphicon-time"></span> ${article.atime} &nbsp; ${article.channame}</p>
@@ -12,11 +13,12 @@
     
     <hr>
     <p>${article.summary}</p>
-    <a class="btn btn-primary" href="#" onclick="window.open('${article.localurl}')">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <!--a class="btn btn-primary" href="#" onclick="window.open('${article.localurl}')">Read More <span class="glyphicon glyphicon-chevron-right"></span></a-->
 
-    <hr>
+    </div>
 </#list>
 
+<div class="well">
 <nav>
     <ul class="pagination pagination-lg ">
         <#assign nowPage=_PAGE_.pageNo>
@@ -48,4 +50,4 @@
                 </#if>
     </ul>
 </nav>
-
+</div>

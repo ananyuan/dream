@@ -303,3 +303,7 @@ iframe {
 .comment-save {
 	margin-bottom: 10px;
 }
+
+.well {
+	background-color: white;
+}

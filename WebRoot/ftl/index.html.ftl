@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>DREAM</title>
+    <title>袁安安的三分田</title>
 
     <!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="/js/tools.js"></script>		
 </head>
 
-<body>
+<body style="background-color: #EEE;">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -32,21 +32,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-globe"></i>DREAM</a>
+                <a class="navbar-brand" style="text-shadow: none; font-size: 24px;width: 240px;" href="/">袁安安的三分田</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li> 
-                        <a href="/views/about.jsp"><i class="glyphicon glyphicon-user"></i>About</a>
-                    </li>
-                    <li>
-                        <a href="/task/timeline"><i class="glyphicon glyphicon-calendar"></i>TimeLine</a>
-                    </li>
-                </ul>
-                
                  <ul class="nav navbar-nav navbar-right">
+                    <li> 
+                        <a href="/views/about.jsp">关于</a>
+                    </li>
                     <li>
-                        <a href="/user/login">Login</a>
+                        <a href="/task/timeline">时间轴</a>
+                    </li>
+                    <li>
+                        <a href="/user/login">登录</a>
                     </li>
                 </ul>               
             </div>   
@@ -62,7 +59,7 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-                <h1 class="page-header">
+                <h1 class="page-header well" style="margin-top: 0px;">
                     You got a dream, you got to protect it. 
                     <small></small>
                 </h1>
@@ -82,8 +79,10 @@
 </#if>	
 
 <#list articles as article>
+   <div class="well">
+
     <h2>
-        <a href="#" onclick="window.open('${article.localurl}')">${article.title}</a>
+        <a href="#" onclick="window.open('${article.localurl}')" style="text-decoration: none;">${article.title}</a>
 		<#if canEdit?? && canEdit>
 			<div style="float:right">
 				<a class="btn btn-primary btn-sm" href="/article/edit/${article.id}">编辑</a>
@@ -101,11 +100,12 @@
     
     <hr>
     <p>${article.summary}</p>
-    <a class="btn btn-primary" href="#" onclick="window.open('${article.localurl}')">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
-    <hr>
+    <!--a class="btn btn-primary" href="#" onclick="window.open('${article.localurl}')">Read More <span class="glyphicon glyphicon-chevron-right"></span></a-->
+	
+	</div>
 </#list>
 
+<div class="well">
 <nav>
     <ul class="pagination pagination-lg ">
         <#assign nowPage=_PAGE_.pageNo>
@@ -137,7 +137,7 @@
                 </#if>
     </ul>
 </nav>
-
+</div>
 
 
 
@@ -163,14 +163,16 @@
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Blog Search</h4>
+                    <form onSubmit="return fullQuery();">
                     <div class="input-group">
                         <input type="text" class="form-control" id="query_str" placeholder="输入查询内容">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="full_search_btn">
+                            <button class="btn btn-default" type="submit" id="full_search_btn">
                                 <span class="glyphicon glyphicon-search"></span>
                         	</button>
                         </span>
                     </div>
+                    </form> 
                 </div>
                 
                 <div class="well">
@@ -241,13 +243,6 @@
 
 <script>
 jQuery(document).ready(function(){
-	jQuery("#full_search_btn").bind("click", function(){
-		var queryStr = jQuery("#query_str").val();
-		if (queryStr.length > 0) {
-			window.location = "/search/page/" + queryStr + "/1";	
-		}
-	});
-	
 	jQuery("#channelsDiv a").each(function(index, item) {
 		jQuery(item).bind("click", function() {
 			window.location.href = "/article/list";
@@ -259,7 +254,14 @@ function toTaskList() {
 	window.location = "/task/list";	
 }
 
-
+function fullQuery() {
+	var queryStr = jQuery("#query_str").val();
+	if (queryStr.length > 0) {
+		window.location = "/search/page/" + queryStr + "/1";
+	}	
+	
+	return false;
+}
 
 </script>
 

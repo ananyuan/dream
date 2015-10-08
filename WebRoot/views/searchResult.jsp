@@ -1,5 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<jsp:include page="header.jsp" flush="true" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>袁安安的三分田-搜索结果</title>
+
+    <!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/zTreeStyle/zTreeStyle.css">
+	<link rel="stylesheet" type="text/css" href="/css/dream.css"/>
+	
+	<script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    
+	<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="/js/jquery.ztree.all-3.5.min.js"></script>
+    
+    
+    <script type="text/javascript" src="/js/tools.js"></script>		
+</head>
+
 
 <style>
 #b_results {
@@ -10,12 +40,12 @@
   padding-top: 7px;
 }
 #b_results>.b_algo {
-  padding: 7px 20px 5px;
+  padding: 7px 0px 5px 0px;
 }
 #b_results>li {
   padding: 7px 20px;
   margin: 0 0 3px;
-    background-color: #fff;
+  background-color: #fff;
 }
 #b_results p {
   word-wrap: break-word;
@@ -50,17 +80,18 @@ cite {
 
 #search_div {
     margin-top:60px;
+	padding-left: 0px;
 }
 
 #r_content {
 }
 
 #r_content nav{
- padding-left:20px;
+ padding-left:0px;
 }
 
 #search_div .padding20 {
-    padding-left:20px;
+    padding-left:0px;
     padding-right:20px;
 }
 </style>
@@ -94,7 +125,42 @@ if (null != request.getAttribute("_PAGE_")) {
 
 
 %>
-<div id="search_div">
+
+
+
+<body style="background-color: #EEE;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="text-shadow: none; font-size: 24px;width: 240px;" href="/">袁安安的三分田</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                 <ul class="nav navbar-nav navbar-right">
+                    <li> 
+                        <a href="/views/about.jsp">关于</a>
+                    </li>
+                    <li>
+                        <a href="/task/timeline">时间轴</a>
+                    </li>
+                    <li>
+                        <a href="/user/login">登录</a>
+                    </li>
+                </ul>               
+            </div>   
+        </div>
+    </nav>
+
+
+
+<div class="container well" style="min-height:500px">
+
+<div id="search_div" class="container">
     <div class="input-group padding20">
         <input type="text" class="form-control" id="query_str" placeholder="输入查询内容">
         <span class="input-group-btn">
@@ -104,7 +170,7 @@ if (null != request.getAttribute("_PAGE_")) {
         </span>
     </div>	
 </div>
-<div id="r_content">
+<div id="r_content" class="">
 	<ul id="b_results">
 		<% for (HashMap<String, Object> dataMap: dataList) {%>
 			<li class="b_algo">
@@ -167,8 +233,9 @@ if (null != request.getAttribute("_PAGE_")) {
 
 </div>
 
+</div>
 
-
+</body>
 
 <script>
 var queryStr = "<%=queryStr%>";
@@ -191,3 +258,4 @@ function toPage(pageNum) {
 }
 
 </script>
+</html>

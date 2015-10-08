@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>DREAM</title>
+    <title>袁安安的三分田</title>
 
     <!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
@@ -40,21 +40,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-globe"></i>DREAM</a>
+                <a class="navbar-brand" style="text-shadow: none; font-size: 24px;width: 240px;" href="/">袁安安的三分田</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li> 
-                        <a href="/views/about.jsp"><i class="glyphicon glyphicon-user"></i>About</a>
-                    </li>
-                    <li>
-                        <a href="/task/timeline"><i class="glyphicon glyphicon-calendar"></i>TimeLine</a>
-                    </li>
-                </ul>
-                
                  <ul class="nav navbar-nav navbar-right">
+                    <li> 
+                        <a href="/views/about.jsp">关于</a>
+                    </li>
                     <li>
-                        <a href="/user/login">Login</a>
+                        <a href="/task/timeline">时间轴</a>
+                    </li>
+                    <li>
+                        <a href="/user/login">登录</a>
                     </li>
                 </ul>               
             </div>   
