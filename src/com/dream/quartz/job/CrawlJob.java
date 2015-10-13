@@ -14,9 +14,12 @@ public class CrawlJob extends QuartzJobBean {
 	    public void setCrawlService(CrawlService crawlService) {  
 	        this.crawlService = crawlService;  
 	    }  
+	    
+	    
 	    @Override  
 	    protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {  
-	        this.crawlService.crawl();  
-	          
+	        //this.crawlService.crawl(); 
+	        
+	        //GetAccessTokenJob.setAccessToekn();
 	    }  
 }

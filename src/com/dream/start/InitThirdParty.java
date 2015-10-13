@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.dream.base.Context;
 import com.dream.controller.serial.mgr.PortMonitor;
+import com.dream.service.wechat.GetMenu;
 
 /**
  * 系统启动第三方的
@@ -20,12 +21,15 @@ public class InitThirdParty {
 	
 	public static void start() {
 		
-		setLibPath();
+//		setLibPath();
+//		
+//		//串口监控的线程
+//		PortMonitor monitor = new PortMonitor();
+//		Thread backThread = new Thread(monitor);
+//		backThread.start();
 		
-		//串口监控的线程
-		PortMonitor monitor = new PortMonitor();
-		Thread backThread = new Thread(monitor);
-		backThread.start();
+		//GetMenu
+		GetMenu.createMenu();
 	}
 
 	/**

@@ -34,7 +34,6 @@ body{
 		
 		<div class="btn ">
 		<a href="/views/wxtest.jsp">微信测试1</a>
-		<a href="/views/wxtest.html">微信测试2</a>
 		
 		</div>
 		
