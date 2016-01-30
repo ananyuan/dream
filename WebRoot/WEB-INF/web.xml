@@ -23,7 +23,7 @@
 	    <listener-class>com.dream.start.StartUpListener</listener-class>
 	</listener>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index2.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,8 +30,9 @@ import com.dream.model.org.Dept;
 import com.dream.model.org.User;
 import com.dream.service.org.UserService;
 import com.dream.utils.DictMgr;
+import com.dream.utils.KafkaProducer;
 import com.dream.utils.UuidUtils;
-import com.easemob.server.example.httpclient.apidemo.EasemobIMUsers;
+//import com.easemob.server.example.httpclient.apidemo.EasemobIMUsers;
  
 @Controller
 @RequestMapping("/user")
@@ -152,14 +155,21 @@ public class UserController extends AbsController {
     		code = UuidUtils.base58Uuid();
     		user.setId(code);
     	}
+    	JSONObject obj = JSONObject.fromObject(user);
+    	String dataStr = obj.toString();
     	
     	if (addFlag) {
     		userService.insert(user);
     		
-    		EasemobIMUsers.addHxUser(user.getLoginname(), user.getPassword());
+    		dataStr = "_ADD_" + dataStr;
+    		
+    		//EasemobIMUsers.addHxUser(user.getLoginname(), user.getPassword());
     	} else {
     		userService.update(user);
+    		dataStr = "_UPDATE_" + dataStr;
     	}
+    	
+    	KafkaProducer.sendData(dataStr);
     	
     	//更新用户的字典
         UserMgr.putCache(code, user);

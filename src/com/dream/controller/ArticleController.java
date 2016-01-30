@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,6 +48,7 @@ import com.dream.utils.DictMgr;
 import com.dream.utils.DrThreadPool;
 import com.dream.utils.FileMgr;
 import com.dream.utils.FreeMarkerUtils;
+import com.dream.utils.KafkaProducer;
 import com.dream.utils.SpringContextUtil;
 import com.dream.utils.UuidUtils;
 
@@ -185,6 +188,9 @@ public class ArticleController extends AbsController {
     	//做索引
     	IndexArticleTask indexTask = new IndexArticleTask(article, IndexArticleTask.INDEX_TYPE_ADD);
     	DrThreadPool.getDefaultPool().execute(indexTask);
+    	
+    	JSONObject obj = JSONObject.fromObject(article);
+    	KafkaProducer.sendData(obj.toString(), "newsTopic");
     	
 		return article;
 	}
