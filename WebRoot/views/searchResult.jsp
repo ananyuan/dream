@@ -161,14 +161,16 @@ if (null != request.getAttribute("_PAGE_")) {
 <div class="container well" style="min-height:500px">
 
 <div id="search_div" class="container">
-    <div class="input-group padding20">
-        <input type="text" class="form-control" id="query_str" placeholder="输入查询内容">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button" id="full_search_btn">
-                <span class="glyphicon glyphicon-search"></span>
-        	</button>
-        </span>
-    </div>	
+	<form onSubmit="return fullQuery();">
+	    <div class="input-group padding20">
+			<input type="text" class="form-control" style="border: 1px solid #46b8da; border-radius: 0px;" id="query_str" placeholder="输入查询内容">
+	        <span class="input-group-btn">
+	            <button class="btn btn-default btn-info" type="submit" id="full_search_btn">
+	                <span class="">飕一下</span>
+	        	</button>
+	        </span>
+	    </div>	
+	</form>    
 </div>
 <div id="r_content" class="">
 	<ul id="b_results">
@@ -250,6 +252,14 @@ jQuery(document).ready(function(){
 		}
 	});
 });
+
+function fullQuery() {
+	var queryStr = jQuery("#query_str").val();
+	if (queryStr.length > 0) {
+		window.location = "/search/page/" + queryStr + "/1";
+	}	
+	return false;
+}
 
 function toPage(pageNum) {
 	var newReqUrl = "/search/page/" + queryStr + "/" + pageNum;

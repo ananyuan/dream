@@ -15,11 +15,11 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +42,7 @@ import com.dream.search.IndexArticleTask;
 import com.dream.service.ActLogService;
 import com.dream.service.ArticleService;
 import com.dream.service.TaskService;
+import com.dream.service.wechat.msg.ArticleItem;
 import com.dream.utils.CommUtils;
 import com.dream.utils.DateUtils;
 import com.dream.utils.DictMgr;
@@ -189,8 +190,11 @@ public class ArticleController extends AbsController {
     	IndexArticleTask indexTask = new IndexArticleTask(article, IndexArticleTask.INDEX_TYPE_ADD);
     	DrThreadPool.getDefaultPool().execute(indexTask);
     	
-    	JSONObject obj = JSONObject.fromObject(article);
-    	KafkaProducer.sendData(obj.toString(), "newsTopic");
+    	//如果是添加才去发消息
+    	if (addFlag) {
+        	JSONObject obj = JSONObject.fromObject(article);
+        	KafkaProducer.sendData(obj.toString(), "newsTopic");
+    	}
     	
 		return article;
 	}
@@ -217,7 +221,9 @@ public class ArticleController extends AbsController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+    	
+    	staticIndex2(articles, fileDir);
+    	
         // 已/未 完成
         TaskService taskService = SpringContextUtil.getBean("taskService");
         Page taskPage = new Page();
@@ -233,6 +239,51 @@ public class ArticleController extends AbsController {
     	try {
     		File file = new File(Context.getSYSPATH() + "index.html");
 			FileUtils.writeStringToFile(file, indexhtml, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+	}
+
+	
+	/**
+	 * 
+	 * @param articles
+	 * @param fileDir
+	 */
+	private void staticIndex2(List<Article> articles, String fileDir) {
+    	//获取到图片列表
+		Page page = new Page();
+		page.setPageSize(4);
+		List<Article> imgArticles = articleService.findArticlesHasImgs(page);
+		for (Article myArticle: imgArticles) {
+			String imgUrl = "";
+			if (StringUtils.isNotEmpty(myArticle.getImgids())) {
+				if (myArticle.getImgids().indexOf(",") > 0) {
+					imgUrl = myArticle.getImgids().substring(0, myArticle.getImgids().indexOf(",")); 
+				} else {
+					imgUrl = myArticle.getImgids();
+				}
+				
+				imgUrl = "http://yuananan.cn/file/" + imgUrl;
+			} 
+			myArticle.setImgids(imgUrl);
+		}
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		if (articles.size() > 8) {
+			dataMap.put("textArticles", articles.subList(0, 8));
+		} else {
+			dataMap.put("textArticles", articles);
+		}
+		
+		dataMap.put("imgArticles", imgArticles);
+		
+    	String index2Html = FreeMarkerUtils.parseString(fileDir, "index2.html.ftl", dataMap); //TODO
+    	try {
+    		File file = new File(Context.getSYSPATH() + "index2.html");
+			FileUtils.writeStringToFile(file, index2Html, "UTF-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
