@@ -33,7 +33,6 @@
 
 <style>
 #b_results {
-	display: inline-block;
 	color: #333;
 }
 #b_results>li:first-child {
@@ -160,9 +159,9 @@ if (null != request.getAttribute("_PAGE_")) {
 
 <div class="container well" style="min-height:500px">
 
-<div id="search_div" class="container">
+<div id="search_div" class="container" style="padding-right: 0px;">
 	<form onSubmit="return fullQuery();">
-	    <div class="input-group padding20">
+	    <div class="input-group padding20" style="padding-right: 0px;">
 			<input type="text" class="form-control" style="border: 1px solid #46b8da; border-radius: 0px;" id="query_str" placeholder="输入查询内容">
 	        <span class="input-group-btn">
 	            <button class="btn btn-default btn-info" type="submit" id="full_search_btn">
